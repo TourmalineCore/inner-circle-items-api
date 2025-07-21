@@ -18,28 +18,28 @@ services:
     networks:
       - inner-circle-items-network
 
-  # inner-circle-items-api:
-  #   container_name: inner-circle-items-api
-  #   profiles: ['default']
-  #   depends_on:
-  #     inner-circle-items-db:
-  #       condition: service_healthy
-  #   build:
-  #     dockerfile: Dockerfile
-  #     context: .
-  #   ports:
-  #     - 10012:8080
-  #   networks:
-  #     - inner-circle-items-network
+  inner-circle-items-api:
+    container_name: inner-circle-items-api
+    profiles: ['default']
+    depends_on:
+      inner-circle-items-db:
+        condition: service_healthy
+    build:
+      dockerfile: ./Api/Dockerfile
+      context: .
+    ports:
+      - 10012:80
+    networks:
+      - inner-circle-items-network
 
-  # inner-circle-items-api-for-e2e:
-  #   container_name: 'inner-circle-items-api-for-e2e'
-  #   profiles: ['MockForPullRequest']
-  #   extends:
-  #     service: inner-circle-items-api
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=MockForPullRequest
-  #     - ASPNETCORE_HTTP_PORTS=80
+  inner-circle-items-api-for-e2e:
+    container_name: 'inner-circle-items-api-for-e2e'
+    profiles: ['MockForPullRequest']
+    extends:
+      service: inner-circle-items-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=MockForPullRequest
+      - ASPNETCORE_HTTP_PORTS=80
   
   # inner-circle-items-api-for-docker-run:
   #   container_name: 'inner-circle-items-api-for-docker-run'
@@ -70,8 +70,8 @@ services:
     build:
       dockerfile: KarateDockerfile
       context: .
-    # depends_on:
-      # - inner-circle-items-api-for-e2e
+    depends_on:
+      - inner-circle-items-api-for-e2e
       # - booksMockServer
     command: ["karate", "/karate"]
     volumes:
