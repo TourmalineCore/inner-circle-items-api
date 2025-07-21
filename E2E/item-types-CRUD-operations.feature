@@ -11,6 +11,6 @@ Scenario: CRUD operations test flow
     * def apiRootUrl = jsUtils().getEnvVariable('API_ROOT_URL')
 
     Given url apiRootUrl
-    Given path 'api/item-types'
+    Given path 'item-types'
     When method GET
     Then status 200
