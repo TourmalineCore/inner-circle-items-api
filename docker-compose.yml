@@ -40,29 +40,6 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=MockForPullRequest
       - ASPNETCORE_HTTP_PORTS=80
-  
-  # inner-circle-items-api-for-docker-run:
-  #   container_name: 'inner-circle-items-api-for-docker-run'
-  #   profiles: ['MockForDevelopment']
-  #   extends:
-  #     service: inner-circle-items-api
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=MockForDevelopment
-  #     - ConnectionStrings__DefaultConnection=User ID=postgres;Password=postgres;Host=inner-circle-items-db;port=5432;Database=inner-circle-items-db
-
-  # booksMockServer:
-  #   container_name: 'booksMockServer'
-  #   profiles: ['MockForPullRequest']
-  #   image: mockserver/mockserver:5.15.0
-  #   command: -logLevel INFO
-  #   ports:
-  #     - 1080:1080
-  #   volumes:
-  #     - ./initializer.json:/config/initializer.json
-  #   environment:
-  #     MOCKSERVER_INITIALIZATION_JSON_PATH: /config/initializer.json
-  #   networks:
-  #     - inner-circle-items-network
 
   inner-circle-items-karate-tests:
     container_name: 'inner-circle-items-karate-tests'
