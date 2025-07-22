@@ -21,8 +21,6 @@ namespace Api
                 app.MapOpenApi();
             }
 
-            app.UseAuthorization();
-
 
             app.MapControllers();
 

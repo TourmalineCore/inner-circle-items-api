@@ -49,12 +49,10 @@ services:
       context: .
     depends_on:
       - inner-circle-items-api-for-e2e
-      # - booksMockServer
     command: ["karate", "/karate"]
     volumes:
       - .:/karate
     environment:
-      # AUTH_API_ROOT_URL: "http://booksMockServer:1080"
       API_ROOT_URL: "http://inner-circle-items-api-for-e2e"
       SHOULD_USE_FAKE_EXTERNAL_DEPENDENCIES: "true"
     networks:
