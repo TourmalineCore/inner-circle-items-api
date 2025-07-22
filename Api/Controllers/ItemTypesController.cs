@@ -1,6 +1,8 @@
 using Api.Requests;
 using Api.Responses;
-using Core;
+using Application.Commands;
+using Application.Queries;
+using Core.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -12,11 +14,21 @@ namespace Api.Controllers
     {
         private readonly ILogger<ItemTypesController> _logger;
 
-        private static long _nextItemTypeId = 1;
+        private readonly CreateItemTypeCommand _createItemTypeCommand;
+        private readonly DeleteItemTypeCommand _deleteItemTypeCommand;
+        private readonly GetAllItemTypeQuery _getAllItemTypeQuery;
+
         private static List<ItemType> _itemTypes = new List<ItemType>();
 
-        public ItemTypesController(ILogger<ItemTypesController> logger)
+        public ItemTypesController(ILogger<ItemTypesController> logger,
+            CreateItemTypeCommand createItemTypeCommand,
+            DeleteItemTypeCommand deleteItemTypeCommand,
+            GetAllItemTypeQuery getAllItemTypeQuery
+            )
         {
+            _createItemTypeCommand = createItemTypeCommand;
+            _deleteItemTypeCommand = deleteItemTypeCommand;
+            _getAllItemTypeQuery = getAllItemTypeQuery;
             _logger = logger;
         }
 
@@ -26,15 +38,14 @@ namespace Api.Controllers
         [HttpGet]
         public async Task<ItemTypesListResponse> GetAllItemTypesAsync()
         {
+            var itemTypes = await _getAllItemTypeQuery.GetAllAsync();
             return new ItemTypesListResponse
             {
-                ItemTypes = _itemTypes
-                    .Select(x => new ItemTypeListItem
-                    {
-                        Id = x.Id,
-                        Name = x.Name,
-                    })
-                    .ToList()
+                ItemTypes = itemTypes.Select(x => new ItemTypeListItem()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                }).ToList()
             };
         }
 
@@ -45,17 +56,16 @@ namespace Api.Controllers
         [HttpPost]
         public async Task<CreateItemTypeResponse> CreatItemTypeAsync([Required][FromBody] CreateItemTypeRequest createItemTypeRequest)
         {
-            var newItemType = new ItemType
+            var createItemTypeCommandParams = new CreateItemTypeCommandParams
             {
-                Id = _nextItemTypeId++,
                 Name = createItemTypeRequest.Name
             };
 
-            _itemTypes.Add(newItemType);
+            var newItemTypeId = await _createItemTypeCommand.CreateAsync(createItemTypeCommandParams);
 
             return new CreateItemTypeResponse()
             {
-                NewItemTypeId = newItemType.Id
+                NewItemTypeId = newItemTypeId
             };
         }
 
@@ -66,11 +76,9 @@ namespace Api.Controllers
         [HttpDelete("{itemTypeId}/hard-delete")]
         public async Task<object> HardDeleteItemType([Required][FromRoute] long itemTypeId)
         {
-            _itemTypes = _itemTypes
-                .Where(x => x.Id != itemTypeId)
-                .ToList();
-
+            await _deleteItemTypeCommand.DeleteAsync(itemTypeId);
             return new { isDeleted = true };
+
         }
 
     }
