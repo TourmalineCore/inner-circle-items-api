@@ -2,7 +2,7 @@
 
 ## Migrations
 
-### Adding a new migration
+### Adding a new migration  (Windows via Visual Studio)
 
 Run the database using doocker compose executing the following script
 ```bash
