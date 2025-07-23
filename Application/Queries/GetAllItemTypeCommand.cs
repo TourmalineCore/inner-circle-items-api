@@ -15,6 +15,7 @@ namespace Application.Queries
         public async Task<List<ItemType>> GetAllAsync()
         {
             var itemTypeList = await _context.ItemTypes
+                .AsNoTracking()
                 .ToListAsync();
             return itemTypeList;
         }
