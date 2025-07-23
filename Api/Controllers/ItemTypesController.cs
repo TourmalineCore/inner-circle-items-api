@@ -76,7 +76,7 @@ namespace Api.Controllers
         [HttpDelete("{itemTypeId}/hard-delete")]
         public async Task<object> HardDeleteItemType([Required][FromRoute] long itemTypeId)
         {
-            await _deleteItemTypeCommand.DeleteAsync(itemTypeId);
+            await _deleteItemTypeCommand.ExecuteAsync(itemTypeId);
 
             return new { 
                 isDeleted = true

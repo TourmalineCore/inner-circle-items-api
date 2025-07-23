@@ -1,8 +1,4 @@
-﻿
-using Core.Entities;
-using Microsoft.EntityFrameworkCore;
-
-namespace Application.Commands;
+﻿namespace Application.Commands;
 
 public class DeleteItemTypeCommand
 {
@@ -13,17 +9,16 @@ public class DeleteItemTypeCommand
         _context = context;
     }
 
-    public async Task DeleteAsync(long id)
+    public async Task ExecuteAsync(long id)
     {
-        var itemType = _context.ItemTypes
-            .Where(x => x.Id == id)
-            .SingleOrDefault();
+        var itemType = _context
+            .ItemTypes
+            .Single(x => x.Id == id);
+            
+        _context
+            .ItemTypes
+            .Remove(itemType);
 
-        if (itemType != null)
-        {
-            _context.ItemTypes.Remove(itemType);
-            await _context.SaveChangesAsync();
-        }
-        
+        await _context.SaveChangesAsync();
     }
 }
