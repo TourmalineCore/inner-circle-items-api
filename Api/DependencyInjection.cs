@@ -1,10 +1,9 @@
-﻿using Application.Commands;
+﻿using Application;
+using Application.Commands;
 using Application.Queries;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace Application;
+namespace Api;
 
 public static class DependencyInjection
 {
