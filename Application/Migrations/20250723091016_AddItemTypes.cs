@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Application.Migrations
 {
     /// <inheritdoc />
-    public partial class addItemTypesTable : Migration
+    public partial class AddItemTypes : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,12 +17,18 @@ namespace Application.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false)
+                    Name = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ItemTypes", x => x.Id);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ItemTypes_Name",
+                table: "ItemTypes",
+                column: "Name",
+                unique: true);
         }
 
         /// <inheritdoc />
