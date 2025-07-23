@@ -6,7 +6,6 @@ namespace Application.Commands;
 public class CreateItemTypeCommandParams
 {
     public string Name { get; set; }
-
 }
 
 public class CreateItemTypeCommand
@@ -18,12 +17,12 @@ public class CreateItemTypeCommand
         _context = context;
     }
 
-    public async Task<long> CreateAsync(CreateItemTypeCommandParams createItemTypeCommandParams)
+    public async Task<long> ExecuteAsync(CreateItemTypeCommandParams createItemTypeCommandParams)
     {
-
-        var itemType = new ItemType(
-            createItemTypeCommandParams.Name
-            );
+        var itemType = new ItemType
+        {
+            Name = createItemTypeCommandParams.Name
+        };
 
         await _context.ItemTypes.AddAsync(itemType);
         await _context.SaveChangesAsync();

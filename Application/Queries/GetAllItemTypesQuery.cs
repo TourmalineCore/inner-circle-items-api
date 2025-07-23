@@ -3,21 +3,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Queries
 {
-    public class GetAllItemTypeQuery
+    public class GetAllItemTypesQuery
     {
         private readonly AppDbContext _context;
 
-        public GetAllItemTypeQuery(AppDbContext context)
+        public GetAllItemTypesQuery(AppDbContext context)
         {
             _context = context;
         }
 
-        public async Task<List<ItemType>> GetAllAsync()
+        public Task<List<ItemType>> GetAsync()
         {
-            var itemTypeList = await _context.ItemTypes
+            return _context
+                .ItemTypes
                 .AsNoTracking()
                 .ToListAsync();
-            return itemTypeList;
         }
     }
 }

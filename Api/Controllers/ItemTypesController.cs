@@ -2,7 +2,6 @@ using Api.Requests;
 using Api.Responses;
 using Application.Commands;
 using Application.Queries;
-using Core.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -16,12 +15,12 @@ namespace Api.Controllers
 
         private readonly CreateItemTypeCommand _createItemTypeCommand;
         private readonly DeleteItemTypeCommand _deleteItemTypeCommand;
-        private readonly GetAllItemTypeQuery _getAllItemTypeQuery;
+        private readonly GetAllItemTypesQuery _getAllItemTypeQuery;
 
         public ItemTypesController(ILogger<ItemTypesController> logger,
             CreateItemTypeCommand createItemTypeCommand,
             DeleteItemTypeCommand deleteItemTypeCommand,
-            GetAllItemTypeQuery getAllItemTypeQuery
+            GetAllItemTypesQuery getAllItemTypeQuery
             )
         {
             _createItemTypeCommand = createItemTypeCommand;
@@ -36,14 +35,17 @@ namespace Api.Controllers
         [HttpGet]
         public async Task<ItemTypesListResponse> GetAllItemTypesAsync()
         {
-            var itemTypes = await _getAllItemTypeQuery.GetAllAsync();
+            var itemTypes = await _getAllItemTypeQuery.GetAsync();
+
             return new ItemTypesListResponse
             {
-                ItemTypes = itemTypes.Select(x => new ItemTypeListItem()
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                }).ToList()
+                ItemTypes = itemTypes
+                    .Select(x => new ItemTypeListItem
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                    })
+                    .ToList()
             };
         }
 
@@ -59,7 +61,7 @@ namespace Api.Controllers
                 Name = createItemTypeRequest.Name
             };
 
-            var newItemTypeId = await _createItemTypeCommand.CreateAsync(createItemTypeCommandParams);
+            var newItemTypeId = await _createItemTypeCommand.ExecuteAsync(createItemTypeCommandParams);
 
             return new CreateItemTypeResponse()
             {
@@ -75,9 +77,10 @@ namespace Api.Controllers
         public async Task<object> HardDeleteItemType([Required][FromRoute] long itemTypeId)
         {
             await _deleteItemTypeCommand.DeleteAsync(itemTypeId);
-            return new { isDeleted = true };
 
+            return new { 
+                isDeleted = true
+            };
         }
-
     }
 }
