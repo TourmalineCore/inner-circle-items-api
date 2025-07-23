@@ -18,7 +18,6 @@ namespace Api
 
             builder.Services.AddApplication(configuration);
 
-
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

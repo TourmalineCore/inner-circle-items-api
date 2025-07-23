@@ -17,7 +17,8 @@ namespace Api.Controllers
         private readonly DeleteItemTypeCommand _deleteItemTypeCommand;
         private readonly GetAllItemTypesQuery _getAllItemTypeQuery;
 
-        public ItemTypesController(ILogger<ItemTypesController> logger,
+        public ItemTypesController(
+            ILogger<ItemTypesController> logger,
             CreateItemTypeCommand createItemTypeCommand,
             DeleteItemTypeCommand deleteItemTypeCommand,
             GetAllItemTypesQuery getAllItemTypeQuery
