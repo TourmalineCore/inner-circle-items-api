@@ -41,6 +41,20 @@ services:
       - ASPNETCORE_ENVIRONMENT=MockForPullRequest
       - ASPNETCORE_HTTP_PORTS=80
 
+  inner-circle-items-mock-server:
+    container_name: 'inner-circle-items-mock-server'
+    profiles: ['MockForPullRequest']
+    image: mockserver/mockserver:5.15.0
+    command: -logLevel INFO
+    ports:
+      - 1080:1080
+    volumes:
+      - ./initializer.json:/config/initializer.json
+    environment:
+      MOCKSERVER_INITIALIZATION_JSON_PATH: /config/initializer.json
+    networks:
+      - inner-circle-items-network
+
   inner-circle-items-karate-tests:
     container_name: 'inner-circle-items-karate-tests'
     profiles: ['MockForPullRequest']
@@ -49,10 +63,12 @@ services:
       context: .
     depends_on:
       - inner-circle-items-api-for-e2e
+      - inner-circle-items-mock-server
     command: ["karate", "/karate"]
     volumes:
       - .:/karate
     environment:
+      AUTH_API_ROOT_URL: "http://inner-circle-items-mock-server:1080"
       API_ROOT_URL: "http://inner-circle-items-api-for-e2e"
       SHOULD_USE_FAKE_EXTERNAL_DEPENDENCIES: "true"
     networks:
