@@ -16,7 +16,6 @@ Scenario: CRUD operations test flow
     # Authentication
     Given url authApiRootUrl
     And path '/auth/login'
-    And print jsUtils().getEnvVariable('AUTH_PASSWORD_WITHOUT_PERMS')
     And request
     """
     {
@@ -32,16 +31,8 @@ Scenario: CRUD operations test flow
     * configure headers = jsUtils().getAuthHeaders(accessToken)
 
     # Step 1: Try to create a new item type
-    * def randomName = '[API-E2E]-Test-item-type-' + Math.random()
-    
     Given url apiRootUrl
     Given path 'item-types'
-    And request
-    """
-    {
-        "name": "#(randomName)"
-    }
-    """
     When method POST
     Then status 403
 
@@ -53,7 +44,7 @@ Scenario: CRUD operations test flow
 
 
     # Cleanup: Try to delete the item type (hard delete)
-    Given path 'item-types', 1, 'hard-delete'
+    Given path 'item-types', 100500, 'hard-delete'
     When method DELETE
     Then status 403
 
