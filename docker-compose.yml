@@ -68,8 +68,8 @@ services:
     volumes:
       - .:/karate
     environment:
-      AUTH_LOGIN: "login-with-perms"
-      AUTH_PASSWORD: "password-with-perms"
+      AUTH_LOGIN: "login-with-permissions"
+      AUTH_PASSWORD: "password-with-permissions"
       AUTH_API_ROOT_URL: "http://inner-circle-items-mock-server:1080"
       API_ROOT_URL: "http://inner-circle-items-api-for-e2e"
       SHOULD_USE_FAKE_EXTERNAL_DEPENDENCIES: "true"

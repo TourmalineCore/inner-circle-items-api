@@ -4,8 +4,8 @@
         "method": "POST",
         "path": "/auth/login",
         "body": {
-          "login" : "login-with-perms",
-          "password": "password-with-perms"
+          "login" : "login-with-permissions",
+          "password": "password-with-permissions"
         }
       },
         "httpResponse": {
