@@ -4,43 +4,17 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Application.Mappings;
 
-public class ItemMapping : IEntityTypeConfiguration<Item>
+public class ItemTypeMapping : IEntityTypeConfiguration<ItemType>
 {
-    public void Configure(EntityTypeBuilder<Item> builder)
+    public void Configure(EntityTypeBuilder<ItemType> builder)
     {
-
         builder
             .Property(e => e.Name)
             .IsRequired()
-            .HasMaxLength(256);
+            .HasMaxLength(128);
 
         builder
             .HasIndex(e => e.Name)
             .IsUnique();
-
-        builder.
-            Property(e => e.SerialNumber);
-
-        builder
-            .Property(e => e.ItemTypeId)
-            .IsRequired();
-
-        builder
-            .Property(e => e.Price)
-            .IsRequired();
-
-        builder
-            .Property(e => e.PurchaseDate)
-            .IsRequired();
-
-        builder
-            .Property(e => e.Description);
-
-        builder
-            .Property(e => e.HolderId);
-
-        builder
-            .Property(e => e.IsDeleted);
-
     }
 }
