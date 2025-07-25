@@ -43,9 +43,6 @@ public class ItemMapping : IEntityTypeConfiguration<Item>
             .Property(e => e.IsDeleted);
 
         builder
-            .Property(e => e.isRemoved);
-
-        builder
             .Property(e => e.Status);
 
     }
