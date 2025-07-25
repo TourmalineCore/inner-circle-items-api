@@ -1,0 +1,31 @@
+﻿namespace Core.Entities
+{
+    public class Item
+    {
+
+        public Item()
+        {
+        }
+
+        public long Id { get; set; }
+
+        public string Name { get; set; }
+
+        public string SerialNumber { get; set; }
+
+        public long ItemTypeId { get; set; }
+
+        public double Price { get; set; }
+
+        public DateOnly PurchaseDate { get; set; }
+
+        public string Description { get; set; }
+
+        public long HolderId { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        public Status Status { get; set; }
+
+    }
+}
