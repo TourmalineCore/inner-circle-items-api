@@ -28,6 +28,8 @@
 
         public List<BrokenItemRecord> BrokenItemRecords { get; set; }
 
+        public DelistedItemRecord DelistedItemRecord { get; set; }
+
         public Status Status { get; set; } = Status.ReadyToUse;
 
     }
