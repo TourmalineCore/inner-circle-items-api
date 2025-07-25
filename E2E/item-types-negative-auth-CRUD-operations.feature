@@ -10,8 +10,8 @@ Scenario: CRUD operations test flow
     * def jsUtils = read('../jsUtils.js')
     * def authApiRootUrl = jsUtils().getEnvVariable('AUTH_API_ROOT_URL')
     * def apiRootUrl = jsUtils().getEnvVariable('API_ROOT_URL')
-    * def authLogin = jsUtils().getEnvVariable('AUTH_LOGIN')
-    * def authPassword = jsUtils().getEnvVariable('AUTH_PASSWORD')
+    * def authLogin = jsUtils().getEnvVariable('AUTH_LOGIN_WITHOUT_PERMISSIONS')
+    * def authPassword = jsUtils().getEnvVariable('AUTH_PASSWORD_WITHOUT_PERMISSIONS')
     
     # Authentication
     Given url authApiRootUrl
@@ -19,8 +19,8 @@ Scenario: CRUD operations test flow
     And request
     """
     {
-        "login": #(authLogin),
-        "password": #(authPassword)
+        "login": "#(authLogin)",
+        "password": "#(authPassword)"
     }
     """
     And method POST
@@ -30,36 +30,17 @@ Scenario: CRUD operations test flow
 
     * configure headers = jsUtils().getAuthHeaders(accessToken)
 
-    # Step 1: Create a new item type
-    * def randomName = '[API-E2E]-Test-item-type-' + Math.random()
-    
     Given url apiRootUrl
     Given path 'item-types'
-    And request
-    """
-    {
-        "name": "#(randomName)"
-    }
-    """
     When method POST
-    Then status 200
+    Then status 403
 
-    * def newItemTypeId = response.newItemTypeId
-
-    # Step 2: Verify that item type is in the list with the id and generated name
     Given url apiRootUrl
     Given path 'item-types'
     When method GET
-    And match response.itemTypes contains
-    """
-    {
-        "id": "#(newItemTypeId)",
-        "name": "#(randomName)"
-    }
-    """
+    Then status 403
 
-    # Cleanup: Delete the item type (hard delete)
-    Given path 'item-types', newItemTypeId, 'hard-delete'
+    Given path 'item-types', 100500, 'hard-delete'
     When method DELETE
-    Then status 200
-    And match response == { isDeleted: true }
+    Then status 403
+
