@@ -14,6 +14,7 @@
         public string? SerialNumber { get; set; }
 
         public long ItemTypeId { get; set; }
+        public ItemType ItemType { get; set; }
 
         public double Price { get; set; }
 
@@ -25,7 +26,6 @@
 
         public bool IsDeleted { get; set; } = false;
 
-        public bool isRemoved { get; set; } = false;
         public List<BrokenItemRecord> BrokenItemRecords { get; set; }
 
         public Status Status { get; set; } = Status.ReadyToUse;
