@@ -4,10 +4,11 @@
 
 ### Adding a new migration  (Windows via Visual Studio)
 
-Run the database using doocker compose executing the following script
+Run the database using doocker compose executing the following script (don't close the terminal unless you want to stop the containers)
 ```bash
-docker compose --profile db-only up -d
+docker compose --profile db-only up --build
 ```
+>Note: `--build` gurantees that we run the latest code after re-applying the script
 
 After making changes to the model and AppDbContext open Tools -> NuGet Package Manager -> Package Manager Console
 
