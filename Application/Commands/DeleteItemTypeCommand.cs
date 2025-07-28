@@ -9,11 +9,11 @@ public class DeleteItemTypeCommand
         _context = context;
     }
 
-    public async Task ExecuteAsync(long id)
+    public async Task ExecuteAsync(long id, long tenantId)
     {
         var itemType = _context
             .ItemTypes
-            .Single(x => x.Id == id);
+            .Single(x => x.Id == id && x.TenantId == tenantId);
             
         _context
             .ItemTypes

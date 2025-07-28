@@ -12,10 +12,11 @@ namespace Application.Queries
             _context = context;
         }
 
-        public Task<List<ItemType>> GetAsync()
+        public Task<List<ItemType>> GetAsync(long tenantId)
         {
             return _context
                 .ItemTypes
+                .Where(x => x.TenantId == tenantId)
                 .AsNoTracking()
                 .ToListAsync();
         }

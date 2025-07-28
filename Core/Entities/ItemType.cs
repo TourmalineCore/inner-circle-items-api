@@ -7,6 +7,8 @@
         }
 
         public long Id { get; set; }
+        
+        public long TenantId { get; set; }
 
         public string Name { get; set; }
 

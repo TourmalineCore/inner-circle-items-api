@@ -40,7 +40,7 @@ namespace Api.Controllers
         [HttpGet]
         public async Task<ItemTypesListResponse> GetAllItemTypesAsync()
         {
-            var itemTypes = await _getAllItemTypeQuery.GetAsync();
+            var itemTypes = await _getAllItemTypeQuery.GetAsync(User.GetTenantId());
 
             return new ItemTypesListResponse
             {
@@ -67,7 +67,7 @@ namespace Api.Controllers
                 Name = createItemTypeRequest.Name
             };
 
-            var newItemTypeId = await _createItemTypeCommand.ExecuteAsync(createItemTypeCommandParams);
+            var newItemTypeId = await _createItemTypeCommand.ExecuteAsync(createItemTypeCommandParams, User.GetTenantId());
 
             return new CreateItemTypeResponse()
             {
@@ -83,7 +83,7 @@ namespace Api.Controllers
         [HttpDelete("{itemTypeId}/hard-delete")]
         public async Task<object> HardDeleteItemType([Required][FromRoute] long itemTypeId)
         {
-            await _deleteItemTypeCommand.ExecuteAsync(itemTypeId);
+            await _deleteItemTypeCommand.ExecuteAsync(itemTypeId, User.GetTenantId());
 
             return new { 
                 isDeleted = true
