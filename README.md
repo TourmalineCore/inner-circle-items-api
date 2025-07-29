@@ -44,39 +44,19 @@ java -jar /karate.jar .
 ```mermaid
 erDiagram
     ItemTypes ||--o{ Item : "1-to-many"
-    Status ||--o{ Item : "1-to-many"
-    Item ||--|| DelistedItemRecord : "1-to-1"
-    Item ||--o{ BrokenItemRecord : "1-to-many"
     
     Item {
         long Id PK
         string Name
-        string SerialNumber
+        string SerialNumber "nullable"
         long ItemTypeId FK
-        double Price
-        DateOnly PurchaseDate
-        long HolderId FK
-        Status Status FK
+        decimal Price
+        DateOnly PurchaseDate "nullable (possibly will be changed to NodaTime)"
+        long HolderId FK "nullable"
         bool IsDeleted
     }
     ItemTypes {
         long Id
         string Name
-    }
-    BrokenItemRecord {
-        long Id PK
-        long ItemId FK
-        string Description
-        DateOnly DateOfBroke
-        DateOnly RepairDate
-        bool IsFinished
-    }
-    DelistedItemRecord {
-        long ItemId PK
-        string Description
-        DateOnly Date
-    }
-    Status {
-        Status Status
     }
 ```
