@@ -70,6 +70,8 @@ services:
     environment:
       AUTH_LOGIN: "login-with-permissions"
       AUTH_PASSWORD: "password-with-permissions"
+      AUTH_LOGIN_SECOND_TENANT: "login-second-tenant"
+      AUTH_PASSWORD_SECOND_TENANT: "password-second-tenant"
       AUTH_API_ROOT_URL: "http://inner-circle-items-mock-server:1080"
       API_ROOT_URL: "http://inner-circle-items-api-for-e2e"
       SHOULD_USE_FAKE_EXTERNAL_DEPENDENCIES: "true"
