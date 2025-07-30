@@ -47,13 +47,13 @@ erDiagram
     
     Item {
         long Id PK
+        long TenantId
         string Name
         string SerialNumber "nullable"
         long ItemTypeId FK
         decimal Price
         DateOnly PurchaseDate "nullable (possibly will be changed to NodaTime)"
         long HolderId FK "nullable"
-        bool IsDeleted
     }
     ItemTypes {
         long Id
