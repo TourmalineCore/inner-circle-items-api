@@ -14,8 +14,7 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"karatelabs.karate",
-				"bierner.markdown-mermaid"
+				"karatelabs.karate"
 			]
 		}
 	},
