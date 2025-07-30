@@ -12,6 +12,11 @@ docker compose --profile db-only up --build
 
 After making changes to the model and AppDbContext open Tools -> NuGet Package Manager -> Package Manager Console
 
+If you want to use 'Update-Database' commands to apply migrations to the database please execute following command in Package Manager Console every time you open the solution.
+```bash
+$env:ASPNETCORE_ENVIRONMENT = 'MockForDevelopment';
+```
+
 Execute the following with your migration name
 ```bash
 Add-Migration <YOUR_MIGRATION_NAME> -Project Application
