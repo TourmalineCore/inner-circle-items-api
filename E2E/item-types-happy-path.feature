@@ -19,8 +19,8 @@ Scenario: Happy Path
     And request
     """
     {
-        "login": #(authLogin),
-        "password": #(authPassword)
+        "login": "#(authLogin)",
+        "password": "#(authPassword)"
     }
     """
     And method POST
