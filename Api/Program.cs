@@ -20,7 +20,6 @@ namespace Api
 
             builder.Services.AddApplication(configuration);
 
-
             var authenticationOptions = configuration.GetSection(nameof(AuthenticationOptions)).Get<AuthenticationOptions>();
             builder.Services.AddJwtAuthentication(authenticationOptions).WithUserClaimsProvider<UserClaimsProvider>(UserClaimsProvider.PermissionClaimType);
 

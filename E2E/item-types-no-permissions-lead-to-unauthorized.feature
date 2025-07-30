@@ -1,11 +1,11 @@
-Feature: Test Flow
+Feature: Item Types
 # https://github.com/karatelabs/karate/issues/1191
 # https://github.com/karatelabs/karate?tab=readme-ov-file#karate-fork
 
 Background:
 * header Content-Type = 'application/json'
 
-Scenario: CRUD operations test flow
+Scenario: No Permissions Lead to Unauthorized for All Endpoints
 
     * def jsUtils = read('../jsUtils.js')
     * def authApiRootUrl = jsUtils().getEnvVariable('AUTH_API_ROOT_URL')
@@ -43,4 +43,3 @@ Scenario: CRUD operations test flow
     Given path 'item-types', 100500, 'hard-delete'
     When method DELETE
     Then status 403
-

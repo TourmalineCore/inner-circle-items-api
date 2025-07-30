@@ -1,56 +1,56 @@
 [
-    {
-      "httpRequest": {
-        "method": "POST",
-        "path": "/auth/login",
-        "body": {
-          "login" : "login-with-permissions",
-          "password": "password-with-permissions"
-        }
-      },
-        "httpResponse": {
-            "statusCode": 200,
-            "body": "{\"accessToken\": { \"value\": \"eyJuYW1lSWRlbnRpZmllciI6Im1haWxAbWFpbC5ydSIsImNvcnBvcmF0ZUVtYWlsIjoibWFpbEBtYWlsLnJ1IiwidGVuYW50SWQiOiIxIiwiYWNjb3VudElkIjoiMyIsImVtcGxveWVlSWQiOiIyIiwicGVybWlzc2lvbnMiOlsiSXNJdGVtVHlwZXNIYXJkRGVsZXRlQWxsb3dlZCIsIkNhbk1hbmFnZUl0ZW1zVHlwZXMiLCJDYW5WaWV3SXRlbXNUeXBlcyJdfQ==\" }}",
-            "headers": {
-                "Content-Type": [ "application/json" ]
-              }
-            
-        }
+  {
+    "httpRequest": {
+      "method": "POST",
+      "path": "/auth/login",
+      "body": {
+        "login": "first-tenant-login-with-all-permissions"
+      }
     },
-    {
-      "httpRequest": {
-        "method": "POST",
-        "path": "/auth/login",
-        "body": {
-          "login" : null,
-          "password": null
-        }
-      },
-        "httpResponse": {
-            "statusCode": 200,
-            "body": "{\"accessToken\": { \"value\": \"eyJuYW1lSWRlbnRpZmllciI6Im1haWxAbWFpbC5ydSIsImNvcnBvcmF0ZUVtYWlsIjoibWFpbEBtYWlsLnJ1IiwidGVuYW50SWQiOiIxIiwiYWNjb3VudElkIjoiMyIsImVtcGxveWVlSWQiOiIyIiwicGVybWlzc2lvbnMiOltdfQ==\" }}",
-            "headers": {
-                "Content-Type": [ "application/json" ]
-              }
-            
-        }
-    },
-    {
-      "httpRequest": {
-        "method": "POST",
-        "path": "/auth/login",
-        "body": {
-          "login" : "login-second-tenant",
-          "password": "password-second-tenant"
-        }
-      },
-        "httpResponse": {
-            "statusCode": 200,
-            "body": "{\"accessToken\": { \"value\": \"eyJuYW1lSWRlbnRpZmllciI6Im1haWxAbWFpbC5ydSIsImNvcnBvcmF0ZUVtYWlsIjoibWFpbEBtYWlsLnJ1IiwidGVuYW50SWQiOiIyIiwiYWNjb3VudElkIjoiMyIsImVtcGxveWVlSWQiOiIyIiwicGVybWlzc2lvbnMiOlsiSXNJdGVtVHlwZXNIYXJkRGVsZXRlQWxsb3dlZCIsIkNhbk1hbmFnZUl0ZW1zVHlwZXMiLCJDYW5WaWV3SXRlbXNUeXBlcyJdfQ==\" }}",
-            "headers": {
-                "Content-Type": [ "application/json" ]
-              }
-            
-        }
+    "httpResponse": {
+      "statusCode": 200,
+      "body": "{\"accessToken\": { \"value\": \"eyJuYW1lSWRlbnRpZmllciI6Im1haWxAbWFpbC5ydSIsImNvcnBvcmF0ZUVtYWlsIjoibWFpbEBtYWlsLnJ1IiwidGVuYW50SWQiOiIxIiwiYWNjb3VudElkIjoiMyIsImVtcGxveWVlSWQiOiIyIiwicGVybWlzc2lvbnMiOlsiQVVUT19URVNUU19PTkxZX0lzSXRlbVR5cGVzSGFyZERlbGV0ZUFsbG93ZWQiLCJDYW5NYW5hZ2VJdGVtc1R5cGVzIiwiQ2FuVmlld0l0ZW1zVHlwZXMiXX0=\" }}",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      }
     }
+  },
+  {
+    "httpRequest": {
+      "method": "POST",
+      "path": "/auth/login",
+      "body": {
+        "login": "second-tenant-login-with-all-permissions"
+      }
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "body": "{\"accessToken\": { \"value\": \"eyJuYW1lSWRlbnRpZmllciI6Im1haWwyQG1haWwucnUiLCJjb3Jwb3JhdGVFbWFpbCI6Im1haWwyQG1haWwucnUiLCJ0ZW5hbnRJZCI6IjIiLCJhY2NvdW50SWQiOiI0IiwiZW1wbG95ZWVJZCI6IjMiLCJwZXJtaXNzaW9ucyI6WyJBVVRPX1RFU1RTX09OTFlfSXNJdGVtVHlwZXNIYXJkRGVsZXRlQWxsb3dlZCIsIkNhbk1hbmFnZUl0ZW1zVHlwZXMiLCJDYW5WaWV3SXRlbXNUeXBlcyJdfQ==\" }}",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      }
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "POST",
+      "path": "/auth/login",
+      "body": {
+        "login": "first-tenant-login-without-permissions"
+      }
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "body": "{\"accessToken\": { \"value\": \"eyJuYW1lSWRlbnRpZmllciI6Im1haWwwQG1haWwucnUiLCJjb3Jwb3JhdGVFbWFpbCI6Im1haWwwQG1haWwucnUiLCJ0ZW5hbnRJZCI6IjEiLCJhY2NvdW50SWQiOiIwIiwiZW1wbG95ZWVJZCI6Ijc3NyIsInBlcm1pc3Npb25zIjpbXX0=\" }}",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      }
+    }
+  }
 ]

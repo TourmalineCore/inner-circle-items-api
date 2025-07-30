@@ -68,10 +68,12 @@ services:
     volumes:
       - .:/karate
     environment:
-      AUTH_LOGIN: "login-with-permissions"
-      AUTH_PASSWORD: "password-with-permissions"
-      AUTH_LOGIN_SECOND_TENANT: "login-second-tenant"
-      AUTH_PASSWORD_SECOND_TENANT: "password-second-tenant"
+      AUTH_FIRST_TENANT_LOGIN_WITH_ALL_PERMISSIONS: "first-tenant-login-with-all-permissions"
+      AUTH_FIRST_TENANT_PASSWORD_WITH_ALL_PERMISSIONS: "first-tenant-password-with-all-permissions"
+      AUTH_SECOND_TENANT_LOGIN_WITH_ALL_PERMISSIONS: "second-tenant-login-with-all-permissions"
+      AUTH_SECOND_TENANT_PASSWORD_WITH_ALL_PERMISSIONS: "second-tenant-password-with-all-permissions"
+      AUTH_LOGIN_WITHOUT_PERMISSIONS: "first-tenant-login-without-permissions"
+      AUTH_PASSWORD_WITHOUT_PERMISSIONS: "first-tenant-password-without-permissions"
       AUTH_API_ROOT_URL: "http://inner-circle-items-mock-server:1080"
       API_ROOT_URL: "http://inner-circle-items-api-for-e2e"
       SHOULD_USE_FAKE_EXTERNAL_DEPENDENCIES: "true"
