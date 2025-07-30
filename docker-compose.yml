@@ -70,7 +70,7 @@ services:
     environment:
       AUTH_LOGIN_WITH_ALL_PERMISSIONS: "login-with-permissions"
       AUTH_PASSWORD_WITH_ALL_PERMISSIONS: "password-with-permissions"
-      AUTH_LOGIN_WITHOUT_PERMISSIONS: "login-with-permissions"
+      AUTH_LOGIN_WITHOUT_PERMISSIONS: "login-without-permissions"
       AUTH_PASSWORD_WITHOUT_PERMISSIONS: "password-without-permissions"
       AUTH_API_ROOT_URL: "http://inner-circle-items-mock-server:1080"
       API_ROOT_URL: "http://inner-circle-items-api-for-e2e"
