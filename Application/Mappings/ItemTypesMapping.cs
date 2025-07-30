@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Application.Mappings;
 
-public class ItemTypeMapping : IEntityTypeConfiguration<ItemType>
+public class ItemTypesMapping : IEntityTypeConfiguration<ItemType>
 {
     public void Configure(EntityTypeBuilder<ItemType> builder)
     {

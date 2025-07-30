@@ -59,4 +59,3 @@ erDiagram
         long Id
         string Name
     }
-```
