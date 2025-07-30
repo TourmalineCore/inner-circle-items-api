@@ -7,7 +7,7 @@ namespace Api
     {
         public const string PermissionClaimType = "permissions";
 
-        public const string IsItemTypesHardDeleteAllowed = "IsItemTypesHardDeleteAllowed";
+        public const string AUTO_TESTS_ONLY_IsItemTypesHardDeleteAllowed = "AUTO_TESTS_ONLY_IsItemTypesHardDeleteAllowed";
         public const string CanManageItemsTypes = "CanManageItemsTypes";
         public const string CanViewItemsTypes = "CanViewItemsTypes";
 
