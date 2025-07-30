@@ -1,38 +1,38 @@
 [
-    {
-      "httpRequest": {
-        "method": "POST",
-        "path": "/auth/login",
-        "body": {
-          "login" : "login-with-permissions",
-          "password": "password-with-permissions"
-        }
-      },
-        "httpResponse": {
-            "statusCode": 200,
-            "body": "{\"accessToken\": { \"value\": \"eyJuYW1lSWRlbnRpZmllciI6Im1haWxAbWFpbC5ydSIsImNvcnBvcmF0ZUVtYWlsIjoibWFpbEBtYWlsLnJ1IiwidGVuYW50SWQiOiIxIiwiYWNjb3VudElkIjoiMyIsImVtcGxveWVlSWQiOiIyIiwicGVybWlzc2lvbnMiOlsiSXNJdGVtVHlwZXNIYXJkRGVsZXRlQWxsb3dlZCIsIkNhbk1hbmFnZUl0ZW1zVHlwZXMiLCJDYW5WaWV3SXRlbXNUeXBlcyJdfQ==\" }}",
-            "headers": {
-                "Content-Type": [ "application/json" ]
-              }
-            
-        }
+  {
+    "httpRequest": {
+      "method": "POST",
+      "path": "/auth/login",
+      "body": {
+        "login": "login-with-permissions"
+      }
     },
-        {
-      "httpRequest": {
-        "method": "POST",
-        "path": "/auth/login",
-        "body": {
-          "login" : null,
-          "password": null
-        }
-      },
-        "httpResponse": {
-            "statusCode": 200,
-            "body": "{\"accessToken\": { \"value\": \"eyJuYW1lSWRlbnRpZmllciI6Im1haWxAbWFpbC5ydSIsImNvcnBvcmF0ZUVtYWlsIjoibWFpbEBtYWlsLnJ1IiwidGVuYW50SWQiOiIxIiwiYWNjb3VudElkIjoiMyIsImVtcGxveWVlSWQiOiIyIiwicGVybWlzc2lvbnMiOltdfQ==\" }}",
-            "headers": {
-                "Content-Type": [ "application/json" ]
-              }
-            
-        }
+    "httpResponse": {
+      "statusCode": 200,
+      "body": "{\"accessToken\": { \"value\": \"eyJuYW1lSWRlbnRpZmllciI6Im1haWxAbWFpbC5ydSIsImNvcnBvcmF0ZUVtYWlsIjoibWFpbEBtYWlsLnJ1IiwidGVuYW50SWQiOiIxIiwiYWNjb3VudElkIjoiMyIsImVtcGxveWVlSWQiOiIyIiwicGVybWlzc2lvbnMiOlsiSXNJdGVtVHlwZXNIYXJkRGVsZXRlQWxsb3dlZCIsIkNhbk1hbmFnZUl0ZW1zVHlwZXMiLCJDYW5WaWV3SXRlbXNUeXBlcyJdfQ==\" }}",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      }
     }
+  },
+  {
+    "httpRequest": {
+      "method": "POST",
+      "path": "/auth/login",
+      "body": {
+        "login": "login-without-permissions"
+      }
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "body": "{\"accessToken\": { \"value\": \"eyJuYW1lSWRlbnRpZmllciI6Im1haWxAbWFpbC5ydSIsImNvcnBvcmF0ZUVtYWlsIjoibWFpbEBtYWlsLnJ1IiwidGVuYW50SWQiOiIxIiwiYWNjb3VudElkIjoiMyIsImVtcGxveWVlSWQiOiIyIiwicGVybWlzc2lvbnMiOltdfQ==\" }}",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      }
+    }
+  }
 ]

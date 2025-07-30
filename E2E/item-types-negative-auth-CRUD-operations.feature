@@ -43,4 +43,3 @@ Scenario: CRUD operations test flow
     Given path 'item-types', 100500, 'hard-delete'
     When method DELETE
     Then status 403
-
