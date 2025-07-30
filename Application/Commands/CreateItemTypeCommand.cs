@@ -17,10 +17,11 @@ public class CreateItemTypeCommand
         _context = context;
     }
 
-    public async Task<long> ExecuteAsync(CreateItemTypeCommandParams createItemTypeCommandParams)
+    public async Task<long> ExecuteAsync(CreateItemTypeCommandParams createItemTypeCommandParams, long tenantId)
     {
         var itemType = new ItemType
         {
+            TenantId = tenantId,
             Name = createItemTypeCommandParams.Name
         };
 

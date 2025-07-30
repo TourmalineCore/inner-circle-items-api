@@ -4,7 +4,7 @@
       "method": "POST",
       "path": "/auth/login",
       "body": {
-        "login": "login-with-permissions"
+        "login": "first-tenant-login-with-all-permissions"
       }
     },
     "httpResponse": {
@@ -22,12 +22,30 @@
       "method": "POST",
       "path": "/auth/login",
       "body": {
-        "login": "login-without-permissions"
+        "login": "second-tenant-login-with-all-permissions"
       }
     },
     "httpResponse": {
       "statusCode": 200,
-      "body": "{\"accessToken\": { \"value\": \"eyJuYW1lSWRlbnRpZmllciI6Im1haWxAbWFpbC5ydSIsImNvcnBvcmF0ZUVtYWlsIjoibWFpbEBtYWlsLnJ1IiwidGVuYW50SWQiOiIxIiwiYWNjb3VudElkIjoiMyIsImVtcGxveWVlSWQiOiIyIiwicGVybWlzc2lvbnMiOltdfQ==\" }}",
+      "body": "{\"accessToken\": { \"value\": \"eyJuYW1lSWRlbnRpZmllciI6Im1haWwyQG1haWwucnUiLCJjb3Jwb3JhdGVFbWFpbCI6Im1haWwyQG1haWwucnUiLCJ0ZW5hbnRJZCI6IjIiLCJhY2NvdW50SWQiOiI0IiwiZW1wbG95ZWVJZCI6IjMiLCJwZXJtaXNzaW9ucyI6WyJBVVRPX1RFU1RTX09OTFlfSXNJdGVtVHlwZXNIYXJkRGVsZXRlQWxsb3dlZCIsIkNhbk1hbmFnZUl0ZW1zVHlwZXMiLCJDYW5WaWV3SXRlbXNUeXBlcyJdfQ==\" }}",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      }
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "POST",
+      "path": "/auth/login",
+      "body": {
+        "login": "first-tenant-login-without-permissions"
+      }
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "body": "{\"accessToken\": { \"value\": \"eyJuYW1lSWRlbnRpZmllciI6Im1haWwwQG1haWwucnUiLCJjb3Jwb3JhdGVFbWFpbCI6Im1haWwwQG1haWwucnUiLCJ0ZW5hbnRJZCI6IjEiLCJhY2NvdW50SWQiOiIwIiwiZW1wbG95ZWVJZCI6Ijc3NyIsInBlcm1pc3Npb25zIjpbXX0=\" }}",
       "headers": {
         "Content-Type": [
           "application/json"
