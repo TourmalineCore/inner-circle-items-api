@@ -10,10 +10,10 @@ Scenario: CRUD operations test flow
     * def jsUtils = read('../jsUtils.js')
     * def authApiRootUrl = jsUtils().getEnvVariable('AUTH_API_ROOT_URL')
     * def apiRootUrl = jsUtils().getEnvVariable('API_ROOT_URL')
-    * def authLoginFirstTenant = jsUtils().getEnvVariable('AUTH_LOGIN')
-    * def authPasswordFirstTenant = jsUtils().getEnvVariable('AUTH_PASSWORD')
-    * def authLoginSecondTenant = jsUtils().getEnvVariable('AUTH_LOGIN_SECOND_TENANT') 
-    * def authPasswordSecondTenant = jsUtils().getEnvVariable('AUTH_PASSWORD_SECOND_TENANT')
+    * def authLoginFirstTenant = jsUtils().getEnvVariable('AUTH_FIRST_TENANT_LOGIN_WITH_ALL_PERMISSIONS')
+    * def authPasswordFirstTenant = jsUtils().getEnvVariable('AUTH_FIRST_TENANT_PASSWORD_WITH_ALL_PERMISSIONS')
+    * def authLoginSecondTenant = jsUtils().getEnvVariable('AUTH_SECOND_TENANT_LOGIN_WITH_ALL_PERMISSIONS') 
+    * def authPasswordSecondTenant = jsUtils().getEnvVariable('AUTH_SECOND_TENANT_PASSWORD_WITH_ALL_PERMISSIONS')
     
     # Authentication
     Given url authApiRootUrl
