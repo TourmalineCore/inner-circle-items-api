@@ -9,7 +9,7 @@
     },
     "httpResponse": {
       "statusCode": 200,
-      "body": "{\"accessToken\": { \"value\": \"eyJuYW1lSWRlbnRpZmllciI6Im1haWxAbWFpbC5ydSIsImNvcnBvcmF0ZUVtYWlsIjoibWFpbEBtYWlsLnJ1IiwidGVuYW50SWQiOiIxIiwiYWNjb3VudElkIjoiMyIsImVtcGxveWVlSWQiOiIyIiwicGVybWlzc2lvbnMiOlsiSXNJdGVtVHlwZXNIYXJkRGVsZXRlQWxsb3dlZCIsIkNhbk1hbmFnZUl0ZW1zVHlwZXMiLCJDYW5WaWV3SXRlbXNUeXBlcyJdfQ==\" }}",
+      "body": "{\"accessToken\": { \"value\": \"eyJuYW1lSWRlbnRpZmllciI6Im1haWxAbWFpbC5ydSIsImNvcnBvcmF0ZUVtYWlsIjoibWFpbEBtYWlsLnJ1IiwidGVuYW50SWQiOiIxIiwiYWNjb3VudElkIjoiMyIsImVtcGxveWVlSWQiOiIyIiwicGVybWlzc2lvbnMiOlsiQVVUT19URVNUU19PTkxZX0lzSXRlbVR5cGVzSGFyZERlbGV0ZUFsbG93ZWQiLCJDYW5NYW5hZ2VJdGVtc1R5cGVzIiwiQ2FuVmlld0l0ZW1zVHlwZXMiXX0=\" }}",
       "headers": {
         "Content-Type": [
           "application/json"
