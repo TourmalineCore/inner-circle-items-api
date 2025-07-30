@@ -5,7 +5,7 @@ Feature: Item Types
 Background:
 * header Content-Type = 'application/json'
 
-Scenario: CRUD operations against different tenants
+Scenario: Tenants Isolation
 
     * def jsUtils = read('../jsUtils.js')
     * def authApiRootUrl = jsUtils().getEnvVariable('AUTH_API_ROOT_URL')
@@ -28,9 +28,9 @@ Scenario: CRUD operations against different tenants
     And method POST
     Then status 200
 
-    * def accessTokenFirstTenant = karate.toMap(response.accessToken.value)
+    * def firstTenantAccessToken = karate.toMap(response.accessToken.value)
 
-    * configure headers = jsUtils().getAuthHeaders(accessTokenFirstTenant)
+    * configure headers = jsUtils().getAuthHeaders(firstTenantAccessToken)
 
     # Step 1: Create a new item type
     * def randomName = '[API-E2E]-Test-item-type-' + Math.random()
@@ -49,7 +49,6 @@ Scenario: CRUD operations against different tenants
     * def newItemTypeId = response.newItemTypeId
 
     # Authentication with other tenant
-
     Given url authApiRootUrl
     And path '/auth/login'
     And request
@@ -62,25 +61,23 @@ Scenario: CRUD operations against different tenants
     And method POST
     Then status 200
 
-    * def accessTokenSecondTenant = karate.toMap(response.accessToken.value)
+    * def secondTenantAccessToken = karate.toMap(response.accessToken.value)
 
-    * configure headers = jsUtils().getAuthHeaders(accessTokenSecondTenant)
+    * configure headers = jsUtils().getAuthHeaders(secondTenantAccessToken)
 
-
-    # Step 2: Try to get item-types generated with other tenant
-
+    # Step 2: Cannot get item-types generated within another Tenant
     Given url apiRootUrl
     Given path 'item-types'
     When method GET
     Then status 200
     And match response.itemTypes == []
 
-    # Step 3: Try to delete item type with other tenant
+    # Step 3: Cannot delete item type of another Tenant
     Given path 'item-types', newItemTypeId, 'hard-delete'
     When method DELETE
     Then status 500
 
-    * configure headers = jsUtils().getAuthHeaders(accessTokenFirstTenant)
+    * configure headers = jsUtils().getAuthHeaders(firstTenantAccessToken)
 
     # Cleanup: Delete the item type (hard delete)
     Given path 'item-types', newItemTypeId, 'hard-delete'
