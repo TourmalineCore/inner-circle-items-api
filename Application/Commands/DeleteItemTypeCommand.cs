@@ -1,4 +1,6 @@
-﻿namespace Application.Commands;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Application.Commands;
 
 public class DeleteItemTypeCommand
 {
@@ -11,9 +13,10 @@ public class DeleteItemTypeCommand
 
     public async Task ExecuteAsync(long id, long tenantId)
     {
-        var itemType = _context
+        var itemType = await _context
             .ItemTypes
-            .Single(x => x.Id == id && x.TenantId == tenantId);
+            .Where(x => x.TenantId == tenantId)
+            .SingleAsync(x => x.Id == id);
             
         _context
             .ItemTypes

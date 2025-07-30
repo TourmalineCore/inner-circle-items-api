@@ -16,8 +16,8 @@ namespace Application.Queries
         {
             return _context
                 .ItemTypes
-                .Where(x => x.TenantId == tenantId)
                 .AsNoTracking()
+                .Where(x => x.TenantId == tenantId)
                 .ToListAsync();
         }
     }
