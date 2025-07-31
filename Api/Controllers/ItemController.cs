@@ -48,6 +48,7 @@ namespace Api.Controllers
                             Name = x.ItemType.Name
                         },
                         Price = x.Price,
+                        Description = x.Description,
                         PurchaseDate = x.PurchaseDate,
                         HolderEmployee = (x.HolderId == null) ? null : new Employee {Id = x.HolderId}
                     })
@@ -66,18 +67,19 @@ namespace Api.Controllers
             [Required][FromBody] CreateItemRequest createItemRequest
         )
         {
-            var createCreateItemCommandParams = new CreateItemCommandParams
+            var CreateItemCommandParams = new CreateItemCommandParams
             {
                 Name = createItemRequest.Name,
                 SerialNumber = createItemRequest.SerialNumber,
                 ItemTypeId = createItemRequest.ItemTypeId,
                 Price = createItemRequest.Price,
+                Description = createItemRequest.Description,
                 PurchaseDate = createItemRequest.PurchaseDate,
                 HolderId = createItemRequest.HolderId
 
             };
 
-            var newCreateItemId = await createCreateItemCommand.ExecuteAsync(createCreateItemCommandParams, User.GetTenantId());
+            var newCreateItemId = await createCreateItemCommand.ExecuteAsync(CreateItemCommandParams, User.GetTenantId());
 
             return new CreateItemResponse()
             {

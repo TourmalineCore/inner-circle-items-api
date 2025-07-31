@@ -17,6 +17,9 @@ public class CreateItemRequest
     [Required]
     public decimal Price { get; set; }
 
+    [MaxLength(512)]
+    public string? Description { get; set; }
+
     public DateOnly? PurchaseDate { get; set; }
 
     public long? HolderId { get; set; }

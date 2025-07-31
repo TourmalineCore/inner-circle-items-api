@@ -35,6 +35,10 @@ public class ItemMaping : IEntityTypeConfiguration<Item>
             .HasForeignKey(x => x.ItemTypeId);
 
         builder
+            .Property(x => x.Description)
+            .HasMaxLength(512);
+
+        builder
             .Property(x => x.Price)
             .IsRequired();
     }
