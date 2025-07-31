@@ -31,14 +31,14 @@ Scenario: Happy Path
     * configure headers = jsUtils().getAuthHeaders(accessToken)
 
     # Step 1: Create a new item type
-    * def randomName = '[API-E2E]-Test-item-type-' + Math.random()
+    * def itemTypeRandomName = '[API-E2E]-Test-item-type-' + Math.random()
     
     Given url apiRootUrl
     Given path 'item-types'
     And request
     """
     {
-        "name": "#(randomName)"
+        "name": "#(itemTypeRandomName)"
     }
     """
     When method POST
@@ -47,18 +47,18 @@ Scenario: Happy Path
     * def newItemTypeId = response.newItemTypeId
 
     # Step 2: Create a new item
-    * def randomName = '[API-E2E]-Test-item' + Math.random()
+    * def itemRandomName = '[API-E2E]-Test-item' + Math.random()
     
     Given url apiRootUrl
     Given path 'items'
     And request
     """
     {
-        "name": "#(randomName)",
+        "name": "#(itemRandomName)",
         "serialNumber": "123456/654321",
         "itemTypeId": "#(newItemTypeId)",
         "price": 322,
-        "purchaseDate": null,
+        "purchaseDate": "2025-07-31",
         "HolderId": null
     }
     """
@@ -71,21 +71,24 @@ Scenario: Happy Path
     Given url apiRootUrl
     Given path 'items'
     When method GET
-    And match response.itemTypes contains
+    And match response.items contains
     """
     {
         "id": "#(newItemId)",
-        "name": "#(randomName)",
+        "name": "#(itemRandomName)",
         "serialNumber": "123456/654321",
-        "itemTypeId": "#(newItemTypeId)",
+        "itemType": {
+            "id": "#(newItemTypeId)",
+            "name": "#(itemTypeRandomName)"
+        },
         "price": 322,
-        "purchaseDate": null,
-        "HolderId": null
+        "purchaseDate": "2025-07-31",
+        "holderEmployee": null
     }
     """
 
-    # Cleanup: Delete the item (hard delete)
-    Given path 'items', newItemId, 'hard-delete'
+    # Cleanup: Delete the item type(hard delete)
+    Given path 'item-types', newItemTypeId, 'hard-delete'
     When method DELETE
     Then status 200
     And match response == { isDeleted: true }
