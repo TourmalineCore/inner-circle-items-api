@@ -52,6 +52,7 @@ erDiagram
         string SerialNumber "nullable"
         long ItemTypeId FK
         decimal Price
+        string Description
         DateOnly PurchaseDate "nullable (possibly will be changed to NodaTime)"
         long HolderId FK "nullable"
     }
