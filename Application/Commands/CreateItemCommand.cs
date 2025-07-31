@@ -1,7 +1,6 @@
 ﻿
 using Core.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Application.Commands;
 

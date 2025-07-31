@@ -1,6 +1,4 @@
-﻿using Core.Entities;
-
-namespace Api.Responses
+﻿namespace Api.Responses
 {
     public class ItemsListResponse
     {
