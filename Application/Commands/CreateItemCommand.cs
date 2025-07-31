@@ -15,9 +15,9 @@ public class CreateItemCommandParams
 
     public decimal Price { get; set; }
 
-    public DateOnly PurchaseDate { get; set; }
+    public DateOnly? PurchaseDate { get; set; }
 
-    public long HolderId { get; set; }
+    public long? HolderId { get; set; }
 }
 
 public class CreateItemCommand
