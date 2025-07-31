@@ -60,7 +60,7 @@ Scenario: Happy Path
         "price": 322,
         "description": "#(itemRandomName)",
         "purchaseDate": "2025-07-31",
-        "HolderId": null
+        "holderId": 555
     }
     """
     When method POST
