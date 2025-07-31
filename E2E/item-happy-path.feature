@@ -58,6 +58,7 @@ Scenario: Happy Path
         "serialNumber": "123456/654321",
         "itemTypeId": "#(newItemTypeId)",
         "price": 322,
+        "description": "#(itemRandomName)",
         "purchaseDate": "2025-07-31",
         "HolderId": null
     }
@@ -82,6 +83,7 @@ Scenario: Happy Path
             "name": "#(itemTypeRandomName)"
         },
         "price": 322,
+        "description": "#(itemRandomName)",
         "purchaseDate": "2025-07-31",
         "holderEmployee": null
     }
