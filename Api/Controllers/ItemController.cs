@@ -24,6 +24,38 @@ namespace Api.Controllers
         }
 
         /// <summary>
+        ///     Get all items
+        /// </summary>
+        [RequiresPermission(UserClaimsProvider.CanViewItems)]
+        [HttpGet]
+        public async Task<ItemsListResponse> GetAllItemsAsync(
+            [FromServices] GetAllItemsQuery getAllItemsQuery
+        )
+        {
+            var items = await getAllItemsQuery.GetAsync(User.GetTenantId());
+
+            return new ItemsListResponse
+            {
+                Items = items
+                    .Select(x => new ItemsListItem
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        SerialNumber = x.SerialNumber,
+                        ItemType = new ItemTypeListItem
+                        {
+                            Id = x.ItemType.Id,
+                            Name = x.ItemType.Name
+                        },
+                        Price = x.Price,
+                        PurchaseDate = x.PurchaseDate,
+                        HolderEmployee = (x.HolderId == null) ? null : new Employee {Id = x.HolderId}
+                    })
+                    .ToList()
+            };
+        }
+
+        /// <summary>
         ///     Adds item type
         /// </summary>
         /// <param name="createItemRequest"></param>
