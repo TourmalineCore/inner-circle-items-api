@@ -87,6 +87,12 @@ Scenario: Happy Path
     }
     """
 
+    # Cleanup: Delete the item(hard delete)
+    Given path 'items', newItemId, 'hard-delete'
+    When method DELETE
+    Then status 200
+    And match response == { isDeleted: true }
+
     # Cleanup: Delete the item type(hard delete)
     Given path 'item-types', newItemTypeId, 'hard-delete'
     When method DELETE
