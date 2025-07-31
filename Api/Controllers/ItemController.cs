@@ -85,5 +85,24 @@ namespace Api.Controllers
             };
         }
 
+        /// <summary>
+        ///     Deletes specific item
+        /// </summary>
+        /// <param name="itemId"></param>
+        [RequiresPermission(UserClaimsProvider.AUTO_TESTS_ONLY_IsItemHardDeleteAllowed)]
+        [HttpDelete("{itemId}/hard-delete")]
+        public async Task<object> HardDeleteItem(
+            [FromServices] DeleteItemCommand deleteItemCommand,
+            [Required][FromRoute] long itemId
+        )
+        {
+            await deleteItemCommand.ExecuteAsync(itemId, User.GetTenantId());
+
+            return new
+            {
+                isDeleted = true
+            };
+        }
+
     }
 }

@@ -21,5 +21,6 @@ public static class DependencyInjection
 
         services.AddTransient<CreateItemCommand>();
         services.AddTransient<GetAllItemsQuery>();
+        services.AddTransient<DeleteItemCommand>();
     }
 }
