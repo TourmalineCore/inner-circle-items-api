@@ -27,7 +27,7 @@ namespace Api.Controllers
         ///     Adds item type
         /// </summary>
         /// <param name="createItemRequest"></param>
-        [RequiresPermission(UserClaimsProvider.CanManageItemsTypes)]
+        [RequiresPermission(UserClaimsProvider.CanManageItems)]
         [HttpPost]
         public async Task<CreateItemResponse> CreatCreateItemAsync(
             [FromServices] CreateItemCommand createCreateItemCommand,
