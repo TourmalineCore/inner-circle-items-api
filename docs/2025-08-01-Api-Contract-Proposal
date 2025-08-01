@@ -1,0 +1,138 @@
+# CRUD operations
+All endpoints are closed by authorization.
+
+## Get all of existing item-types
+- **Url:** /api/item-types; 
+- **Type - GET**; 
+- **Headers:** Authorization - Bearer ***
+- **Permission:** CanViewItemsTypes
+
+**Response body:** 
+```json
+{
+  "itemTypes": [
+    {
+      "id": 1,
+      "name": "Пример типа предмета 1"
+    },
+    {
+      "id": 2,
+      "name": "Пример типа предмета 2"
+    }
+  ]
+}
+```
+
+## Create (or add) a item-type
+- **Url:** /api/item-types; 
+- **Type - POST**; 
+- **Headers:** Authorization - Bearer ***
+- **Permission:** CanManageItemsTypes
+
+**Request body:**
+```json
+{
+  "title": "Пример названия типа предмета", (required)
+}
+```
+
+**Response body:**
+```json
+{
+  "newItemTypeId": 1
+}
+```
+
+## Delete a item-type (hard)
+- **Url:** /api/item-types/{id}/hard-delete; 
+- **Type - DELETE**; 
+- **Headers:** Authorization - Bearer ***
+- **Permission:** AUTO_TESTS_ONLY_IsItemTypesHardDeleteAllowed
+
+**Response body:** 
+```json
+{
+  "isDeleted": true
+}
+```
+
+## Get all of existing items
+- **Url:** /api/items; 
+- **Type - GET**; 
+- **Headers:** Authorization - Bearer ***
+- **Permission:** CanViewItems
+
+**Response body:** 
+```json
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "Предмет 1",
+      "serialNumber": "1234567890",
+      "itemType": {
+        "id": 1,
+        "name": "Тип предмета 1"
+      },
+      "price": 123.45,
+      "purchaseDate": "2025-10-26",
+      "holderEmployee": {
+        "id": 123,
+        "fullName": "Иван Иванов"
+      },
+    },
+    {
+      "id": 2,
+      "name": "Пример 2",
+      "serialNumber": "1234567891",
+      "itemType": {
+        "id": 2,
+        "name": "Тип предмета 2"
+      },
+      "price": 123.45,
+      "purchaseDate": "2025-10-255",
+      "holderEmployee": {
+        "id": 123,
+        "fullName": "Иван Иванов"
+      },
+    },
+  ]
+}
+```
+
+## Create (or add) a item
+- **Url:** /api/items; 
+- **Type - POST**; 
+- **Headers:** Authorization - Bearer ***
+- **Permission:** CanManageItems
+
+**Request body:**
+```json
+{
+  "name": "Пример названия предмета", (required),
+  "serialNumber": "Пример серийного номера", (optional, default: ""),
+  "itemTypeId": 123, (required),
+  "price": 123.45, (required),
+  "purchaseDate": "2010-01-01", (optional, default:null),
+  "holderEmployeeId": 123, (optional, default:null)
+}
+```
+**Response body:**
+```json
+{
+  "newBookId": 1
+}
+```
+
+## Delete a item (hard)
+- **Url:** /api/items/{id}/hard-delete; 
+- **Type - DELETE**; 
+- **Headers:** Authorization - Bearer ***
+- **Permission:** AUTO_TESTS_ONLY_IsItemHardDeleteAllowed
+
+**Response body:** 
+```json
+{
+  "isDeleted": true
+}
+```
