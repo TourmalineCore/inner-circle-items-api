@@ -1,5 +1,7 @@
 using Application;
 using Microsoft.EntityFrameworkCore;
+using TourmalineCore.AspNetCore.JwtAuthentication.Core;
+using TourmalineCore.AspNetCore.JwtAuthentication.Core.Options;
 
 namespace Api
 {
@@ -17,6 +19,9 @@ namespace Api
             builder.Services.AddOpenApi();
 
             builder.Services.AddApplication(configuration);
+
+            var authenticationOptions = configuration.GetSection(nameof(AuthenticationOptions)).Get<AuthenticationOptions>();
+            builder.Services.AddJwtAuthentication(authenticationOptions).WithUserClaimsProvider<UserClaimsProvider>(UserClaimsProvider.PermissionClaimType);
 
             var app = builder.Build();
 
