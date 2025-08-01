@@ -38,8 +38,8 @@ Execute following command inside of the dev-container
 ```bash
 java -jar /karate.jar .
 ```
-## Databse Schema
 
+## Database Schema
 
 ### Database schema which covers every USM
 
@@ -55,7 +55,7 @@ Problems:
 * Afterwards, should we update contract and add required endpoints? 
 
 ```mermaid
-UserDiagram
+erDiagram
     ItemTypes ||--o{ Item : "1-to-many"
     Status ||--o{ Item : "1-to-many"
     Item ||--|| DelistedItemRecord : "1-to-1"
@@ -63,31 +63,35 @@ UserDiagram
     
     Item {
         long Id PK
-        string Name
-        string SerialNumber
-        long ItemTypeId FK
-        double Price
-        DateOnly PurchaseDate
-        long HolderId FK
-        Status Status FK
-        bool IsDeleted
+        long TenantId "required"
+        string Name "required"
+        string SerialNumber "nullable"
+        long ItemTypeId FK "required"
+        decimal Price "required"
+        string Description "nullable"
+        Date PurchaseDate "nullable"
+        long HolderId FK "nullable"
+        Status Status FK "required"
     }
     ItemTypes {
-        long Id
-        string Name
+        long Id PK
+        long TenantId "required"
+        string Name "required"
     }
     BrokenItemRecord {
         long Id PK
-        long ItemId FK
-        string Description
-        DateOnly DateOfBroke
-        DateOnly RepairDate
+        long TenantId "required"
+        long ItemId FK "required"
+        string Description "nullable"
+        DateOnly BreakDate "required"
+        DateOnly RepairDate "nullable"
         bool IsFinished
     }
     DelistedItemRecord {
-        long ItemId PK
-        string Description
-        DateOnly Date
+        long ItemId PK,FK
+        long TenantId "required"
+        DateOnly DelistDate "required"
+        string Description "nullable"
     }
     Status {
         Status Status
