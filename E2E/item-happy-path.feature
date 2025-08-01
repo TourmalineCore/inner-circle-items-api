@@ -85,7 +85,9 @@ Scenario: Happy Path
         "price": 322,
         "description": "#(itemRandomName)",
         "purchaseDate": "2025-07-31",
-        "holderEmployee": null
+        "holderEmployee": {
+            "id": 555
+        }
     }
     """
 
