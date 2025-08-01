@@ -1,4 +1,4 @@
-Feature: Item
+Feature: Items
 # https://github.com/karatelabs/karate/issues/1191
 # https://github.com/karatelabs/karate?tab=readme-ov-file#karate-fork
 
@@ -58,9 +58,9 @@ Scenario: Happy Path
         "serialNumber": "123456/654321",
         "itemTypeId": "#(newItemTypeId)",
         "price": 322,
-        "description": "#(itemRandomName)",
-        "purchaseDate": "2025-07-31",
-        "holderId": 555
+        "description": "some description",
+        "purchaseDate": "2025-07-01",
+        "holderEmployeeId": 555
     }
     """
     When method POST
@@ -83,8 +83,8 @@ Scenario: Happy Path
             "name": "#(itemTypeRandomName)"
         },
         "price": 322,
-        "description": "#(itemRandomName)",
-        "purchaseDate": "2025-07-31",
+        "description": "some description",
+        "purchaseDate": "2025-07-01",
         "holderEmployee": {
             "id": 555
         }

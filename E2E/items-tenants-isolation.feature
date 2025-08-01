@@ -1,4 +1,4 @@
-Feature: Item
+Feature: Items
 # https://github.com/karatelabs/karate/issues/1191
 # https://github.com/karatelabs/karate?tab=readme-ov-file#karate-fork
 
@@ -60,9 +60,9 @@ Scenario: Tenants Isolation
         "serialNumber": "123456/654321",
         "itemTypeId": "#(newItemTypeId)",
         "price": 322,
-        "description": "#(itemRandomName)",
-        "purchaseDate": "2025-07-31",
-        "holderId": 555
+        "description": "some description",
+        "purchaseDate": "2025-07-01",
+        "holderEmployeeId": 555
     }
     """
     When method POST
@@ -95,10 +95,10 @@ Scenario: Tenants Isolation
     And match response.items == []
 
     # Step 4: Cannot delete item type of another Tenant
-    Given path 'items', newItemTypeId, 'hard-delete'
+    Given path 'items', newItemId, 'hard-delete'
     When method DELETE
     Then status 500
-
+   
     * configure headers = jsUtils().getAuthHeaders(firstTenantAccessToken)
 
     # Cleanup: Delete the item type (hard delete)

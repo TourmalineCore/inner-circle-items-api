@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Application.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250731094549_AddDescriptionPropertyForItems")]
-    partial class AddDescriptionPropertyForItems
+    [Migration("20250801115655_AddItems")]
+    partial class AddItems
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,10 +34,11 @@ namespace Application.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasMaxLength(512)
                         .HasColumnType("character varying(512)");
 
-                    b.Property<long?>("HolderId")
+                    b.Property<long?>("HolderEmployeeId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("ItemTypeId")

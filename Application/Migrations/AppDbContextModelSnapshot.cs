@@ -31,10 +31,11 @@ namespace Application.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasMaxLength(512)
                         .HasColumnType("character varying(512)");
 
-                    b.Property<long?>("HolderId")
+                    b.Property<long?>("HolderEmployeeId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("ItemTypeId")

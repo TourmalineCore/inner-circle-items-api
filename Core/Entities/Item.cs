@@ -2,9 +2,8 @@
 {
     public class Item
     {
-        public Item ()
+        public Item()
         {
-
         }
 
         public long Id { get; set; }
@@ -13,18 +12,17 @@
 
         public string Name { get; set; }
 
-        public string SerialNumber { get; set; } = string.Empty;
+        public string SerialNumber { get; set; }
 
         public long ItemTypeId { get; set; }
-
         public ItemType ItemType { get; set; }
 
         public decimal Price { get; set; }
 
-        public string? Description { get; set; }
+        public string Description { get; set; }
 
         public DateOnly? PurchaseDate { get; set; }  
 
-        public long? HolderId { get; set; }
+        public long? HolderEmployeeId { get; set; }
     }
 }

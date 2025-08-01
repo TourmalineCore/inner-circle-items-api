@@ -7,13 +7,13 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Application.Migrations
 {
     /// <inheritdoc />
-    public partial class AddItem : Migration
+    public partial class AddItems : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Item",
+                name: "Items",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -23,14 +23,15 @@ namespace Application.Migrations
                     SerialNumber = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
                     ItemTypeId = table.Column<long>(type: "bigint", nullable: false),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
+                    Description = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: false),
                     PurchaseDate = table.Column<DateOnly>(type: "date", nullable: true),
-                    HolderId = table.Column<long>(type: "bigint", nullable: true)
+                    HolderEmployeeId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Item", x => x.Id);
+                    table.PrimaryKey("PK_Items", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Item_ItemTypes_ItemTypeId",
+                        name: "FK_Items_ItemTypes_ItemTypeId",
                         column: x => x.ItemTypeId,
                         principalTable: "ItemTypes",
                         principalColumn: "Id",
@@ -38,14 +39,14 @@ namespace Application.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Item_Id",
-                table: "Item",
+                name: "IX_Items_Id",
+                table: "Items",
                 column: "Id",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Item_ItemTypeId",
-                table: "Item",
+                name: "IX_Items_ItemTypeId",
+                table: "Items",
                 column: "ItemTypeId");
         }
 
@@ -53,7 +54,7 @@ namespace Application.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Item");
+                name: "Items");
         }
     }
 }

@@ -14,11 +14,11 @@ public class CreateItemCommandParams
 
     public decimal Price { get; set; }
 
-    public string? Description { get; set; }
+    public string Description { get; set; }
 
     public DateOnly? PurchaseDate { get; set; }
 
-    public long? HolderId { get; set; }
+    public long? HolderEmployeeId { get; set; }
 }
 
 public class CreateItemCommand
@@ -32,17 +32,17 @@ public class CreateItemCommand
 
     public async Task<long> ExecuteAsync(CreateItemCommandParams createItemCommandParams, long tenantId)
     {
-        var itemType = await _context
+        var itemTypeIdDoesNotExistWithinTenant = await _context
             .ItemTypes
             .Where(x => x.TenantId == tenantId)
-            .SingleOrDefaultAsync(x => x.Id == createItemCommandParams.ItemTypeId);
+            .AllAsync(x => x.Id != createItemCommandParams.ItemTypeId);
 
-        if (itemType == null)
+        if (itemTypeIdDoesNotExistWithinTenant)
         {
-            throw new Exception($"Passed item type where id={createItemCommandParams.ItemTypeId} is not found");
+            throw new Exception($"Passed item type where id={createItemCommandParams.ItemTypeId} is not found within tenant where id={tenantId}");
         }
 
-        var Item = new Item
+        var item = new Item
         {
             TenantId = tenantId,
             Name = createItemCommandParams.Name,
@@ -51,12 +51,12 @@ public class CreateItemCommand
             Price = createItemCommandParams.Price,
             Description = createItemCommandParams.Description,
             PurchaseDate = createItemCommandParams.PurchaseDate,
-            HolderId = createItemCommandParams.HolderId
+            HolderEmployeeId = createItemCommandParams.HolderEmployeeId
         };
 
-        await _context.Items.AddAsync(Item);
+        await _context.Items.AddAsync(item);
         await _context.SaveChangesAsync();
 
-        return Item.Id;
+        return item.Id;
     }
 }

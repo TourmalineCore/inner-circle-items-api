@@ -12,12 +12,12 @@ namespace Api.Controllers
     [Authorize]
     [ApiController]
     [Route("items")]
-    public class ItemController : ControllerBase
+    public class ItemsController : ControllerBase
     {
-        private readonly ILogger<ItemController> _logger;
+        private readonly ILogger<ItemsController> _logger;
 
-        public ItemController(
-            ILogger<ItemController> logger
+        public ItemsController(
+            ILogger<ItemsController> logger
         )
         {
             _logger = logger;
@@ -37,12 +37,12 @@ namespace Api.Controllers
             return new ItemsListResponse
             {
                 Items = items
-                    .Select(x => new ItemsListItem
+                    .Select(x => new Item
                     {
                         Id = x.Id,
                         Name = x.Name,
                         SerialNumber = x.SerialNumber,
-                        ItemType = new ItemTypeListItem
+                        ItemType = new ItemType
                         {
                             Id = x.ItemType.Id,
                             Name = x.ItemType.Name
@@ -50,7 +50,11 @@ namespace Api.Controllers
                         Price = x.Price,
                         Description = x.Description,
                         PurchaseDate = x.PurchaseDate,
-                        HolderEmployee = (x.HolderId == null) ? null : new Employee {Id = x.HolderId}
+                        HolderEmployee = (x.HolderEmployeeId == null) 
+                            ? null 
+                            : new Employee {
+                                Id = x.HolderEmployeeId.Value
+                            }
                     })
                     .ToList()
             };
@@ -75,7 +79,7 @@ namespace Api.Controllers
                 Price = createItemRequest.Price,
                 Description = createItemRequest.Description,
                 PurchaseDate = createItemRequest.PurchaseDate,
-                HolderId = createItemRequest.HolderId
+                HolderEmployeeId = createItemRequest.HolderEmployeeId
 
             };
 

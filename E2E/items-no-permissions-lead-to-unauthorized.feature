@@ -1,4 +1,4 @@
-Feature: Item
+Feature: Items
 # https://github.com/karatelabs/karate/issues/1191
 # https://github.com/karatelabs/karate?tab=readme-ov-file#karate-fork
 

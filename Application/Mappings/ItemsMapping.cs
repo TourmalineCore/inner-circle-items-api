@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Application.Mappings;
 
-public class ItemMaping : IEntityTypeConfiguration<Item>
+public class ItemsMapping : IEntityTypeConfiguration<Item>
 {
     public void Configure(EntityTypeBuilder<Item> builder)
     {
@@ -23,6 +23,7 @@ public class ItemMaping : IEntityTypeConfiguration<Item>
 
         builder
             .Property(x => x.SerialNumber)
+            .IsRequired()
             .HasMaxLength(128);
 
         builder
@@ -36,6 +37,7 @@ public class ItemMaping : IEntityTypeConfiguration<Item>
 
         builder
             .Property(x => x.Description)
+            .IsRequired()
             .HasMaxLength(512);
 
         builder

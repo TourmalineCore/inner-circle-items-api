@@ -9,7 +9,7 @@ public class CreateItemRequest
     public string Name { get; set; }
 
     [MaxLength(128)]
-    public string SerialNumber { get; set; }
+    public string SerialNumber { get; set; } = string.Empty;
 
     [Required]
     public long ItemTypeId { get; set; }
@@ -18,9 +18,9 @@ public class CreateItemRequest
     public decimal Price { get; set; }
 
     [MaxLength(512)]
-    public string? Description { get; set; }
+    public string Description { get; set; } = string.Empty;
 
     public DateOnly? PurchaseDate { get; set; }
 
-    public long? HolderId { get; set; }
+    public long? HolderEmployeeId { get; set; }
 }
