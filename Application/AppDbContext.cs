@@ -15,6 +15,7 @@ namespace Application
         }
 
         public virtual DbSet<ItemType> ItemTypes { get; set; }
+        public virtual DbSet<Item> Items { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
