@@ -28,21 +28,21 @@ namespace Api.Controllers
         /// </summary>
         [RequiresPermission(UserClaimsProvider.CanViewItems)]
         [HttpGet]
-        public async Task<ItemsListResponse> GetAllItemsAsync(
+        public async Task<ItemsResponse> GetAllItemsAsync(
             [FromServices] GetAllItemsQuery getAllItemsQuery
         )
         {
             var items = await getAllItemsQuery.GetAsync(User.GetTenantId());
 
-            return new ItemsListResponse
+            return new ItemsResponse
             {
                 Items = items
-                    .Select(x => new Item
+                    .Select(x => new ItemDto
                     {
                         Id = x.Id,
                         Name = x.Name,
                         SerialNumber = x.SerialNumber,
-                        ItemType = new ItemType
+                        ItemType = new ItemTypeDto
                         {
                             Id = x.ItemType.Id,
                             Name = x.ItemType.Name
@@ -52,7 +52,7 @@ namespace Api.Controllers
                         PurchaseDate = x.PurchaseDate,
                         HolderEmployee = (x.HolderEmployeeId == null) 
                             ? null 
-                            : new Employee {
+                            : new EmployeeDto {
                                 Id = x.HolderEmployeeId.Value
                             }
                     })
@@ -109,6 +109,5 @@ namespace Api.Controllers
                 isDeleted = true
             };
         }
-
     }
 }
