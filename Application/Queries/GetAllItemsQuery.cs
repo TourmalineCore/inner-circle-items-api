@@ -16,8 +16,8 @@ namespace Application.Queries
         {
             return _context
                 .Items
-                .Include(x => x.ItemType)
                 .AsNoTracking()
+                .Include(x => x.ItemType)
                 .Where(x => x.TenantId == tenantId)
                 .ToListAsync();
         }
