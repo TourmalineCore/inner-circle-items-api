@@ -71,7 +71,7 @@ namespace Api.Controllers
             [Required][FromBody] CreateItemRequest createItemRequest
         )
         {
-            var CreateItemCommandParams = new CreateItemCommandParams
+            var createItemCommandParams = new CreateItemCommandParams
             {
                 Name = createItemRequest.Name,
                 SerialNumber = createItemRequest.SerialNumber,
@@ -83,7 +83,7 @@ namespace Api.Controllers
 
             };
 
-            var newCreateItemId = await createCreateItemCommand.ExecuteAsync(CreateItemCommandParams, User.GetTenantId());
+            var newCreateItemId = await createCreateItemCommand.ExecuteAsync(createItemCommandParams, User.GetTenantId());
 
             return new CreateItemResponse()
             {
