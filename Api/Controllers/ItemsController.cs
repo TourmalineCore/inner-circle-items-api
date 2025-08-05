@@ -80,7 +80,6 @@ namespace Api.Controllers
                 Description = createItemRequest.Description,
                 PurchaseDate = createItemRequest.PurchaseDate,
                 HolderEmployeeId = createItemRequest.HolderEmployeeId
-
             };
 
             var newCreateItemId = await createItemCommand.ExecuteAsync(createItemCommandParams, User.GetTenantId());
