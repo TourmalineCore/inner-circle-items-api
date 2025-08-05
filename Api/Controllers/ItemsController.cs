@@ -82,11 +82,11 @@ namespace Api.Controllers
                 HolderEmployeeId = createItemRequest.HolderEmployeeId
             };
 
-            var newCreateItemId = await createItemCommand.ExecuteAsync(createItemCommandParams, User.GetTenantId());
+            var newItemId = await createItemCommand.ExecuteAsync(createItemCommandParams, User.GetTenantId());
 
             return new CreateItemResponse()
             {
-                NewItemId = newCreateItemId
+                NewItemId = newItemId
             };
         }
 
