@@ -61,7 +61,7 @@ namespace Api.Controllers
         }
 
         /// <summary>
-        ///     Adds item
+        ///     Add an item
         /// </summary>
         /// <param name="createItemRequest"></param>
         [RequiresPermission(UserClaimsProvider.CanManageItems)]
