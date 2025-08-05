@@ -11,7 +11,7 @@ namespace Api
         public const string CanManageItemsTypes = "CanManageItemsTypes";
         public const string CanViewItemsTypes = "CanViewItemsTypes";
 
-        public const string AUTO_TESTS_ONLY_IsItemHardDeleteAllowed = "AUTO_TESTS_ONLY_IsItemHardDeleteAllowed";
+        public const string AUTO_TESTS_ONLY_IsItemsHardDeleteAllowed = "AUTO_TESTS_ONLY_IsItemsHardDeleteAllowed";
         public const string CanManageItems = "CanManageItems";
         public const string CanViewItems = "CanViewItems";
         public Task<List<Claim>> GetUserClaimsAsync(string login)

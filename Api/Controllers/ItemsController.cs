@@ -95,7 +95,7 @@ namespace Api.Controllers
         ///     Deletes specific item
         /// </summary>
         /// <param name="itemId"></param>
-        [RequiresPermission(UserClaimsProvider.AUTO_TESTS_ONLY_IsItemHardDeleteAllowed)]
+        [RequiresPermission(UserClaimsProvider.AUTO_TESTS_ONLY_IsItemsHardDeleteAllowed)]
         [HttpDelete("{itemId}/hard-delete")]
         public async Task<object> HardDeleteItem(
             [FromServices] DeleteItemCommand deleteItemCommand,
