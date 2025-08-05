@@ -66,8 +66,8 @@ namespace Api.Controllers
         /// <param name="createItemRequest"></param>
         [RequiresPermission(UserClaimsProvider.CanManageItems)]
         [HttpPost]
-        public async Task<CreateItemResponse> CreatCreateItemAsync(
-            [FromServices] CreateItemCommand createCreateItemCommand,
+        public async Task<CreateItemResponse> CreateItemAsync(
+            [FromServices] CreateItemCommand createItemCommand,
             [Required][FromBody] CreateItemRequest createItemRequest
         )
         {
@@ -83,7 +83,7 @@ namespace Api.Controllers
 
             };
 
-            var newCreateItemId = await createCreateItemCommand.ExecuteAsync(createItemCommandParams, User.GetTenantId());
+            var newCreateItemId = await createItemCommand.ExecuteAsync(createItemCommandParams, User.GetTenantId());
 
             return new CreateItemResponse()
             {
