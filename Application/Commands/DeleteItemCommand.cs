@@ -2,25 +2,25 @@
 
 namespace Application.Commands;
 
-public class DeleteItemTypeCommand
+public class DeleteItemCommand
 {
     private readonly AppDbContext _context;
 
-    public DeleteItemTypeCommand(AppDbContext context)
+    public DeleteItemCommand(AppDbContext context)
     {
         _context = context;
     }
 
     public async Task ExecuteAsync(long id, long tenantId)
     {
-        var itemType = await _context
-            .ItemTypes
+        var item = await _context
+            .Items
             .Where(x => x.TenantId == tenantId)
             .SingleAsync(x => x.Id == id);
             
         _context
-            .ItemTypes
-            .Remove(itemType);
+            .Items
+            .Remove(item);
 
         await _context.SaveChangesAsync();
     }

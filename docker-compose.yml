@@ -41,6 +41,20 @@ services:
       - ASPNETCORE_ENVIRONMENT=MockForPullRequest
       - ASPNETCORE_HTTP_PORTS=80
 
+  inner-circle-items-mock-server:
+    container_name: 'inner-circle-items-mock-server'
+    profiles: ['MockForPullRequest']
+    image: mockserver/mockserver:5.15.0
+    command: -logLevel INFO
+    ports:
+      - 1080:1080
+    volumes:
+      - ./initializer.json:/config/initializer.json
+    environment:
+      MOCKSERVER_INITIALIZATION_JSON_PATH: /config/initializer.json
+    networks:
+      - inner-circle-items-network
+
   inner-circle-items-karate-tests:
     container_name: 'inner-circle-items-karate-tests'
     profiles: ['MockForPullRequest']
@@ -49,10 +63,18 @@ services:
       context: .
     depends_on:
       - inner-circle-items-api-for-e2e
+      - inner-circle-items-mock-server
     command: ["karate", "/karate"]
     volumes:
       - .:/karate
     environment:
+      AUTH_FIRST_TENANT_LOGIN_WITH_ALL_PERMISSIONS: "first-tenant-login-with-all-permissions"
+      AUTH_FIRST_TENANT_PASSWORD_WITH_ALL_PERMISSIONS: "first-tenant-password-with-all-permissions"
+      AUTH_SECOND_TENANT_LOGIN_WITH_ALL_PERMISSIONS: "second-tenant-login-with-all-permissions"
+      AUTH_SECOND_TENANT_PASSWORD_WITH_ALL_PERMISSIONS: "second-tenant-password-with-all-permissions"
+      AUTH_LOGIN_WITHOUT_PERMISSIONS: "first-tenant-login-without-permissions"
+      AUTH_PASSWORD_WITHOUT_PERMISSIONS: "first-tenant-password-without-permissions"
+      AUTH_API_ROOT_URL: "http://inner-circle-items-mock-server:1080"
       API_ROOT_URL: "http://inner-circle-items-api-for-e2e"
       SHOULD_USE_FAKE_EXTERNAL_DEPENDENCIES: "true"
     networks:

@@ -3,20 +3,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Queries
 {
-    public class GetAllItemTypesQuery
+    public class GetAllItemsQuery
     {
         private readonly AppDbContext _context;
 
-        public GetAllItemTypesQuery(AppDbContext context)
+        public GetAllItemsQuery(AppDbContext context)
         {
             _context = context;
         }
 
-        public Task<List<ItemType>> GetAsync(long tenantId)
+        public Task<List<Item>> GetAsync(long tenantId)
         {
             return _context
-                .ItemTypes
+                .Items
                 .AsNoTracking()
+                .Include(x => x.ItemType)
                 .Where(x => x.TenantId == tenantId)
                 .ToListAsync();
         }
