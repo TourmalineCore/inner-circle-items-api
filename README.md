@@ -4,7 +4,7 @@
 
 ### Adding a new migration  (Windows via Visual Studio)
 
-Run the database using doocker compose executing the following script (don't close the terminal unless you want to stop the containers)
+Run the database using docker compose executing the following script (don't close the terminal unless you want to stop the containers)
 ```bash
 docker compose --profile db-only up --build
 ```
