@@ -14,15 +14,6 @@ namespace Api.Controllers
     [Route("item-types")]
     public class ItemTypesController : ControllerBase
     {
-        private readonly ILogger<ItemTypesController> _logger;
-
-        public ItemTypesController(
-            ILogger<ItemTypesController> logger
-        )
-        {
-            _logger = logger;
-        }
-
         /// <summary>
         ///     Get all item types
         /// </summary>

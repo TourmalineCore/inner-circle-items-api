@@ -14,15 +14,6 @@ namespace Api.Controllers
     [Route("items")]
     public class ItemsController : ControllerBase
     {
-        private readonly ILogger<ItemsController> _logger;
-
-        public ItemsController(
-            ILogger<ItemsController> logger
-        )
-        {
-            _logger = logger;
-        }
-
         /// <summary>
         ///     Get all items
         /// </summary>
