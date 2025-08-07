@@ -24,13 +24,6 @@
         public EmployeeDto? HolderEmployee { get; set; }
     }
 
-    public class ItemTypeDto
-    {
-        public long Id { get; set; }
-
-        public string Name { get; set; }
-    }
-
     public class EmployeeDto
     {
         public long Id { get; set; }

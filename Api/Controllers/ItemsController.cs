@@ -29,10 +29,10 @@ namespace Api.Controllers
         [RequiresPermission(UserClaimsProvider.CanViewItems)]
         [HttpGet]
         public async Task<ItemsResponse> GetAllItemsAsync(
-            [FromServices] GetAllItemsQuery getAllItemsQuery
+            [FromServices] AllItemsQuery allItemsQuery
         )
         {
-            var items = await getAllItemsQuery.GetAsync(User.GetTenantId());
+            var items = await allItemsQuery.GetAsync(User.GetTenantId());
 
             return new ItemsResponse
             {

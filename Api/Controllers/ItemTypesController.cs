@@ -28,16 +28,16 @@ namespace Api.Controllers
         /// </summary>
         [RequiresPermission(UserClaimsProvider.CanViewItemsTypes)]
         [HttpGet]
-        public async Task<ItemTypesListResponse> GetAllItemTypesAsync(
-            [FromServices] GetAllItemTypesQuery getAllItemTypeQuery
+        public async Task<ItemTypesResponse> GetAllItemTypesAsync(
+            [FromServices] AllItemTypesQuery allItemTypesQuery
         )
         {
-            var itemTypes = await getAllItemTypeQuery.GetAsync(User.GetTenantId());
+            var itemTypes = await allItemTypesQuery.GetAsync(User.GetTenantId());
 
-            return new ItemTypesListResponse
+            return new ItemTypesResponse
             {
                 ItemTypes = itemTypes
-                    .Select(x => new ItemTypeListItem
+                    .Select(x => new ItemTypeDto
                     {
                         Id = x.Id,
                         Name = x.Name,

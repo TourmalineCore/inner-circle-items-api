@@ -17,10 +17,10 @@ public static class DependencyInjection
         );
         services.AddTransient<CreateItemTypeCommand>();
         services.AddTransient<DeleteItemTypeCommand>();
-        services.AddTransient<GetAllItemTypesQuery>();
+        services.AddTransient<AllItemTypesQuery>();
 
         services.AddTransient<CreateItemCommand>();
-        services.AddTransient<GetAllItemsQuery>();
+        services.AddTransient<AllItemsQuery>();
         services.AddTransient<DeleteItemCommand>();
     }
 }
