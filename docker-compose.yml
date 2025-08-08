@@ -49,9 +49,9 @@ services:
     ports:
       - 1080:1080
     volumes:
-      - ./initializer.json:/config/initializer.json
+      - ./e2e/mock-server-initialization.json:/config/mock-server-initialization.json
     environment:
-      MOCKSERVER_INITIALIZATION_JSON_PATH: /config/initializer.json
+      MOCKSERVER_INITIALIZATION_JSON_PATH: /config/mock-server-initialization.json
     networks:
       - inner-circle-items-network
 
@@ -59,7 +59,7 @@ services:
     container_name: 'inner-circle-items-karate-tests'
     profiles: ['MockForPullRequest']
     build:
-      dockerfile: KarateDockerfile
+      dockerfile: ./e2e/KarateDockerfile
       context: .
     depends_on:
       - inner-circle-items-api-for-e2e

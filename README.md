@@ -32,10 +32,10 @@ Update-Database -Project Application
 
 ### Running karate tests in dev-container
 
-Run the docker compose with MockForPullRequest profile executing the following command
+Run the docker compose with MockForPullRequest profile executing the following command (don't close the terminal unless you want to stop the containers)
 
 ```bash
-docker compose --profile MockForPullRequest up -d
+docker compose --profile MockForPullRequest up --build
 ```
 
 Open VS Code for the `inner-circle-items-api` repo to use dev-container
