@@ -7,7 +7,7 @@ Background:
 
 Scenario: No Permissions Lead to Unauthorized for All Endpoints
 
-    * def jsUtils = read('../jsUtils.js')
+    * def jsUtils = read('./js-utils.js')
     * def authApiRootUrl = jsUtils().getEnvVariable('AUTH_API_ROOT_URL')
     * def apiRootUrl = jsUtils().getEnvVariable('API_ROOT_URL')
     * def authLogin = jsUtils().getEnvVariable('AUTH_LOGIN_WITHOUT_PERMISSIONS')
