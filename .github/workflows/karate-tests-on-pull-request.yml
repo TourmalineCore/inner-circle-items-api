@@ -1,4 +1,4 @@
-name: Run karate tests (docker compose and local env)
+name: E2E Tests
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - feature/*
 
 jobs:
-  e2e-test-in-docker-compose:
+  e2e-karate-tests-in-docker-compose:
     runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@v4
@@ -27,4 +27,3 @@ jobs:
           echo "No tests passed! Failing the pipeline..."
           exit 1
         fi        
-          
