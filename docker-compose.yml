@@ -60,7 +60,7 @@ services:
     profiles: ['MockForPullRequest']
     build:
       dockerfile: ./e2e/KarateDockerfile
-      context: .
+      context: ./e2e
     depends_on:
       - inner-circle-items-api-for-e2e
       - inner-circle-items-mock-server
