@@ -16,8 +16,13 @@ public class DeleteItemCommand
         var item = await _context
             .Items
             .Where(x => x.TenantId == tenantId)
-            .SingleAsync(x => x.Id == id);
-            
+            .SingleOrDefaultAsync(x => x.Id == id);
+
+        if (item == null)
+        {
+            return;
+        }
+        
         _context
             .Items
             .Remove(item);
