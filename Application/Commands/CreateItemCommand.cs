@@ -24,27 +24,32 @@ public class CreateItemCommandParams
 public class CreateItemCommand
 {
     private readonly AppDbContext _context;
+    private readonly IClaimsProvider _claimsProvider;
 
-    public CreateItemCommand(AppDbContext context)
+    public CreateItemCommand(
+        AppDbContext context,
+        IClaimsProvider claimsProvider
+    )
     {
         _context = context;
+        _claimsProvider = claimsProvider;
     }
 
-    public async Task<long> ExecuteAsync(CreateItemCommandParams createItemCommandParams, long tenantId)
+    public async Task<long> ExecuteAsync(CreateItemCommandParams createItemCommandParams)
     {
         var itemTypeIdDoesNotExistWithinTenant = await _context
             .ItemTypes
-            .Where(x => x.TenantId == tenantId)
+            .Where(x => x.TenantId == _claimsProvider.TenantId)
             .AllAsync(x => x.Id != createItemCommandParams.ItemTypeId);
 
         if (itemTypeIdDoesNotExistWithinTenant)
         {
-            throw new Exception($"Passed item type where id={createItemCommandParams.ItemTypeId} is not found within tenant where id={tenantId}");
+            throw new Exception($"Passed item type where id={createItemCommandParams.ItemTypeId} is not found within tenant where id={_claimsProvider.TenantId}");
         }
 
         var item = new Item
         {
-            TenantId = tenantId,
+            TenantId = _claimsProvider.TenantId,
             Name = createItemCommandParams.Name,
             SerialNumber = createItemCommandParams.SerialNumber,
             ItemTypeId = createItemCommandParams.ItemTypeId,

@@ -73,7 +73,7 @@ namespace Api.Controllers
                 HolderEmployeeId = createItemRequest.HolderEmployeeId
             };
 
-            var newItemId = await createItemCommand.ExecuteAsync(createItemCommandParams, User.GetTenantId());
+            var newItemId = await createItemCommand.ExecuteAsync(createItemCommandParams);
 
             return new CreateItemResponse()
             {
