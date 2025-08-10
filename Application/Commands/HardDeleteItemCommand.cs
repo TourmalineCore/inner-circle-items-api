@@ -2,17 +2,17 @@
 
 namespace Application.Commands;
 
-public class DeleteItemTypeCommand
+public class HardDeleteItemCommand
 {
     private readonly HardDeleteEntityCommand _hardDeleteEntityCommand;
 
-    public DeleteItemTypeCommand(AppDbContext context)
+    public HardDeleteItemCommand(AppDbContext context)
     {
         _hardDeleteEntityCommand = new HardDeleteEntityCommand(context);
     }
 
     public Task<bool> ExecuteAsync(long id, long tenantId)
     {
-        return _hardDeleteEntityCommand.ExecuteAsync<ItemType>(id, tenantId);
+        return _hardDeleteEntityCommand.ExecuteAsync<Item>(id, tenantId);
     }
 }

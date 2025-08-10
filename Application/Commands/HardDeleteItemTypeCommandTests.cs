@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Application.Commands;
 
-public class DeleteItemTypeCommandTests
+public class HardDeleteItemTypeCommandTests
 {
     [Fact]
     public async Task DeleteItemTypeThatHasRelatedItem_ShouldDeleteItemAsWell()
@@ -24,7 +24,7 @@ public class DeleteItemTypeCommandTests
             ItemTypeId = 1
         });
 
-        var deleteItemTypeCommand = new DeleteItemTypeCommand(appDbContext);
+        var deleteItemTypeCommand = new HardDeleteItemTypeCommand(appDbContext);
 
         await deleteItemTypeCommand.ExecuteAsync(1, 777);
 
