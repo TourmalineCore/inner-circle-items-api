@@ -71,6 +71,8 @@ services:
         condition: service_started
       inner-circle-items-mock-server:
         condition: service_started
+    # restart twice in case of not ready db or network failures
+    restart: on-failure:2
     command: ["karate", "/karate"]
     volumes:
       - .:/karate
