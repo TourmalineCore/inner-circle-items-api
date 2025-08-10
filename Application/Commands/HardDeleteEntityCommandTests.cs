@@ -9,19 +9,18 @@ public class HardDeleteEntityCommandTests
     [Fact]
     public async Task DeleteExistingEntityTwice_ShouldDeleteEntityFromDbSetAndDoNotThrowAtSecondTime()
     {
-        var appDbContext = AppDbContext.CteateInMemoryContextForTests();
+        var tenantAppDbContext = TenantAppDbContext.CteateInMemoryTenantContextForTests();
 
-        await appDbContext.AddEntityAndSaveAsync(new Item
+        await tenantAppDbContext.AddEntityAndSaveAsync(new Item
         {
-            Id = 1,
-            TenantId = 777
+            Id = 1
         });
 
-        var hardDeleteEntityCommand = new HardDeleteEntityCommand(appDbContext);
+        var hardDeleteEntityCommand = new HardDeleteEntityCommand(tenantAppDbContext);
 
         var wasDeleted = await hardDeleteEntityCommand.ExecuteAsync<Item>(1);
 
-        var itemDoesNotExist = await appDbContext
+        var itemDoesNotExist = await tenantAppDbContext
             .Items
             .AllAsync(x => x.Id != 1);
 
@@ -38,15 +37,14 @@ public class HardDeleteEntityCommandTests
     [Fact]
     public async Task DeleteNonExistingEntity_ShouldNotThrowException()
     {
-        var appDbContext = AppDbContext.CteateInMemoryContextForTests();
+        var tenantAppDbContext = TenantAppDbContext.CteateInMemoryTenantContextForTests();
 
-        await appDbContext.AddEntityAndSaveAsync(new Item
+        await tenantAppDbContext.AddEntityAndSaveAsync(new Item
         {
-            Id = 1,
-            TenantId = 777
+            Id = 1
         });
 
-        var hardDeleteEntityCommand = new HardDeleteEntityCommand(appDbContext);
+        var hardDeleteEntityCommand = new HardDeleteEntityCommand(tenantAppDbContext);
 
         var wasNonExistedDeleted = true;
 
