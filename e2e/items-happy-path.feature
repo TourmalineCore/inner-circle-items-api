@@ -102,3 +102,9 @@ Scenario: Happy Path
     When method DELETE
     Then status 200
     And match response == { isDeleted: true }
+  
+    # Cleanup Verification: Verify that item was deleted
+    Given url apiRootUrl
+    Given path 'items'
+    When method GET
+    And assert response.items.filter(x => x.id == newItemId).length == 0
