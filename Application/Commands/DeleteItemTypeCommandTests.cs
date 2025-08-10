@@ -9,11 +9,7 @@ public class DeleteItemTypeCommandTests
     [Fact]
     public async Task DeleteItemTypeThatHasRelatedItem_ShouldDeleteItemAsWell()
     {
-        var options = new DbContextOptionsBuilder<AppDbContext>()
-            .UseInMemoryDatabase("DeleteItemTypeThatHasRelatedItem_ShouldDeleteItemAsWell", x => x.EnableNullChecks(false))
-            .Options;
-
-        var appDbContext = new AppDbContext(options);
+        var appDbContext = AppDbContext.CteateInMemoryContextForTests();
 
         await appDbContext
             .ItemTypes

@@ -9,11 +9,7 @@ public class HardDeleteEntityCommandTests
     [Fact]
     public async Task DeleteExistingEntityTwice_ShouldDeleteEntityFromDbSetAndDoNotThrowAtSecondTime()
     {
-        var options = new DbContextOptionsBuilder<AppDbContext>()
-            .UseInMemoryDatabase("DeleteExistingEntityTwice_ShouldDeleteEntityFromDbSetAndDoNotThrowAtSecondTime", x => x.EnableNullChecks(false))
-            .Options;
-
-        var appDbContext = new AppDbContext(options);
+        var appDbContext = AppDbContext.CteateInMemoryContextForTests();
 
         await appDbContext
             .Items
@@ -46,11 +42,7 @@ public class HardDeleteEntityCommandTests
     [Fact]
     public async Task DeleteNonExistingEntity_ShouldNotThrowException()
     {
-        var options = new DbContextOptionsBuilder<AppDbContext>()
-            .UseInMemoryDatabase("DeleteNonExistingEntity_ShouldNotThrowException", x => x.EnableNullChecks(false))
-            .Options;
-
-        var appDbContext = new AppDbContext(options);
+        var appDbContext = AppDbContext.CteateInMemoryContextForTests();
 
         await appDbContext
             .Items
