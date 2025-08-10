@@ -27,6 +27,8 @@ services:
     build:
       dockerfile: ./Api/Dockerfile
       context: .
+      args:
+        EXCLUDE_UNIT_TESTS_FROM_BUILD: "true"
     ports:
       - 10012:80
     networks:
