@@ -72,10 +72,8 @@ namespace Api.Controllers
             [Required][FromRoute] long itemTypeId
         )
         {
-            await deleteItemTypeCommand.ExecuteAsync(itemTypeId, User.GetTenantId());
-
             return new { 
-                isDeleted = true
+                isDeleted = await deleteItemTypeCommand.ExecuteAsync(itemTypeId, User.GetTenantId())
             };
         }
     }

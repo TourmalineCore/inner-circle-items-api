@@ -11,7 +11,7 @@ public class DeleteItemTypeCommand
         _hardDeleteEntityCommand = new HardDeleteEntityCommand(context);
     }
 
-    public Task ExecuteAsync(long id, long tenantId)
+    public Task<bool> ExecuteAsync(long id, long tenantId)
     {
         return _hardDeleteEntityCommand.ExecuteAsync<ItemType>(id, tenantId);
     }
