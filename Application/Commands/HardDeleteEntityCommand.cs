@@ -12,7 +12,7 @@ public class HardDeleteEntityCommand
         _context = context;
     }
 
-    public async Task ExecuteAsync<TEntity>(long id, long tenantId)
+    public async Task<bool> ExecuteAsync<TEntity>(long id, long tenantId)
         where TEntity : EntityBase
     {
         var entity = await _context
@@ -22,7 +22,7 @@ public class HardDeleteEntityCommand
 
         if (entity == null)
         {
-            return;
+            return false;
         }
         
         _context
@@ -30,5 +30,7 @@ public class HardDeleteEntityCommand
             .Remove(entity);
 
         await _context.SaveChangesAsync();
+
+        return true;
     }
 }
