@@ -1,4 +1,4 @@
-﻿using Core.Entities;
+﻿using Core;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Commands;
