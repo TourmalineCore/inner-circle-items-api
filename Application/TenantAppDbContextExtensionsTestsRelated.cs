@@ -29,17 +29,17 @@ internal static class TenantAppDbContextExtensionsTestsRelated
     }
     
     public async static Task AddEntityAndSaveAsync<TEntity>(
-        this TenantAppDbContext tenantAppDbContext,
+        this TenantAppDbContext context,
         TEntity newEntity
     )
         where TEntity : EntityBase
     {
         newEntity.TenantId = TestsRelatedTenantId;
 
-        await tenantAppDbContext
+        await context
             .Set<TEntity>()
             .AddAsync(newEntity);
 
-        await tenantAppDbContext.SaveChangesAsync();
+        await context.SaveChangesAsync();
     }
 }
