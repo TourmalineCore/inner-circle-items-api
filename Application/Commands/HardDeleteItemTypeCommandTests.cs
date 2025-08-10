@@ -9,7 +9,7 @@ public class HardDeleteItemTypeCommandTests
     [Fact]
     public async Task DeleteItemTypeThatHasRelatedItem_ShouldDeleteItemAsWell()
     {
-        var tenantAppDbContext = TenantAppDbContext.CteateInMemoryTenantContextForTests();
+        var tenantAppDbContext = TenantAppDbContextExtensionsTestsRelated.CteateInMemoryTenantContextForTests();
 
         await tenantAppDbContext.AddEntityAndSaveAsync(new ItemType
         {

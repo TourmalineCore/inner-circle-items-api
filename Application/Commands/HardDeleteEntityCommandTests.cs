@@ -9,7 +9,7 @@ public class HardDeleteEntityCommandTests
     [Fact]
     public async Task DeleteExistingEntityTwice_ShouldDeleteEntityFromDbSetAndDoNotThrowAtSecondTime()
     {
-        var tenantAppDbContext = TenantAppDbContext.CteateInMemoryTenantContextForTests();
+        var tenantAppDbContext = TenantAppDbContextExtensionsTestsRelated.CteateInMemoryTenantContextForTests();
 
         await tenantAppDbContext.AddEntityAndSaveAsync(new Item
         {
@@ -37,7 +37,7 @@ public class HardDeleteEntityCommandTests
     [Fact]
     public async Task DeleteNonExistingEntity_ShouldNotThrowException()
     {
-        var tenantAppDbContext = TenantAppDbContext.CteateInMemoryTenantContextForTests();
+        var tenantAppDbContext = TenantAppDbContextExtensionsTestsRelated.CteateInMemoryTenantContextForTests();
 
         await tenantAppDbContext.AddEntityAndSaveAsync(new Item
         {
