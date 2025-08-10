@@ -13,7 +13,7 @@ jobs:
     - name: Run service via docker-compose and run Karate-tests
     # Find text with 'failed' and 'passed' in logs from karate-testing container
       run: |
-        LOGS=$(docker compose --profile MockForPullRequest up --build --abort-on-container-exit)
+        LOGS=$(docker compose --profile MockForPullRequest up --abort-on-container-exit)
         echo "$LOGS"
         FAILED=$(echo "$LOGS" | grep -oP 'failed: *\K\d+')
         PASSED=$(echo "$LOGS" | grep -oP 'passed: *\K\d+')
