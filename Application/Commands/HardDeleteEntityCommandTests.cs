@@ -11,15 +11,11 @@ public class HardDeleteEntityCommandTests
     {
         var appDbContext = AppDbContext.CteateInMemoryContextForTests();
 
-        await appDbContext
-            .Items
-            .AddAsync(new Item
-            {
-                Id = 1,
-                TenantId = 777
-            });
-
-        await appDbContext.SaveChangesAsync();
+        await appDbContext.AddEntityAndSaveAsync(new Item
+        {
+            Id = 1,
+            TenantId = 777
+        });
 
         var hardDeleteEntityCommand = new HardDeleteEntityCommand(appDbContext);
 
@@ -44,15 +40,11 @@ public class HardDeleteEntityCommandTests
     {
         var appDbContext = AppDbContext.CteateInMemoryContextForTests();
 
-        await appDbContext
-            .Items
-            .AddAsync(new Item
-            {
-                Id = 1,
-                TenantId = 777
-            });
-
-        await appDbContext.SaveChangesAsync();
+        await appDbContext.AddEntityAndSaveAsync(new Item
+        {
+            Id = 1,
+            TenantId = 777
+        });
 
         var hardDeleteEntityCommand = new HardDeleteEntityCommand(appDbContext);
 

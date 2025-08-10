@@ -11,24 +11,18 @@ public class DeleteItemTypeCommandTests
     {
         var appDbContext = AppDbContext.CteateInMemoryContextForTests();
 
-        await appDbContext
-            .ItemTypes
-            .AddAsync(new ItemType
-            {
-                Id = 1,
-                TenantId = 777
-            });
+        await appDbContext.AddEntityAndSaveAsync(new ItemType
+        {
+            Id = 1,
+            TenantId = 777
+        });
 
-        await appDbContext
-            .Items
-            .AddAsync(new Item
-            {
-                Id = 2,
-                TenantId = 777,
-                ItemTypeId = 1
-            });
-
-        await appDbContext.SaveChangesAsync();
+        await appDbContext.AddEntityAndSaveAsync(new Item
+        {
+            Id = 2,
+            TenantId = 777,
+            ItemTypeId = 1
+        });
 
         var deleteItemTypeCommand = new DeleteItemTypeCommand(appDbContext);
 
