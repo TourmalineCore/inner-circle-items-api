@@ -68,14 +68,12 @@ namespace Api.Controllers
         [RequiresPermission(UserClaimsProvider.AUTO_TESTS_ONLY_IsItemTypesHardDeleteAllowed)]
         [HttpDelete("{itemTypeId}/hard-delete")]
         public async Task<object> HardDeleteItemType(
-            [FromServices] DeleteItemTypeCommand deleteItemTypeCommand,
+            [FromServices] HardDeleteItemTypeCommand hardDeleteItemTypeCommand,
             [Required][FromRoute] long itemTypeId
         )
         {
-            await deleteItemTypeCommand.ExecuteAsync(itemTypeId, User.GetTenantId());
-
             return new { 
-                isDeleted = true
+                isDeleted = await hardDeleteItemTypeCommand.ExecuteAsync(itemTypeId, User.GetTenantId())
             };
         }
     }

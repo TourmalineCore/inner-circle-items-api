@@ -75,7 +75,8 @@ Scenario: Tenants Isolation
     # Step 3: Cannot delete item type of another Tenant
     Given path 'item-types', newItemTypeId, 'hard-delete'
     When method DELETE
-    Then status 500
+    Then status 200
+    And match response == { isDeleted: false }
 
     * configure headers = jsUtils().getAuthHeaders(firstTenantAccessToken)
 

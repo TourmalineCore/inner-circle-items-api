@@ -27,6 +27,8 @@ services:
     build:
       dockerfile: ./Api/Dockerfile
       context: .
+      args:
+        EXCLUDE_UNIT_TESTS_FROM_BUILD: "true"
     ports:
       - 10012:80
     networks:
@@ -37,6 +39,10 @@ services:
     profiles: ['MockForPullRequest']
     extends:
       service: inner-circle-items-api
+    # service_started is not what we need, we need deps to be healthy and ready, this needs to be implemented in mock-server first 
+    depends_on:
+      inner-circle-items-mock-server:
+        condition: service_started
     environment:
       - ASPNETCORE_ENVIRONMENT=MockForPullRequest
       - ASPNETCORE_HTTP_PORTS=80
@@ -61,9 +67,14 @@ services:
     build:
       dockerfile: ./e2e/KarateDockerfile
       context: .
+    # service_started is not what we need, we need deps to be healthy and ready, this needs to be implemented in api and mock-server first 
     depends_on:
-      - inner-circle-items-api-for-e2e
-      - inner-circle-items-mock-server
+      inner-circle-items-api-for-e2e:
+        condition: service_started
+      inner-circle-items-mock-server:
+        condition: service_started
+    # restart twice in case of not ready db or network failures
+    restart: on-failure:2
     command: ["karate", "/karate"]
     volumes:
       - .:/karate

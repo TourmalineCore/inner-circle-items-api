@@ -1,14 +1,10 @@
 ﻿namespace Core.Entities
 {
-    public class Item
+    public class Item : EntityBase
     {
         public Item()
         {
         }
-
-        public long Id { get; set; }
-
-        public long TenantId { get; set; }
 
         public string Name { get; set; }
 

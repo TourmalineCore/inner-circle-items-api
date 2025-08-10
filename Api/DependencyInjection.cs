@@ -16,11 +16,11 @@ public static class DependencyInjection
         services.AddDbContext<AppDbContext>(options => { options.UseNpgsql(connectionString); }
         );
         services.AddTransient<CreateItemTypeCommand>();
-        services.AddTransient<DeleteItemTypeCommand>();
+        services.AddTransient<HardDeleteItemTypeCommand>();
         services.AddTransient<AllItemTypesQuery>();
 
         services.AddTransient<CreateItemCommand>();
         services.AddTransient<AllItemsQuery>();
-        services.AddTransient<DeleteItemCommand>();
+        services.AddTransient<HardDeleteItemCommand>();
     }
 }
