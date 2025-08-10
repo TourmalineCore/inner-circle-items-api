@@ -1,33 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Core.Entities;
 
 namespace Application.Commands;
 
 public class DeleteItemTypeCommand
 {
-    private readonly AppDbContext _context;
+    private readonly HardDeleteEntityCommand _hardDeleteEntityCommand;
 
     public DeleteItemTypeCommand(AppDbContext context)
     {
-        _context = context;
+        _hardDeleteEntityCommand = new HardDeleteEntityCommand(context);
     }
 
-    public async Task ExecuteAsync(long id, long tenantId)
+    public Task ExecuteAsync(long id, long tenantId)
     {
-        var itemType = await _context
-            .ItemTypes
-            .Where(x => x.TenantId == tenantId)
-            .SingleOrDefaultAsync(x => x.Id == id);
-
-
-        if (itemType == null)
-        {
-            return;
-        }
-
-        _context
-            .ItemTypes
-            .Remove(itemType);
-
-        await _context.SaveChangesAsync();
+        return _hardDeleteEntityCommand.ExecuteAsync<ItemType>(id, tenantId);
     }
 }
