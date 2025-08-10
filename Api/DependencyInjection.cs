@@ -2,7 +2,6 @@
 using Application.Commands;
 using Application.Queries;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Api;
 
@@ -13,7 +12,7 @@ public static class DependencyInjection
     public static void AddApplication(this IServiceCollection services, IConfiguration configuration)
     {
         // https://stackoverflow.com/a/37373557
-        services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddHttpContextAccessor();
         services.AddScoped<IClaimsProvider, HttpContextClaimsProvider>();
 
         var connectionString = configuration.GetConnectionString(DefaultConnection);
@@ -21,6 +20,8 @@ public static class DependencyInjection
         services.AddDbContext<AppDbContext>(options => { 
             options.UseNpgsql(connectionString); 
         });
+
+        services.AddScoped<TenantAppDbContext>();
 
         services.AddTransient<CreateItemTypeCommand>();
         services.AddTransient<HardDeleteItemTypeCommand>();

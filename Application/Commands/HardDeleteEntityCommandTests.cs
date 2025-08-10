@@ -19,7 +19,7 @@ public class HardDeleteEntityCommandTests
 
         var hardDeleteEntityCommand = new HardDeleteEntityCommand(appDbContext);
 
-        var wasDeleted = await hardDeleteEntityCommand.ExecuteAsync<Item>(1, 777);
+        var wasDeleted = await hardDeleteEntityCommand.ExecuteAsync<Item>(1);
 
         var itemDoesNotExist = await appDbContext
             .Items
@@ -31,7 +31,7 @@ public class HardDeleteEntityCommandTests
         var wasDeletedAgain = true;
 
         // try to delete again
-        Assert.Null(await Record.ExceptionAsync(async () => wasDeletedAgain = await hardDeleteEntityCommand.ExecuteAsync<Item>(1, 777)));
+        Assert.Null(await Record.ExceptionAsync(async () => wasDeletedAgain = await hardDeleteEntityCommand.ExecuteAsync<Item>(1)));
         Assert.False(wasDeletedAgain);
     }
 
@@ -50,14 +50,8 @@ public class HardDeleteEntityCommandTests
 
         var wasNonExistedDeleted = true;
 
-        // try to delete a non-existent item from the same tenant
-        Assert.Null(await Record.ExceptionAsync(async () => wasNonExistedDeleted = await hardDeleteEntityCommand.ExecuteAsync<Item>(2, 777)));
+        // try to delete a non-existent item
+        Assert.Null(await Record.ExceptionAsync(async () => wasNonExistedDeleted = await hardDeleteEntityCommand.ExecuteAsync<Item>(2)));
         Assert.False(wasNonExistedDeleted);
-
-        var wasDeletedFromAnotherTenant = true;
-
-        // try to delete an existent item from a wrong tenant
-        Assert.Null(await Record.ExceptionAsync(async () => wasDeletedFromAnotherTenant = await hardDeleteEntityCommand.ExecuteAsync<Item>(1, 888)));
-        Assert.False(wasDeletedFromAnotherTenant);
     }
 }

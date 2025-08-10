@@ -26,7 +26,7 @@ public class HardDeleteItemTypeCommandTests
 
         var deleteItemTypeCommand = new HardDeleteItemTypeCommand(appDbContext);
 
-        await deleteItemTypeCommand.ExecuteAsync(1, 777);
+        await deleteItemTypeCommand.ExecuteAsync(1);
 
         var itemDoesNotExist = await appDbContext
             .Items

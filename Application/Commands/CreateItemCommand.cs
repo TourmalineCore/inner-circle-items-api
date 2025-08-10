@@ -23,11 +23,11 @@ public class CreateItemCommandParams
 
 public class CreateItemCommand
 {
-    private readonly AppDbContext _context;
+    private readonly TenantAppDbContext _context;
     private readonly IClaimsProvider _claimsProvider;
 
     public CreateItemCommand(
-        AppDbContext context,
+        TenantAppDbContext context,
         IClaimsProvider claimsProvider
     )
     {
@@ -38,8 +38,7 @@ public class CreateItemCommand
     public async Task<long> ExecuteAsync(CreateItemCommandParams createItemCommandParams)
     {
         var itemTypeIdDoesNotExistWithinTenant = await _context
-            .ItemTypes
-            .Where(x => x.TenantId == _claimsProvider.TenantId)
+            .QueryableWithinTenant<ItemType>()
             .AllAsync(x => x.Id != createItemCommandParams.ItemTypeId);
 
         if (itemTypeIdDoesNotExistWithinTenant)
@@ -59,7 +58,10 @@ public class CreateItemCommand
             HolderEmployeeId = createItemCommandParams.HolderEmployeeId
         };
 
-        await _context.Items.AddAsync(item);
+        await _context
+            .Items
+            .AddAsync(item);
+
         await _context.SaveChangesAsync();
 
         return item.Id;

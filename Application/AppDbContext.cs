@@ -23,7 +23,7 @@ namespace Application
             base.OnModelCreating(modelBuilder);
         }
 
-        internal static AppDbContext CteateInMemoryContextForTests()
+        internal static TenantAppDbContext CteateInMemoryContextForTests()
         {
             var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(
@@ -38,7 +38,10 @@ namespace Application
                 )
                 .Options;
 
-            return new AppDbContext(options);
+            return new TenantAppDbContext(
+                options,
+                777
+            );
         }
     }
 }

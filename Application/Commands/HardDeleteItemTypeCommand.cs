@@ -6,13 +6,13 @@ public class HardDeleteItemTypeCommand
 {
     private readonly HardDeleteEntityCommand _hardDeleteEntityCommand;
 
-    public HardDeleteItemTypeCommand(AppDbContext context)
+    public HardDeleteItemTypeCommand(TenantAppDbContext context)
     {
         _hardDeleteEntityCommand = new HardDeleteEntityCommand(context);
     }
 
-    public Task<bool> ExecuteAsync(long id, long tenantId)
+    public Task<bool> ExecuteAsync(long itemTypeId)
     {
-        return _hardDeleteEntityCommand.ExecuteAsync<ItemType>(id, tenantId);
+        return _hardDeleteEntityCommand.ExecuteAsync<ItemType>(itemTypeId);
     }
 }
