@@ -23,7 +23,7 @@ namespace Api.Controllers
             [FromServices] AllItemTypesQuery allItemTypesQuery
         )
         {
-            var itemTypes = await allItemTypesQuery.GetAsync(User.GetTenantId());
+            var itemTypes = await allItemTypesQuery.GetAsync();
 
             return new ItemTypesResponse
             {
@@ -53,7 +53,7 @@ namespace Api.Controllers
                 Name = createItemTypeRequest.Name
             };
 
-            var newItemTypeId = await createItemTypeCommand.ExecuteAsync(createItemTypeCommandParams, User.GetTenantId());
+            var newItemTypeId = await createItemTypeCommand.ExecuteAsync(createItemTypeCommandParams);
 
             return new CreateItemTypeResponse()
             {
@@ -73,7 +73,7 @@ namespace Api.Controllers
         )
         {
             return new { 
-                isDeleted = await hardDeleteItemTypeCommand.ExecuteAsync(itemTypeId, User.GetTenantId())
+                isDeleted = await hardDeleteItemTypeCommand.ExecuteAsync(itemTypeId)
             };
         }
     }

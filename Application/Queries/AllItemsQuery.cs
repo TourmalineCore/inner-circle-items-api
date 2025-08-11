@@ -5,20 +5,18 @@ namespace Application.Queries
 {
     public class AllItemsQuery
     {
-        private readonly AppDbContext _context;
+        private readonly TenantAppDbContext _context;
 
-        public AllItemsQuery(AppDbContext context)
+        public AllItemsQuery(TenantAppDbContext context)
         {
             _context = context;
         }
 
-        public Task<List<Item>> GetAsync(long tenantId)
+        public Task<List<Item>> GetAsync()
         {
             return _context
-                .Items
-                .AsNoTracking()
+                .QueryableWithinTenantAsNoTracking<Item>()
                 .Include(x => x.ItemType)
-                .Where(x => x.TenantId == tenantId)
                 .ToListAsync();
         }
     }

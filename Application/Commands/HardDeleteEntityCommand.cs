@@ -5,20 +5,19 @@ namespace Application.Commands;
 
 public class HardDeleteEntityCommand
 {
-    private readonly AppDbContext _context;
+    private readonly TenantAppDbContext _context;
 
-    public HardDeleteEntityCommand(AppDbContext context)
+    public HardDeleteEntityCommand(TenantAppDbContext context)
     {
         _context = context;
     }
 
-    public async Task<bool> ExecuteAsync<TEntity>(long id, long tenantId)
+    public async Task<bool> ExecuteAsync<TEntity>(long entityId)
         where TEntity : EntityBase
     {
         var entity = await _context
-            .Set<TEntity>()
-            .Where(x => x.TenantId == tenantId)
-            .SingleOrDefaultAsync(x => x.Id == id);
+            .QueryableWithinTenant<TEntity>()
+            .SingleOrDefaultAsync(x => x.Id == entityId);
 
         if (entity == null)
         {

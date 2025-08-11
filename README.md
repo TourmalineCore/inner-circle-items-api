@@ -19,12 +19,12 @@ $env:ASPNETCORE_ENVIRONMENT = 'MockForDevelopment';
 
 Execute the following with your migration name
 ```bash
-Add-Migration <YOUR_MIGRATION_NAME> -Project Application
+Add-Migration <YOUR_MIGRATION_NAME> -Project Application -Context AppDbContext
 ```
 
 To apply migration run the following:
 ```bash
-Update-Database -Project Application
+Update-Database -Project Application -Context AppDbContext
 ```
 
 

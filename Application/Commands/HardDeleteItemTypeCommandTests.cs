@@ -9,26 +9,24 @@ public class HardDeleteItemTypeCommandTests
     [Fact]
     public async Task DeleteItemTypeThatHasRelatedItem_ShouldDeleteItemAsWell()
     {
-        var appDbContext = AppDbContext.CteateInMemoryContextForTests();
+        var context = TenantAppDbContextExtensionsTestsRelated.CteateInMemoryTenantContextForTests();
 
-        await appDbContext.AddEntityAndSaveAsync(new ItemType
+        await context.AddEntityAndSaveAsync(new ItemType
         {
-            Id = 1,
-            TenantId = 777
+            Id = 1
         });
 
-        await appDbContext.AddEntityAndSaveAsync(new Item
+        await context.AddEntityAndSaveAsync(new Item
         {
             Id = 2,
-            TenantId = 777,
             ItemTypeId = 1
         });
 
-        var deleteItemTypeCommand = new HardDeleteItemTypeCommand(appDbContext);
+        var deleteItemTypeCommand = new HardDeleteItemTypeCommand(context);
 
-        await deleteItemTypeCommand.ExecuteAsync(1, 777);
+        await deleteItemTypeCommand.ExecuteAsync(1);
 
-        var itemDoesNotExist = await appDbContext
+        var itemDoesNotExist = await context
             .Items
             .AllAsync(x => x.Id != 2);
 

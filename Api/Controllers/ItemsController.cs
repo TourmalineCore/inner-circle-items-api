@@ -23,7 +23,7 @@ namespace Api.Controllers
             [FromServices] AllItemsQuery allItemsQuery
         )
         {
-            var items = await allItemsQuery.GetAsync(User.GetTenantId());
+            var items = await allItemsQuery.GetAsync();
 
             return new ItemsResponse
             {
@@ -73,7 +73,7 @@ namespace Api.Controllers
                 HolderEmployeeId = createItemRequest.HolderEmployeeId
             };
 
-            var newItemId = await createItemCommand.ExecuteAsync(createItemCommandParams, User.GetTenantId());
+            var newItemId = await createItemCommand.ExecuteAsync(createItemCommandParams);
 
             return new CreateItemResponse()
             {
@@ -94,7 +94,7 @@ namespace Api.Controllers
         {
             return new
             {
-                isDeleted = await hardDeleteItemCommand.ExecuteAsync(itemId, User.GetTenantId())
+                isDeleted = await hardDeleteItemCommand.ExecuteAsync(itemId)
             };
         }
     }
