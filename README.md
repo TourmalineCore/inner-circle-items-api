@@ -1,12 +1,19 @@
 # inner-circle-items-api
 
+## Run in Visual Studio
+
+First run this script to run a db and mocked external deps:
+```bash
+docker compose --profile MockForDevelopment up --build
+```
+
 ## Migrations
 
 ### Adding a new migration  (Windows via Visual Studio)
 
 Run the database using docker compose executing the following script (don't close the terminal unless you want to stop the containers)
 ```bash
-docker compose --profile db-only up --build
+docker compose --profile DbOnly --build
 ```
 >Note: `--build` gurantees that we run the latest code after re-applying the script
 
@@ -40,7 +47,28 @@ docker compose --profile MockForPullRequest up --build
 
 Open VS Code for the `inner-circle-items-api` repo to use dev-container
 
-Execute following command inside of the dev-container
+### Run Karate Tests Against Api Running in IDE (not Docker Compose)
+
+Run Db and MockServer executing the following command (don't close the terminal unless you want to stop the containers)
+
+```bash
+docker compose --profile MockForDevelopment up --build
+```
+
+Then execute following command inside of the dev-container
+```bash
+API_ROOT_URL=http://host.docker.internal:5501 java -jar /karate.jar .
+```
+
+### Run Karate against Api, Db, and MockServer in Docker Compose
+
+Run Api, Db, and MockServer executing the following command (don't close the terminal unless you want to stop the containers)
+
+```bash
+docker compose --profile MockForTests up --build
+```
+
+Then execute following command inside of the dev-container
 ```bash
 java -jar /karate.jar .
 ```
