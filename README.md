@@ -35,17 +35,7 @@ Update-Database -Project Application -Context AppDbContext
 ```
 
 
-## Tests
-
-### Running karate tests in dev-container
-
-Run the docker compose with MockForPullRequest profile executing the following command (don't close the terminal unless you want to stop the containers)
-
-```bash
-docker compose --profile MockForPullRequest up --build
-```
-
-Open VS Code for the `inner-circle-items-api` repo to use dev-container
+## Karate Tests
 
 ### Run Karate Tests Against Api Running in IDE (not Docker Compose)
 
@@ -69,6 +59,18 @@ docker compose --profile MockForTests up --build
 ```
 
 Then execute following command inside of the dev-container
+```bash
+java -jar /karate.jar .
+```
+
+### Running Karate Tests, Api, Db, and MockServer in Docker Compose
+
+Run the docker compose with MockForPullRequest profile executing the following command (don't close the terminal unless you want to stop the containers)
+
+```bash
+docker compose --profile MockForPullRequest up --build
+```
+>Note: this also includes Karate Tests run by default. However, if you want to run the test again from Dev Container execute:
 ```bash
 java -jar /karate.jar .
 ```
