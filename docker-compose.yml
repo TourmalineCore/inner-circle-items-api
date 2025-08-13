@@ -1,77 +1,79 @@
 services:
 
-  inner-circle-items-db:
+  inner-circle-items-api-db:
     image: postgres:14
-    container_name: inner-circle-items-db
-    profiles: ['MockForDevelopment', 'MockForPullRequest', 'db-only']
+    container_name: inner-circle-items-api-db
+    profiles:
+      - DbOnly
+      - MockForDevelopment
+      - MockForTests
+      - MockForPullRequest
     environment:
-      POSTGRES_DB: inner-circle-items-db
+      POSTGRES_DB: inner-circle-items-api-db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - 10011:5432
+      - 7501:5432
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
       timeout: 5s
       retries: 5
     networks:
-      - inner-circle-items-network
+      - inner-circle-items-api-network
 
   inner-circle-items-api:
     container_name: inner-circle-items-api
-    profiles: ['default']
+    profiles:
+      - MockForTests
+      - MockForPullRequest
     depends_on:
-      inner-circle-items-db:
+      inner-circle-items-api-db:
         condition: service_healthy
+      inner-circle-items-api-mock-server:
+        condition: service_started
     build:
       dockerfile: ./Api/Dockerfile
       context: .
       args:
         EXCLUDE_UNIT_TESTS_FROM_BUILD: "true"
-    ports:
-      - 10012:80
-    networks:
-      - inner-circle-items-network
-
-  inner-circle-items-api-for-e2e:
-    container_name: 'inner-circle-items-api-for-e2e'
-    profiles: ['MockForPullRequest']
-    extends:
-      service: inner-circle-items-api
-    # service_started is not what we need, we need deps to be healthy and ready, this needs to be implemented in mock-server first 
-    depends_on:
-      inner-circle-items-mock-server:
-        condition: service_started
     environment:
       - ASPNETCORE_ENVIRONMENT=MockForPullRequest
-      - ASPNETCORE_HTTP_PORTS=80
+    ports:
+      - 6501:80
+    networks:
+      - inner-circle-items-api-network
 
-  inner-circle-items-mock-server:
-    container_name: 'inner-circle-items-mock-server'
-    profiles: ['MockForPullRequest']
+  inner-circle-items-api-mock-server:
+    container_name: 'inner-circle-items-api-mock-server'
+    profiles:
+      - MockForDevelopment
+      - MockForTests
+      - MockForPullRequest
     image: mockserver/mockserver:5.15.0
     command: -logLevel INFO
     ports:
-      - 1080:1080
+      - 8501:1080
     volumes:
       - ./e2e/mock-server-initialization.json:/config/mock-server-initialization.json
     environment:
+      SERVER_PORT: 1080
       MOCKSERVER_INITIALIZATION_JSON_PATH: /config/mock-server-initialization.json
     networks:
-      - inner-circle-items-network
+      - inner-circle-items-api-network
 
-  inner-circle-items-karate-tests:
-    container_name: 'inner-circle-items-karate-tests'
-    profiles: ['MockForPullRequest']
+  inner-circle-items-api-karate-tests:
+    container_name: 'inner-circle-items-api-karate-tests'
+    profiles:
+      - MockForPullRequest
     build:
       dockerfile: ./e2e/KarateDockerfile
       context: .
     # service_started is not what we need, we need deps to be healthy and ready, this needs to be implemented in api and mock-server first 
     depends_on:
-      inner-circle-items-api-for-e2e:
+      inner-circle-items-api:
         condition: service_started
-      inner-circle-items-mock-server:
+      inner-circle-items-api-mock-server:
         condition: service_started
     # restart twice in case of not ready db or network failures
     restart: on-failure:2
@@ -85,12 +87,12 @@ services:
       AUTH_SECOND_TENANT_PASSWORD_WITH_ALL_PERMISSIONS: "second-tenant-password-with-all-permissions"
       AUTH_LOGIN_WITHOUT_PERMISSIONS: "first-tenant-login-without-permissions"
       AUTH_PASSWORD_WITHOUT_PERMISSIONS: "first-tenant-password-without-permissions"
-      AUTH_API_ROOT_URL: "http://inner-circle-items-mock-server:1080"
-      API_ROOT_URL: "http://inner-circle-items-api-for-e2e"
+      # here the port is 1080 because it needs to be an internal port, not an external which is 8501 in this case
+      AUTH_API_ROOT_URL: "http://inner-circle-items-api-mock-server:1080"
+      API_ROOT_URL: "http://inner-circle-items-api"
       SHOULD_USE_FAKE_EXTERNAL_DEPENDENCIES: "true"
     networks:
-      - inner-circle-items-network
+      - inner-circle-items-api-network
 
 networks:
-  inner-circle-items-network:
-  
+  inner-circle-items-api-network:
