@@ -52,7 +52,6 @@ services:
       - MockForPullRequest
     image: mockserver/mockserver:5.15.0
     command: -logLevel INFO
-    # user: root
     ports:
       - 8501:1080
     volumes:
@@ -88,7 +87,8 @@ services:
       AUTH_SECOND_TENANT_PASSWORD_WITH_ALL_PERMISSIONS: "second-tenant-password-with-all-permissions"
       AUTH_LOGIN_WITHOUT_PERMISSIONS: "first-tenant-login-without-permissions"
       AUTH_PASSWORD_WITHOUT_PERMISSIONS: "first-tenant-password-without-permissions"
-      AUTH_API_ROOT_URL: "http://inner-circle-items-mock-server:8501"
+      # here the port is 1080 because it needs to be an internal port, not an external which is 8501 in this case
+      AUTH_API_ROOT_URL: "http://inner-circle-items-mock-server:1080"
       API_ROOT_URL: "http://inner-circle-items-api"
       SHOULD_USE_FAKE_EXTERNAL_DEPENDENCIES: "true"
     networks:
