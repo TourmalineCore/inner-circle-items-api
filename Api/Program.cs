@@ -24,11 +24,12 @@ namespace Api
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsEnvironment("MockForDevelopment"))
+            app.MapOpenApi("/swagger/openapi/v1.json");
+
+            app.UseSwaggerUI(options =>
             {
-                app.MapOpenApi();
-            }
+                options.SwaggerEndpoint("openapi/v1.json", "My API V1");
+            });
 
             using (var serviceScope = app.Services.CreateScope())
             {
