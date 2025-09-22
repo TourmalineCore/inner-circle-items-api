@@ -2,7 +2,7 @@ services:
 
   inner-circle-items-api-db:
     image: postgres:14
-    container_name: inner-circle-items-api-db
+    container_name: 'inner-circle-items-api-db'
     profiles:
       - DbOnly
       - MockForDevelopment
@@ -23,7 +23,7 @@ services:
       - inner-circle-items-api-network
 
   inner-circle-items-api:
-    container_name: inner-circle-items-api
+    container_name: 'inner-circle-items-api'
     profiles:
       - MockForTests
       - MockForPullRequest
