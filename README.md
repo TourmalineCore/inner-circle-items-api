@@ -13,7 +13,7 @@ docker compose --profile MockForDevelopment up --build
 
 Run the database using docker compose executing the following script (don't close the terminal unless you want to stop the containers)
 ```bash
-docker compose --profile DbOnly --build
+docker compose --profile DbOnly up --build
 ```
 >Note: `--build` gurantees that we run the latest code after re-applying the script
 
