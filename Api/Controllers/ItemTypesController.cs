@@ -43,7 +43,7 @@ namespace Api.Controllers
         /// <param name="createItemTypeRequest"></param>
         [RequiresPermission(UserClaimsProvider.CanManageItemsTypes)]
         [HttpPost]
-        public async Task<CreateItemTypeResponse> CreatItemTypeAsync(
+        public async Task<CreateItemTypeResponse> CreateItemTypeAsync(
             [FromServices] CreateItemTypeCommand createItemTypeCommand,
             [Required][FromBody] CreateItemTypeRequest createItemTypeRequest
         )
@@ -67,7 +67,7 @@ namespace Api.Controllers
         /// <param name="itemTypeId"></param>
         [RequiresPermission(UserClaimsProvider.AUTO_TESTS_ONLY_IsItemTypesHardDeleteAllowed)]
         [HttpDelete("{itemTypeId}/hard-delete")]
-        public async Task<object> HardDeleteItemType(
+        public async Task<object> HardDeleteItemTypeAsync(
             [FromServices] HardDeleteItemTypeCommand hardDeleteItemTypeCommand,
             [Required][FromRoute] long itemTypeId
         )

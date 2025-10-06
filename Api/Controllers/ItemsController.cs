@@ -87,7 +87,7 @@ namespace Api.Controllers
         /// <param name="itemId"></param>
         [RequiresPermission(UserClaimsProvider.AUTO_TESTS_ONLY_IsItemsHardDeleteAllowed)]
         [HttpDelete("{itemId}/hard-delete")]
-        public async Task<object> HardDeleteItem(
+        public async Task<object> HardDeleteItemAsync(
             [FromServices] HardDeleteItemCommand hardDeleteItemCommand,
             [Required][FromRoute] long itemId
         )
