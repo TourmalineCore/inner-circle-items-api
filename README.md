@@ -49,6 +49,10 @@ Then execute following command inside of the dev-container
 ```bash
 API_ROOT_URL=http://host.docker.internal:5501 java -jar /karate.jar .
 ```
+>Note: If you run it from without Dev Container you need to use `host.docker.internal` for all external deps liks this:
+```bash
+API_ROOT_URL=http://host.docker.internal:5501 AUTH_API_ROOT_URL=http://host.docker.internal:8501 java -jar /karate.jar .
+```
 
 ### Run Karate against Api, Db, and MockServer in Docker Compose
 
