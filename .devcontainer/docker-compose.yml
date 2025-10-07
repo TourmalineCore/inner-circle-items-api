@@ -19,3 +19,7 @@ services:
       # this is needed so that we can access the API at localhost if we run it from this Dev Container
       # this also allows API that is started from Dev Container using dotnet run to access DB at localhost
       network_mode: "host"
+
+      extra_hosts:
+        - "host.docker.internal:host-gateway"
+
