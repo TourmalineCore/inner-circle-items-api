@@ -1,5 +1,13 @@
 FROM mcr.microsoft.com/devcontainers/dotnet:1-9.0-noble
 
+
+
+# installing EntityFramework Core tooling for migrations
+RUN dotnet tool install --global dotnet-ef --version 9.0.7
+# https://stackoverflow.com/a/72727052
+# we need to manually add it to PATH otherwise it cannot find dotnet ef tool
+ENV PATH="$PATH:/root/.dotnet/tools"
+
 # [Optional] Uncomment this section to install additional OS packages.
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends \ 
