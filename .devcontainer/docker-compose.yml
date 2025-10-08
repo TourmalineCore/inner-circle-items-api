@@ -19,11 +19,3 @@ services:
       # this is needed so that we can access the API at localhost if we run it from this Dev Container
       # this also allows API that is started from Dev Container using dotnet run to access DB at localhost
       network_mode: "host"
-
-      # it is needed for GitHub codespaces or Ubuntu (probably) to add missing host.docker.internal that is part of Docker Desktop (macOS, Windows)
-      # proposed by AI Overview
-      extra_hosts:
-        - ${EXTRA_HOST_FOR_CODESPACES:-myhostv6=::1}
-
-      environment:
-        EXTRA_HOST_FOR_CODESPACES: ${CODESPACES:+host.docker.internal:host-gateway}

@@ -32,7 +32,6 @@ Add-Migration <YOUR_MIGRATION_NAME> -Project Application -Context AppDbContext
 To apply migration run the following:
 ```bash
 Update-Database -Project Application -Context AppDbContext
-ASPNETCORE_ENVIRONMENT=MockForDevelopment dotnet ef database update -- --project Application -- --context AppDbContext
 dotnet ef database update --startup-project ./Api/Api.csproj --project ./Application/Application.csproj --context AppDbContext --verbose
 ```
 

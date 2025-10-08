@@ -40,7 +40,8 @@
 	"remoteUser": "root",
 	// Use this environment variable if you need to bind mount your local source code into a new container.
 	"remoteEnv": {
-		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}",
+		"ASPNETCORE_ENVIRONMENT": "MockForDevelopment"
 	},
 	// need to open the API port to be able to open it using localhost
 	// that wes needed to connect to API running from Visual Studio IDE from Dev Container's Karate tests
