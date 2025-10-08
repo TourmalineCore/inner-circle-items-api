@@ -43,7 +43,14 @@
 		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
 	},
 	// need to open the API port to be able to open it using localhost
-	"forwardPorts": [5501]
+	// that wes needed to connect to API running from Visual Studio IDE from Dev Container's Karate tests
+	// without this or with "forwardPorts": [5501] instead http://host.docker.internal:5501 wasn't accessible from tests (but was from Dev Container curl http://host.docker.internal:5501/item-types --verbose)
+	"portsAttributes": {
+		"4501": {
+			"label": "VSCode Dev Container API Running Port",
+			"requireLocalPort": true
+		}
+	}
 
 	// Uncomment the next line to run commands after the container is created.
 	// "postCreateCommand": "cat /etc/os-release",
