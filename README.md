@@ -49,7 +49,7 @@ docker compose --profile MockForDevelopment up --build
 Then execute following command inside of the dev-container
 ```bash
 API_ROOT_URL=http://host.docker.internal:5501 java -jar /karate.jar .
-dotnet run --project ./Api --urls "http://*:4501"
+dotnet run --project ./Api
 API_ROOT_URL=http://127.0.0.1:4501 java -jar /karate.jar .
 ```
 >Note: If you run the API from within Dev Container you need to use `host.docker.internal` for all external deps liks this:

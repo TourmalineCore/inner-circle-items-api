@@ -41,7 +41,11 @@
 	// Use this environment variable if you need to bind mount your local source code into a new container.
 	"remoteEnv": {
 		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}",
-		"ASPNETCORE_ENVIRONMENT": "MockForDevelopment"
+		"ASPNETCORE_ENVIRONMENT": "MockForDevelopment",
+		// https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-9.0#default-host-configuration-sources
+		// https://andrewlock.net/8-ways-to-set-the-urls-for-an-aspnetcore-app/
+		// this will override urls in appsettings.MockForDevelopment.json and use different port when run within Dev Container to avoid using the same port
+		"URLS": "http://*:4501"
 	},
 	// need to open the API port to be able to open it using localhost
 	// that wes needed to connect to API running from Visual Studio IDE from Dev Container's Karate tests
