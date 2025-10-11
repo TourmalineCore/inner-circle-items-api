@@ -32,7 +32,6 @@ Add-Migration <YOUR_MIGRATION_NAME> -Project Application -Context AppDbContext
 To apply migration run the following:
 ```bash
 Update-Database -Project Application -Context AppDbContext
-dotnet ef database update --startup-project ./Api/Api.csproj --project ./Application/Application.csproj --context AppDbContext --verbose
 ```
 
 
@@ -49,18 +48,6 @@ docker compose --profile MockForDevelopment up --build
 Then execute following command inside of the dev-container
 ```bash
 API_ROOT_URL=http://host.docker.internal:5501 java -jar /karate.jar .
----
-dotnet run --project ./Api
-java -jar /karate.jar .
-```
->Note: If you run the API from within Dev Container you need to use `host.docker.internal` for all external deps liks this:
-```bash
-API_ROOT_URL=http://host.docker.internal:4501 AUTH_API_ROOT_URL=http://host.docker.internal:8501 java -jar /karate.jar .
-```
->Note: If you run the API from within Dev Container you need to use `host.docker.internal` for all external deps liks this:
-```bash
-API_ROOT_URL=http://localhost:4501 AUTH_API_ROOT_URL=http://host.docker.internal:8501 java -jar /karate.jar .
-API_ROOT_URL=http://localhost:4501 java -jar /karate.jar .
 ```
 
 ### Run Karate against Api, Db, and MockServer in Docker Compose
