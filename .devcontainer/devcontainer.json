@@ -56,10 +56,23 @@
 		// this will override urls in appsettings.MockForDevelopment.json and use different port when run within Dev Container to avoid using the same port
 		"URLS": "http://*:4501"
 	},
-	// need to open the API port to be able to open it using Host OS localhost
+	// need to open the API, DB, and MockServer ports to be able to open them using Host OS localhost
+	"forwardPorts": [
+		4501,
+		7501,
+		8501
+	],
 	"portsAttributes": {
 		"4501": {
 			"label": "VSCode Dev Container API Running Port",
+			"requireLocalPort": true
+		},
+		"7501": {
+			"label": "VSCode Dev Container DB Running Port",
+			"requireLocalPort": true
+		},
+		"8501": {
+			"label": "VSCode Dev Container MockServer Running Port",
 			"requireLocalPort": true
 		}
 	}
