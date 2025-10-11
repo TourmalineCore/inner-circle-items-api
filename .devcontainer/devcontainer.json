@@ -1,13 +1,20 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
-// README at: https://github.com/devcontainers/templates/tree/main/src/docker-existing-dockerfile
+// README at: https://github.com/devcontainers/templates/tree/main/src/dotnet-postgres
 {
 	"name": "TC .NET API Dev Container",
 	// this combines base compose with all service with the one that contains .NET SDK and Karate
-	"dockerComposeFile": ["../docker-compose.yml", "docker-compose.yml"],
+	"dockerComposeFile": [
+		"../docker-compose.yml",
+		"docker-compose.yml"
+	],
+	// our terminal will need .NET SDK and Karate that are part of this docker compose service
 	"service": "dotnet-sdk-with-karate",
 	// https://github.com/microsoft/vscode-remote-release/issues/5795#issuecomment-2518255296
-	// it is not possible to pass a profile name thus we need to hadrcode here services that need to be run as part of Dev Container
-	"runServices": ["inner-circle-items-api-db", "inner-circle-items-api-mock-server"],
+	// it is not possible to pass a profile name MockForDevelopment thus we need to hadrcode here services that need to be run as part of Dev Container
+	"runServices": [
+		"inner-circle-items-api-db",
+		"inner-circle-items-api-mock-server"
+	],
     "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 	"features": {
 		// this is needed to be able to call Host OS Docker (DooD)
@@ -40,25 +47,20 @@
 	// this root is needed e.g. in case when you edit files not inly in VSCode in Dev Container but also directly
 	// it might not have enough rights to write to files that are open in another editor with Admin rights
 	"remoteUser": "root",
-	// Use this environment variable if you need to bind mount your local source code into a new container.
 	"remoteEnv": {
 		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}",
+		// let's set our default envrironment here to not do it manually every time
 		"ASPNETCORE_ENVIRONMENT": "MockForDevelopment",
 		// https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-9.0#default-host-configuration-sources
 		// https://andrewlock.net/8-ways-to-set-the-urls-for-an-aspnetcore-app/
 		// this will override urls in appsettings.MockForDevelopment.json and use different port when run within Dev Container to avoid using the same port
 		"URLS": "http://*:4501"
 	},
-	// need to open the API port to be able to open it using localhost
-	// that wes needed to connect to API running from Visual Studio IDE from Dev Container's Karate tests
-	// without this or with "forwardPorts": [5501] instead http://host.docker.internal:5501 wasn't accessible from tests (but was from Dev Container curl http://host.docker.internal:5501/item-types --verbose)
+	// need to open the API port to be able to open it using Host OS localhost
 	"portsAttributes": {
 		"4501": {
 			"label": "VSCode Dev Container API Running Port",
 			"requireLocalPort": true
 		}
 	}
-
-	// Uncomment the next line to run commands after the container is created.
-	// "postCreateCommand": "cat /etc/os-release",
 }
