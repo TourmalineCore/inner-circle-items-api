@@ -49,17 +49,18 @@ docker compose --profile MockForDevelopment up --build
 Then execute following command inside of the dev-container
 ```bash
 API_ROOT_URL=http://host.docker.internal:5501 java -jar /karate.jar .
+---
 dotnet run --project ./Api
-API_ROOT_URL=http://127.0.0.1:4501 java -jar /karate.jar .
+java -jar /karate.jar .
 ```
 >Note: If you run the API from within Dev Container you need to use `host.docker.internal` for all external deps liks this:
 ```bash
-API_ROOT_URL=http://host.docker.internal:5501 AUTH_API_ROOT_URL=http://host.docker.internal:8501 java -jar /karate.jar .
+API_ROOT_URL=http://host.docker.internal:4501 AUTH_API_ROOT_URL=http://host.docker.internal:8501 java -jar /karate.jar .
 ```
 >Note: If you run the API from within Dev Container you need to use `host.docker.internal` for all external deps liks this:
 ```bash
-API_ROOT_URL=http://localhost:5501 AUTH_API_ROOT_URL=http://host.docker.internal:8501 java -jar /karate.jar .
-API_ROOT_URL=http://localhost:5501 java -jar /karate.jar .
+API_ROOT_URL=http://localhost:4501 AUTH_API_ROOT_URL=http://host.docker.internal:8501 java -jar /karate.jar .
+API_ROOT_URL=http://localhost:4501 java -jar /karate.jar .
 ```
 
 ### Run Karate against Api, Db, and MockServer in Docker Compose
@@ -72,7 +73,7 @@ docker compose --profile MockForTests up --build
 
 Then execute following command inside of the dev-container
 ```bash
-java -jar /karate.jar .
+API_ROOT_URL=http://localhost:6501 java -jar /karate.jar .
 ```
 
 ### Running Karate Tests, Api, Db, and MockServer in Docker Compose
@@ -84,7 +85,7 @@ docker compose --profile MockForPullRequest up --build
 ```
 >Note: this also includes Karate Tests run by default. However, if you want to run the test again from Dev Container execute:
 ```bash
-java -jar /karate.jar .
+API_ROOT_URL=http://localhost:6501 java -jar /karate.jar .
 ```
 
 ## Swagger
