@@ -27,7 +27,9 @@
 				"karatelabs.karate",
 				"bierner.markdown-mermaid",
                 // C# Dev Kit recommended extension
-                "ms-dotnettools.csdevkit"
+                "ms-dotnettools.csdevkit",
+				// Rest Client for *.http files
+				"humao.rest-client"
 			]
 		}
 	},
