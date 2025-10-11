@@ -8,8 +8,8 @@ services:
       build:
         context: .
         dockerfile: .devcontainer/Dockerfile
-      # Mounts the project folder to '/workspaces/inner-circle-items-api'. While this file is in .devcontainer,
-      # mounts are relative to the first file in the list, which is a level up.
+
+      # Mounts the project folder to '/workspaces/inner-circle-items-api'
       volumes:
         - ${LOCAL_WORKSPACE_FOLDER:-./}:/workspaces/inner-circle-items-api
 
