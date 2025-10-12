@@ -22,7 +22,7 @@ jobs:
         dotnet-version: 9.0.x
     
     - name: Install siren-gen tool
-      run: dotnet tool install -g Gman.Siren
+      run: dotnet tool install -g Gman.Siren --version 9.0.3
 
     - name: Restore application dependencies
       run: dotnet restore 
