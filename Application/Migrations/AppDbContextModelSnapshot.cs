@@ -67,7 +67,7 @@ namespace Application.Migrations
 
                     b.HasIndex("ItemTypeId");
 
-                    b.ToTable("Items");
+                    b.ToTable("Items", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entities.ItemType", b =>
@@ -86,16 +86,12 @@ namespace Application.Migrations
                     b.Property<long>("TenantId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Test")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("ItemTypes");
+                    b.ToTable("ItemTypes", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entities.Item", b =>
