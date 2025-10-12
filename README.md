@@ -83,4 +83,25 @@ However, UI doesn't support requests execution, this requires adding Auth dialog
 
 ## Database Schema
 <!--- SIREN_START -->
+```mermaid
+	erDiagram
+	%%{init: {'theme':'neutral'}}%%
+	Item {
+		bigint Id PK
+		charactervarying512 Description 
+		bigint HolderEmployeeId 
+		bigint ItemTypeId FK
+		charactervarying256 Name 
+		numeric Price 
+		date PurchaseDate 
+		charactervarying128 SerialNumber 
+		bigint TenantId 
+	}
+	ItemType {
+		bigint Id PK
+		charactervarying128 Name 
+		bigint TenantId 
+	}
+Item}o--||ItemType : ""
+```
 <!--- SIREN_END -->
