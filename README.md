@@ -101,6 +101,7 @@ However, UI doesn't support requests execution, this requires adding Auth dialog
 		bigint Id PK
 		charactervarying128 Name 
 		bigint TenantId 
+		text Test 
 	}
 Item}o--||ItemType : ""
 ```
