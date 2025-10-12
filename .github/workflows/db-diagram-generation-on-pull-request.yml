@@ -35,18 +35,8 @@ jobs:
     - name: Consolidate packages (including symbols)
       run: find . -name "*.dll" -type f -exec cp {} ./output \;
 
-    - name: Echo packages
-      run: find ./output -name "*.dll" -type f -exec echo {} \;
-
     - name: Run siren-gen on ModelSnapshot
       run: siren-gen --outputPath "README.md" --assemblyPath "./output/Application.dll" --markdownAnchor "## Database Schema"
-    
-    - name: 'Upload README.md'
-      uses: actions/upload-artifact@v4
-      with:
-        name: README
-        path: README.md
-        retention-days: 5
 
     - name: Commit README
       run: |
