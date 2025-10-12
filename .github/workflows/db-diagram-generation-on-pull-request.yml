@@ -39,4 +39,4 @@ jobs:
       run: find ./output -name "*.dll" -type f -exec echo {} \;
 
     - name: Run siren-gen on ModelSnapshot
-      run: siren-gen "./output/Application.dll" "README.md" "## Database Schema"
+      run: siren-gen --outputPath "README.md" --assemblyPath "./output/Application.dll" --markdownAnchor "## Database Schema"
