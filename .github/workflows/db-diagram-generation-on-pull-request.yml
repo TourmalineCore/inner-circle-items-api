@@ -40,3 +40,10 @@ jobs:
 
     - name: Run siren-gen on ModelSnapshot
       run: siren-gen --outputPath "README.md" --assemblyPath "./output/Application.dll" --markdownAnchor "## Database Schema"
+    
+    - name: 'Upload README.md'
+      uses: actions/upload-artifact@v4
+      with:
+        name: README
+        path: README.md
+        retention-days: 5
