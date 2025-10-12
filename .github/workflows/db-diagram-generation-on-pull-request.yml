@@ -47,3 +47,10 @@ jobs:
         name: README
         path: README.md
         retention-days: 5
+
+    - name: Commit README
+      run: |
+        git config user.email "contact@tourmalinecore.com"
+        git config user.name "Workflow Action"
+        git commit README.md -m "docs: Update Mermaid DB Schema Diagram in README.md (siren-gen)" || echo "No changes to commit"
+        git push origin || echo "No changes to commit"
