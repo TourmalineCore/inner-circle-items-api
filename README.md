@@ -82,23 +82,26 @@ You can fetch OpenApi endpoints and types contract using this path `/swagger/ope
 However, UI doesn't support requests execution, this requires adding Auth dialog to pass a token. It is a bit trickier starting from .NET 9 due to the change in support of Swagger packagies family `Swashbuckle`, read [here](https://learn.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-8.0&tabs=visual-studio) and [there](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/openapi/overview?view=aspnetcore-9.0&preserve-view=true) about that more.
 
 ## Database Schema
-
+<!--- SIREN_START -->
 ```mermaid
-erDiagram
-    ItemTypes ||--o{ Item : "1-to-many"
-    
-    Item {
-        long Id PK
-        long TenantId
-        string Name
-        string SerialNumber "nullable"
-        long ItemTypeId FK
-        decimal Price
-        string Description
-        DateOnly PurchaseDate "nullable (possibly will be changed to NodaTime)"
-        long HolderId FK "nullable"
-    }
-    ItemTypes {
-        long Id
-        string Name
-    }
+	erDiagram
+	%%{init: {'theme':'neutral'}}%%
+	Item {
+		bigint Id PK
+		charactervarying512 Description 
+		bigint HolderEmployeeId 
+		bigint ItemTypeId FK
+		charactervarying256 Name 
+		numeric Price 
+		date PurchaseDate 
+		charactervarying128 SerialNumber 
+		bigint TenantId 
+	}
+	ItemType {
+		bigint Id PK
+		charactervarying128 Name 
+		bigint TenantId 
+	}
+Item}o--||ItemType : ""
+```
+<!--- SIREN_END -->
