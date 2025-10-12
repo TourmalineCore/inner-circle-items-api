@@ -7,6 +7,8 @@
         }
         public string Name { get; set; }
 
+        public string Test { get; set; }
+
         public List<Item> Items { get; set; }
     }
 }
