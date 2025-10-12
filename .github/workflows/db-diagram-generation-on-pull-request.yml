@@ -1,0 +1,42 @@
+name: DB Diagram Generation
+
+on:
+  push:
+    branches:
+      - feature/*
+    # need to execute only when migrations changed
+    # paths:
+    #   - '**/Migrations/**'
+
+jobs:
+  db-diagram-generation:
+    runs-on: ubuntu-24.04
+    steps:
+    - name: Check out the repo
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+    
+    - name: Install siren-gen tool
+      run: dotnet tool install -g Gman.Siren
+
+    - name: Restore application dependencies
+      run: dotnet restore 
+
+    - name: Build application
+      run: dotnet build
+
+    - name: Create output folder
+      run: mkdir ./output
+
+    - name: Consolidate packages (including symbols)
+      run: find . -name "*.dll" -type f -exec cp {} ./output \;
+
+    - name: Echo packages
+      run: find ./output -name "*.dll" -type f -exec echo {} \;
+
+    - name: Run siren-gen on ModelSnapshot
+      run: siren-gen "./output/Application.dll" "README.md" "## Database Schema"
