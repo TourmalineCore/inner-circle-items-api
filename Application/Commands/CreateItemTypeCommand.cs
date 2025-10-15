@@ -4,7 +4,7 @@ namespace Application.Commands;
 
 public class CreateItemTypeCommandParams
 {
-    public string Name { get; set; }
+    public required string Name { get; set; }
 }
 
 public class CreateItemTypeCommand

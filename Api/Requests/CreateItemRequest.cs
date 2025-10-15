@@ -6,7 +6,7 @@ public class CreateItemRequest
 {
     [MaxLength(256)]
     [Required]
-    public string Name { get; set; }
+    public required string Name { get; set; }
 
     [MaxLength(128)]
     public string SerialNumber { get; set; } = string.Empty;
