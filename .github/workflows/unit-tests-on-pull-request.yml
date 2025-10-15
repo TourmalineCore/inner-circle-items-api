@@ -22,7 +22,7 @@ jobs:
         run: dotnet restore 
 
       - name: Build application
-        run: dotnet build
+        run: dotnet build --property:TreatWarningsAsErrors=true
 
       - name: Run unit-tests
         run: dotnet test  
