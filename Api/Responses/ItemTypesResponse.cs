@@ -2,6 +2,6 @@
 {
     public class ItemTypesResponse
     {
-        public List<ItemTypeDto> ItemTypes { get; set; }
+        public required List<ItemTypeDto> ItemTypes { get; set; }
     }
 }

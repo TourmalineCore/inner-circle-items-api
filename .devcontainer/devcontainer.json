@@ -15,21 +15,20 @@
 		"inner-circle-items-api-db",
 		"inner-circle-items-api-mock-server"
 	],
-    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 	"features": {
 		// this is needed to be able to call Host OS Docker (DooD)
-		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
-		}
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
 	},
 	"customizations": {
 		"vscode": {
 			"extensions": [
 				"karatelabs.karate",
 				"bierner.markdown-mermaid",
-                // C# Dev Kit recommended extension
-                "ms-dotnettools.csdevkit",
-				// Rest Client for *.http files
-				"humao.rest-client"
+				"ms-dotnettools.csdevkit", // C# Dev Kit recommended extension
+				"humao.rest-client", // Rest Client for *.http files
+				"EditorConfig.EditorConfig", // For code auto-formatting using .editorconfig
+				"github.vscode-github-actions" // For workflows editing
 			]
 		}
 	},

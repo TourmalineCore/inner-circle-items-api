@@ -1,10 +1,10 @@
+using System.ComponentModel.DataAnnotations;
 using Api.Requests;
 using Api.Responses;
 using Application.Commands;
 using Application.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 using TourmalineCore.AspNetCore.JwtAuthentication.Core.Filters;
 
 namespace Api.Controllers
@@ -41,9 +41,10 @@ namespace Api.Controllers
                         Price = x.Price,
                         Description = x.Description,
                         PurchaseDate = x.PurchaseDate,
-                        HolderEmployee = (x.HolderEmployeeId == null) 
-                            ? null 
-                            : new EmployeeDto {
+                        HolderEmployee = (x.HolderEmployeeId == null)
+                            ? null
+                            : new EmployeeDto
+                            {
                                 Id = x.HolderEmployeeId.Value
                             }
                     })

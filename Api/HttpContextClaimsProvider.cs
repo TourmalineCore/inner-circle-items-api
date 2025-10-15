@@ -1,5 +1,5 @@
-﻿using Application;
-using System.Security.Claims;
+﻿using System.Security.Claims;
+using Application;
 
 namespace Api;
 
@@ -16,8 +16,9 @@ public class HttpContextClaimsProvider : IClaimsProvider
 
     public long TenantId
     {
-        get { 
-            return _tenantId; 
+        get
+        {
+            return _tenantId;
         }
     }
 }

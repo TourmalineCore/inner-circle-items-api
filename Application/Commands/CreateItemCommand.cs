@@ -6,19 +6,19 @@ namespace Application.Commands;
 
 public class CreateItemCommandParams
 {
-    public string Name { get; set; }
+    public required string Name { get; set; }
 
-    public string SerialNumber { get; set; }
+    public required string SerialNumber { get; set; }
 
-    public long ItemTypeId { get; set; }
+    public required long ItemTypeId { get; set; }
 
-    public decimal Price { get; set; }
+    public required decimal Price { get; set; }
 
-    public string Description { get; set; }
+    public required string Description { get; set; }
 
-    public DateOnly? PurchaseDate { get; set; }
+    public required DateOnly? PurchaseDate { get; set; }
 
-    public long? HolderEmployeeId { get; set; }
+    public required long? HolderEmployeeId { get; set; }
 }
 
 public class CreateItemCommand
