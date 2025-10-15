@@ -48,7 +48,6 @@ jobs:
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        shell: powershell
         run: |
           ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"TourmalineCore_inner-circle-items-api" /o:"tourmalinecore" /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
           dotnet build
