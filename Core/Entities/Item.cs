@@ -17,7 +17,7 @@
 
         public string Description { get; set; }
 
-        public DateOnly? PurchaseDate { get; set; }  
+        public DateOnly? PurchaseDate { get; set; }
 
         public long? HolderEmployeeId { get; set; }
     }

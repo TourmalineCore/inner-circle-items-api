@@ -27,7 +27,7 @@ internal static class TenantAppDbContextExtensionsTestsRelated
             TestsRelatedTenantId
         );
     }
-    
+
     public async static Task AddEntityAndSaveAsync<TEntity>(
         this TenantAppDbContext context,
         TEntity newEntity

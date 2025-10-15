@@ -17,8 +17,9 @@ public static class DependencyInjection
 
         var connectionString = configuration.GetConnectionString(DefaultConnection);
 
-        services.AddDbContext<AppDbContext>(options => { 
-            options.UseNpgsql(connectionString); 
+        services.AddDbContext<AppDbContext>(options =>
+        {
+            options.UseNpgsql(connectionString);
         });
 
         services.AddScoped<TenantAppDbContext>();

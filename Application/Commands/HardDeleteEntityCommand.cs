@@ -23,7 +23,7 @@ public class HardDeleteEntityCommand
         {
             return false;
         }
-        
+
         _context
             .Set<TEntity>()
             .Remove(entity);

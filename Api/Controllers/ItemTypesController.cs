@@ -1,10 +1,10 @@
+using System.ComponentModel.DataAnnotations;
 using Api.Requests;
 using Api.Responses;
 using Application.Commands;
 using Application.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 using TourmalineCore.AspNetCore.JwtAuthentication.Core.Filters;
 
 namespace Api.Controllers
@@ -72,7 +72,8 @@ namespace Api.Controllers
             [Required][FromRoute] long itemTypeId
         )
         {
-            return new { 
+            return new
+            {
                 isDeleted = await hardDeleteItemTypeCommand.ExecuteAsync(itemTypeId)
             };
         }

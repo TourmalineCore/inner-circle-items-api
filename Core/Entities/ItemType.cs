@@ -2,7 +2,7 @@
 {
     public class ItemType : EntityBase
     {
-        public ItemType() 
+        public ItemType()
         {
         }
         public string Name { get; set; }
