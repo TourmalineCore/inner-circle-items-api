@@ -27,7 +27,8 @@
 				"bierner.markdown-mermaid",
 				"ms-dotnettools.csdevkit", // C# Dev Kit recommended extension
 				"humao.rest-client", // Rest Client for *.http files
-				"EditorConfig.EditorConfig"
+				"EditorConfig.EditorConfig", // For code auto-formatting using .editorconfig
+				"github.vscode-github-actions" // For workflows editing
 			]
 		}
 	},
