@@ -4,9 +4,7 @@ name: SonarQube
 on:
   push:
     branches:
-      - feature/*
-  pull_request:
-    types: [opened, synchronize, reopened]
+      - feature/add_sonar_qube_for_sast
 
 jobs:
   build:
