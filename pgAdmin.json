@@ -1,0 +1,14 @@
+{
+    "Servers": {
+        "1": {
+            "Group": "Servers",
+            "Name": "inner-circle-items-api-db server",
+            "Host": "host.docker.internal",
+            "Port": 7501,
+            "MaintenanceDB": "inner-circle-items-api-db",
+            "Username": "postgres",
+            "SSLMode": "prefer",
+            "Favorite": true
+        }
+    }
+}
