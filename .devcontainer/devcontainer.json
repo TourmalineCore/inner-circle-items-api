@@ -25,7 +25,9 @@
 			"extensions": [
 				"karatelabs.karate",
 				"bierner.markdown-mermaid",
-				"ms-dotnettools.csdevkit", // C# Dev Kit recommended extension
+				"ms-dotnettools.csdevkit@1.73.14", // C# Dev Kit recommended extension
+				"ms-dotnettools.csharp@2.96.3",
+				"ms-dotnettools.vscode-dotnet-runtime@2.3.9",
 				"humao.rest-client", // Rest Client for *.http files
 				"EditorConfig.EditorConfig", // For code auto-formatting using .editorconfig
 				"github.vscode-github-actions" // For workflows editing

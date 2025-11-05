@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/dotnet:1-9.0-noble
+FROM mcr.microsoft.com/devcontainers/dotnet:1.5.5-9.0-noble
 
 # installing EntityFramework Core tooling for migrations
 RUN dotnet tool install --global dotnet-ef --version 9.0.7
