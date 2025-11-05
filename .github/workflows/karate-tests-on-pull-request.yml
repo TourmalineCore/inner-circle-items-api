@@ -13,4 +13,4 @@ jobs:
     - name: Run service via docker-compose and run Karate-tests
     # Find text with 'failed' and 'passed' in logs from karate-testing container
       run: |
-        docker compose --profile MockForPullRequest up --abort-on-container-exit --exit-code-from inner-circle-items-api-karate-tests
+        docker compose --profile MockForPullRequest up --abort-on-container-exit --exit-code-from inner-circle-items-api-karate-tests > /dev/null 2>&1
