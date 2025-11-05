@@ -1,11 +1,11 @@
 Feature: Item Types
-# https://github.com/karatelabs/karate/issues/1191
-# https://github.com/karatelabs/karate?tab=readme-ov-file#karate-fork
+    # https://github.com/karatelabs/karate/issues/1191
+    # https://github.com/karatelabs/karate?tab=readme-ov-file#karate-fork
 
-Background:
-* header Content-Type = 'application/json'
+  Background:
+    * header Content-Type = 'application/json'
 
-Scenario: Happy Path
+  Scenario: Happy Path
 
     * def jsUtils = read('./js-utils.js')
     * def authApiRootUrl = jsUtils().getEnvVariable('AUTH_API_ROOT_URL')
@@ -19,7 +19,7 @@ Scenario: Happy Path
     And request
     """
     {
-        "login": "#(authLogin)",
+        "login": "test-error-login-for-check-tests-failing",
         "password": "#(authPassword)"
     }
     """
