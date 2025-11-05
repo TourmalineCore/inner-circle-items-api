@@ -19,7 +19,7 @@ Scenario: Happy Path
     And request
     """
     {
-        "login": "lets-fail-tests!",
+        "login": "#(authLogin)",
         "password": "#(authPassword)"
     }
     """
