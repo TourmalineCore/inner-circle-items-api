@@ -19,7 +19,7 @@ Feature: Item Types
     And request
     """
     {
-        "login": "test-error-login-for-check-tests-failing",
+        "login": "#(authLogin)",
         "password": "#(authPassword)"
     }
     """
