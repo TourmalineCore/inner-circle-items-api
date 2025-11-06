@@ -13,17 +13,7 @@ jobs:
     - name: Run service via docker-compose and run Karate-tests
     # Find text with 'failed' and 'passed' in logs from karate-testing container
       run: |
-        LOGS=$(docker compose --profile MockForPullRequest up --abort-on-container-exit)
-        echo "$LOGS"
-        FAILED=$(echo "$LOGS" | grep -oP 'failed: *\K\d+')
-        PASSED=$(echo "$LOGS" | grep -oP 'passed: *\K\d+')
-        echo "Failed tests: $FAILED"
-        echo "Passed tests: $PASSED"
-        if [ "$FAILED" -gt 0 ]; then
-          echo "Failed tests found! Failing the pipeline..."
-          exit 1
-        fi
-        if [ "$PASSED" -eq 0 ]; then
-          echo "No tests passed! Failing the pipeline..."
-          exit 1
-        fi        
+        # The option --exit-code-from ensures that the command's exit code exactly matches the exit code of the specified service.
+        # Learn more about '> /dev/null 2>&1': https://stackoverflow.com/a/42919998
+        # In essence it merges output and error streams and doesn't show errors in the terminal to avoid leakage of secrets in the pipeline
+        docker compose --profile MockForPullRequest up --exit-code-from inner-circle-items-api-karate-tests > /dev/null 2>&1
