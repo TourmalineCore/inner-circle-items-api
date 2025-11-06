@@ -40,6 +40,9 @@ services:
       PGADMIN_DEFAULT_PASSWORD: postgres
       PGADMIN_CONFIG_SERVER_MODE: 'False'
       PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
+      # these 2 variables PGADMIN_CONFIG_PROXY_X_HOST_COUNT and PGADMIN_CONFIG_PROXY_X_PREFIX_COUNT
+      # are needed to enable PgAdmin in Codespaces scenario when it is behind a reverse proxy
+      # https://github.com/orgs/community/discussions/17918
       PGADMIN_CONFIG_PROXY_X_HOST_COUNT: 1
       PGADMIN_CONFIG_PROXY_X_PREFIX_COUNT: 1
     ports:
