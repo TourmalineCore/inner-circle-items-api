@@ -23,7 +23,5 @@
         public DateOnly? PurchaseDate { get; set; }
 
         public long? HolderEmployeeId { get; set; }
-
-        public string Test { get; set; }
     }
 }
