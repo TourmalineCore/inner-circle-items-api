@@ -34,6 +34,7 @@ To apply migration run the following:
 Update-Database -Project Application -Context AppDbContext
 ```
 
+
 ## Karate Tests
 
 ### Run Karate Tests Against Api Running in IDE (not Docker Compose)
