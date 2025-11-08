@@ -98,4 +98,36 @@ public class CreateItemCommand
 
         return item.Id;
     }
+
+    public async Task<long> ExecuteDuplication2Async(CreateItemCommandParams createItemCommandParams)
+    {
+        var itemTypeIdDoesNotExistWithinTenant = await _context
+            .QueryableWithinTenant<ItemType>()
+            .AllAsync(x => x.Id != createItemCommandParams.ItemTypeId);
+
+        if (itemTypeIdDoesNotExistWithinTenant)
+        {
+            throw new Exception($"Passed item type where id={createItemCommandParams.ItemTypeId} is not found within tenant where id={_claimsProvider.TenantId}");
+        }
+
+        var item = new Item
+        {
+            TenantId = _claimsProvider.TenantId,
+            Name = createItemCommandParams.Name,
+            SerialNumber = createItemCommandParams.SerialNumber,
+            ItemTypeId = createItemCommandParams.ItemTypeId,
+            Price = createItemCommandParams.Price,
+            Description = createItemCommandParams.Description,
+            PurchaseDate = createItemCommandParams.PurchaseDate,
+            HolderEmployeeId = createItemCommandParams.HolderEmployeeId
+        };
+
+        await _context
+            .Items
+            .AddAsync(item);
+
+        await _context.SaveChangesAsync();
+
+        return item.Id;
+    }
 }
