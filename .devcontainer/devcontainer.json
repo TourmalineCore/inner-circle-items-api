@@ -13,7 +13,8 @@
 	// it is not possible to pass a profile name MockForDevelopment thus we need to hadrcode here services that need to be run as part of Dev Container
 	"runServices": [
 		"inner-circle-items-api-db",
-		"inner-circle-items-api-mock-server"
+		"inner-circle-items-api-mock-server",
+		"inner-circle-items-api-pgadmin"
 	],
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 	"features": {
@@ -61,7 +62,8 @@
 	"forwardPorts": [
 		4501,
 		7501,
-		8501
+		8501,
+		9501
 	],
 	"portsAttributes": {
 		"4501": {
@@ -74,6 +76,10 @@
 		},
 		"8501": {
 			"label": "VSCode Dev Container MockServer Running Port",
+			"requireLocalPort": true
+		},
+		"9501": {
+			"label": "VSCode Dev Container PgAdmin Running Port",
 			"requireLocalPort": true
 		}
 	}
