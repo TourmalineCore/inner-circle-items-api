@@ -19,13 +19,6 @@ jobs:
         runCmd: |
           dotnet-coverage collect -f cobertura --session-id calculate-project-coverage-session --include-files "./**/bin/Debug/net9.0/*.dll" "dotnet test --no-build"
 
-    - name: Install coverage
-      run: pip install coverage==7.11.3
-
-    - name: Combine coverage reports
-      run: |
-        coverage json --data-file ./output.cobertura.xml -o output.cobertura.json
-
     - name: Print Coverage
       run: |
-        echo "$(jq -r .totals.percent_covered_display output.cobertura.json)"
+        echo "$(cat output.cobertura.xml | xq -x /coverage/@line-rate)"

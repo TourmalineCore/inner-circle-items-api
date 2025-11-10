@@ -14,7 +14,7 @@ ENV PATH="$PATH:/root/.dotnet/tools"
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive \
     apt-get -y install --no-install-recommends \ 
-    curl unzip default-jre-headless jq
+    curl unzip default-jre-headless xq
 
 RUN curl -o /karate.jar -L 'https://github.com/intuit/karate/releases/download/v1.5.1/karate-1.5.1.jar'
 
