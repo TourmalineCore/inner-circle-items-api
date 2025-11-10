@@ -17,6 +17,7 @@ jobs:
       with:
         runCmd: |
           dotnet-coverage collect -f cobertura --session-id calculate-project-coverage-session --include-files "./**/bin/Debug/net9.0/*.dll" "dotnet test --no-build"
+        push: never
 
     - name: Upload combined coverage artifact
       uses: actions/upload-artifact@v4
@@ -34,9 +35,9 @@ jobs:
     - name: Checkout repository 
       uses: actions/checkout@v4
     
-    - name: Download jq
+    - name: Install xq
       run: |
-        sudo apt install jq
+        apt install xq
     
     - name: Download combined coverage
       uses: actions/download-artifact@v5
