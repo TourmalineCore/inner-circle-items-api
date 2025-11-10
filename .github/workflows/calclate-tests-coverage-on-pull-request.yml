@@ -17,6 +17,7 @@ jobs:
       with:
         runCmd: |
           dotnet-coverage collect -f cobertura --session-id calculate-project-coverage-session --include-files "./**/bin/Debug/net9.0/*.dll" "dotnet test --no-build"
+          dotnet-coverage shutdown calculate-project-coverage-session
         push: never
 
     - name: Upload combined coverage artifact
