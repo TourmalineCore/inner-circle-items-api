@@ -37,7 +37,7 @@ jobs:
     
     - name: Install xq
       run: |
-        apt install xq
+        sudo apt install xq
     
     - name: Download combined coverage
       uses: actions/download-artifact@v5
