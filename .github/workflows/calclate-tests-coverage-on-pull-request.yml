@@ -19,13 +19,8 @@ jobs:
         runCmd: |
           dotnet-coverage collect -f cobertura --session-id calculate-project-coverage-session --include-files "./**/bin/Debug/net9.0/*.dll" "dotnet test --no-build"
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: "3.12"
-
     - name: Install coverage
-      run: python pip install coverage==7.11.3
+      run: pip install coverage==7.11.3
 
     - name: Combine coverage reports
       run: |
