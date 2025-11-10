@@ -1,7 +1,10 @@
 FROM mcr.microsoft.com/devcontainers/dotnet:1.5.5-9.0-noble
 
 # installing EntityFramework Core tooling for migrations
-RUN dotnet tool install --global dotnet-ef --version 9.0.7
+RUN dotnet tool install --global dotnet-ef --version 9.0.7 && \
+    dotnet tool install --global dotnet-coverage --version 18.1.0 && \
+    dotnet tool install --global dotnet-reportgenerator-globaltool --version 5.4.18
+
 # https://stackoverflow.com/a/72727052
 # we need to manually add it to PATH otherwise it cannot find dotnet ef tool
 ENV PATH="$PATH:/root/.dotnet/tools"
@@ -11,7 +14,7 @@ ENV PATH="$PATH:/root/.dotnet/tools"
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive \
     apt-get -y install --no-install-recommends \ 
-    curl unzip default-jre-headless
+    curl unzip default-jre-headless jq
 
 RUN curl -o /karate.jar -L 'https://github.com/intuit/karate/releases/download/v1.5.1/karate-1.5.1.jar'
 

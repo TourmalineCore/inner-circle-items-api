@@ -1,0 +1,36 @@
+# main part of the workflow was taken from https://github.com/gman-au/not-again/blob/master/.github/workflows/siren-gen.yml
+name: Tests Coverage
+
+on:
+  push:
+    branches:
+      - feature/*
+
+jobs:
+  code-coverage-generation:
+    runs-on: ubuntu-24.04
+    steps:
+    - name: Check out the repo
+      uses: actions/checkout@v4
+
+    - name: Calculate Unit Tests Coverage
+      uses: devcontainers/ci@v0.3
+      with:
+        runCmd: |
+          dotnet-coverage collect -f cobertura --session-id calculate-project-coverage-session --include-files "./**/bin/Debug/net9.0/*.dll" "dotnet test --no-build"
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+
+    - name: Install coverage
+      run: python pip install coverage==7.11.3
+
+    - name: Combine coverage reports
+      run: |
+        coverage json --data-file ./output.cobertura.xml -o output.cobertura.json
+
+    - name: Print Coverage
+      run: |
+        echo "$(jq -r .totals.percent_covered_display output.cobertura.json)"
