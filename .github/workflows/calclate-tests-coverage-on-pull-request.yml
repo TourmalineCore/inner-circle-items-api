@@ -43,8 +43,7 @@ jobs:
       uses: actions/download-artifact@v5
       with:
         name: full-coverage
-        path: output.cobertura.xml
 
     - name: Find calculated test coverage
       run: |
-        echo "CALCULATED_COVERAGE=$(cat full-coverage/output.cobertura.xml | xq -x /coverage/@line-rate)" >> "$GITHUB_ENV"
+        echo "CALCULATED_COVERAGE=$(cat output.cobertura.xml | xq -x /coverage/@line-rate)" >> "$GITHUB_ENV"
