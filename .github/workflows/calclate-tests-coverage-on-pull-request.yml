@@ -16,6 +16,8 @@ jobs:
       uses: devcontainers/ci@v0.3
       with:
         runCmd: |
+          dotnet build
+
           dotnet-coverage collect -f cobertura --session-id calculate-project-coverage-session --include-files "./**/bin/Debug/net9.0/*.dll" "dotnet test --no-build" &
           
           echo "Waiting for all background processes to complete..."
