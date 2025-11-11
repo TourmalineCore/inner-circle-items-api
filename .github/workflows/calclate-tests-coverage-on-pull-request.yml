@@ -24,6 +24,10 @@ jobs:
           # rounded to 2 decimal digits
           echo "CALCULATED_COVERAGE=$(printf "%.2f\n" "$line_coverage_percent")" >> "$GITHUB_ENV"
         push: never
+    
+    - name: Check found coverage scores and color
+      run: |
+        echo $CALCULATED_COVERAGE
 
     - name: Upload combined coverage artifact
       uses: actions/upload-artifact@v4
