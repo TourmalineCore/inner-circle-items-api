@@ -18,7 +18,12 @@ jobs:
         runCmd: |
           dotnet build
 
-          dotnet-coverage collect -f cobertura --session-id calculate-project-coverage-session --include-files "./**/bin/Debug/net9.0/*.dll" "dotnet test --no-build"
+          dotnet-coverage collect \
+            -f cobertura \
+            -o output.cobertura.xml
+            --session-id calculate-coverage-session \
+            --include-files "./**/bin/Debug/net9.0/*.dll" \
+            dotnet test --no-build
           
           line_coverage_float=$(cat output.cobertura.xml | xq -x /coverage/@line-rate)
 
