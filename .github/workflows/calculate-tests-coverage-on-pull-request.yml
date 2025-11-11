@@ -79,7 +79,7 @@ jobs:
         python3 - <<'PY'
         import os
 
-        new_coverage = int(os.getenv("CALCULATED_COVERAGE"))
+        new_coverage = float(os.getenv("CALCULATED_COVERAGE"))
 
         if new_coverage < 60:
           new_badge_color = "crimson"
