@@ -6,7 +6,7 @@ on:
       - feature/*
 
 jobs:
-  calculate-code-coverage:
+  calculate-coverage:
     runs-on: ubuntu-24.04
     steps:
     - name: Check out the repo
@@ -21,21 +21,46 @@ jobs:
           dotnet-coverage collect \
             -f cobertura \
             -o units-coverage.xml \
-            --session-id calculate-coverage-session \
             --include-files "./**/bin/Debug/net9.0/*.dll" \
             dotnet test --no-build
         push: never
 
-    - name: Upload combined coverage artifact
+    - name: Calculate E2E Tests Coverage
+      uses: devcontainers/ci@v0.3
+      with:
+        runCmd: |
+          dotnet-coverage collect \
+            -f cobertura \
+            -o e2e-coverage.xml \
+            --session-id calculate-e2e-coverage-session \
+            --include-files "./**/bin/Debug/net9.0/*.dll" \
+            dotnet run --project ./Api --no-build
+        push: never
+
+    - name: Run E2E Tests And Save Coverage
+      uses: devcontainers/ci@v0.3
+      with:
+        runCmd: |
+          java -jar /karate.jar .
+
+          dotnet-coverage shutdown calculate-e2e-coverage-session
+        push: never
+
+    - name: Upload Unit Tests Coverage
       uses: actions/upload-artifact@v4
       with:
         name: units-coverage
         path: units-coverage.xml
 
+    - name: Upload E2E Tests Coverage
+      uses: actions/upload-artifact@v4
+      with:
+        name: e2e-coverage
+        path: e2e-coverage.xml
+
   update-coverage:
-    name: Update Coverage
     runs-on: ubuntu-24.04
-    needs: [calculate-code-coverage]
+    needs: [calculate-coverage]
     permissions:
       contents: write
     steps:
@@ -51,6 +76,12 @@ jobs:
       with:
         name: units-coverage
         path: coverage
+    
+    - name: Download E2E Coverage
+      uses: actions/download-artifact@v5
+      with:
+        name: e2e-coverage
+        path: coverage
       
       # Find existing score and color by line matching in README and get calculated coverage from json file
     - name: Find existing and calculated test coverage scores and existing color
@@ -63,23 +94,31 @@ jobs:
         units_line_coverage_percent=$(awk -v num="$units_line_coverage_float" 'BEGIN { print num * 100 }')
         
         # round to 2 decimal digits
-        echo "CALCULATED_COVERAGE=$(printf "%.2f\n" "$units_line_coverage_percent")" >> "$GITHUB_ENV"    
+        echo "UNITS_CALCULATED_COVERAGE=$(printf "%.2f\n" "$units_line_coverage_percent")" >> "$GITHUB_ENV"
+
+        e2e_line_coverage_float=$(cat coverage/e2e-coverage.xml | xq -x /coverage/@line-rate)
+
+        e2e_line_coverage_percent=$(awk -v num="$e2e_line_coverage_float" 'BEGIN { print num * 100 }')
+        
+        # round to 2 decimal digits
+        echo "E2E_CALCULATED_COVERAGE=$(printf "%.2f\n" "$e2e_line_coverage_percent")" >> "$GITHUB_ENV"    
 
     - name: Check found coverage scores and color
       run: |
         echo $EXISTING_COVERAGE
-        echo $CALCULATED_COVERAGE
+        echo $UNITS_CALCULATED_COVERAGE
+        echo $E2E_CALCULATED_COVERAGE
         echo $EXISTING_BADGE_COLOR
 
     # 0-60: red; 60-70: orange; 70-80: yellow; 80-90: yellowish green; 90-100: green
     # set new color and then add its variable to workflow's environment
     - name: Define new badge color 
-      if: ${{ env.EXISTING_COVERAGE != env.CALCULATED_COVERAGE }} 
+      if: ${{ env.EXISTING_COVERAGE != env.UNITS_CALCULATED_COVERAGE }} 
       run: |
         python3 - <<'PY'
         import os
 
-        new_coverage = float(os.getenv("CALCULATED_COVERAGE"))
+        new_coverage = float(os.getenv("UNITS_CALCULATED_COVERAGE"))
 
         if new_coverage < 60:
           new_badge_color = "crimson"
@@ -101,20 +140,20 @@ jobs:
       # Find existing badge url in README assuming that it looks like we expect (must be perfect match)
       # Replace it with calculated url, where score and color are new
     - name: Replace badge URL in README
-      if: ${{ env.EXISTING_COVERAGE != env.CALCULATED_COVERAGE }} 
+      if: ${{ env.EXISTING_COVERAGE != env.UNITS_CALCULATED_COVERAGE }} 
       run: |
 
         export EXISTING_COVERAGE_BADGE_URL="https://img.shields.io/badge/coverage-$EXISTING_COVERAGE%25-$EXISTING_BADGE_COLOR?logo=codecov&logoColor=ff9d1c"
-        export CALCULATED_COVERAGE_BADGE_URL="https://img.shields.io/badge/coverage-$CALCULATED_COVERAGE%25-$NEW_BADGE_COLOR?logo=codecov&logoColor=ff9d1c"
+        export UNITS_CALCULATED_COVERAGE_BADGE_URL="https://img.shields.io/badge/coverage-$UNITS_CALCULATED_COVERAGE%25-$NEW_BADGE_COLOR?logo=codecov&logoColor=ff9d1c"
 
         echo $EXISTING_COVERAGE_BADGE_URL
-        echo $CALCULATED_COVERAGE_BADGE_URL
+        echo $UNITS_CALCULATED_COVERAGE_BADGE_URL
 
         python3 - <<'PY'
         import io, sys, os
 
         old_badge_url = os.getenv("EXISTING_COVERAGE_BADGE_URL")
-        new_badge_url = os.getenv("CALCULATED_COVERAGE_BADGE_URL")
+        new_badge_url = os.getenv("UNITS_CALCULATED_COVERAGE_BADGE_URL")
         path = "README.md"
 
         if not old_badge_url or not new_badge_url:
