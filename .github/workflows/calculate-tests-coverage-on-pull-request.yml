@@ -33,8 +33,6 @@ jobs:
             --session-id calculate-units-coverage-session \
             --include-files "./**/bin/Debug/net9.0/*.dll" \
             dotnet test --no-build
-
-          dotnet-coverage shutdown calculate-units-coverage-session
         push: always
 
     - name: Calculate E2E Tests Coverage
