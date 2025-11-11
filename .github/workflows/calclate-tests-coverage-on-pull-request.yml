@@ -16,8 +16,12 @@ jobs:
       uses: devcontainers/ci@v0.3
       with:
         runCmd: |
-          dotnet-coverage collect -f cobertura --session-id calculate-project-coverage-session --include-files "./**/bin/Debug/net9.0/*.dll" "dotnet test --no-build"
+          dotnet-coverage collect -f cobertura --session-id calculate-project-coverage-session --include-files "./**/bin/Debug/net9.0/*.dll" "dotnet test --no-build" &
           
+          echo "Waiting for all background processes to complete..."
+          wait
+          echo "All background processes finished."
+
           line_coverage_float=$(cat output.cobertura.xml | xq -x /coverage/@line-rate)
 
           line_coverage_percent=$(awk -v num="$line_coverage_float" 'BEGIN { print num * 100 }')
