@@ -1,5 +1,9 @@
 # inner-circle-items-api
 
+<!-- auto-generated -->
+[![coverage](https://img.shields.io/badge/coverage-87%25-olivedrab?logo=codecov&logoColor=ff9d1c)](https://github.com/TourmalineCore/inner-circle-items-api/actions/workflows/calclate-tests-coverage-on-pull-request.yml)
+<!-- auto-generated -->
+
 ## Run in Visual Studio
 
 First run this script to run a db and mocked external deps:
