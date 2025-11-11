@@ -46,7 +46,6 @@ jobs:
       run: |
         echo "EXISTING_COVERAGE=$(grep -oP '(?<=coverage-)\d+' README.md | head -n1)" >> "$GITHUB_ENV"
         echo "EXISTING_BADGE_COLOR=$(grep -oP '(?<=%25-)[^?]+' README.md | head -n1)" >> "$GITHUB_ENV"
-        echo "CALCULATED_COVERAGE=$(cat output.cobertura.xml | xq -x /coverage/@line-rate)" >> "$GITHUB_ENV"
     
     - name: Check found coverage scores and color
       run: |
