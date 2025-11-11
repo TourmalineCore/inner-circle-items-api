@@ -16,6 +16,7 @@ jobs:
       uses: devcontainers/ci@v0.3
       with:
         runCmd: |
+          chown 777 ./coverage.sh
           ./coverage.sh
         push: never
     
