@@ -29,100 +29,100 @@ jobs:
       run: |
         echo $CALCULATED_COVERAGE
 
-    - name: Upload combined coverage artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: full-coverage
-        path: output.cobertura.xml
+  #   - name: Upload combined coverage artifact
+  #     uses: actions/upload-artifact@v4
+  #     with:
+  #       name: full-coverage
+  #       path: output.cobertura.xml
 
-  update-coverage:
-    name: Update Coverage
-    runs-on: ubuntu-24.04
-    needs: [calculate-code-coverage]
-    permissions:
-      contents: write
-    steps:
-    - name: Checkout repository 
-      uses: actions/checkout@v4
+  # update-coverage:
+  #   name: Update Coverage
+  #   runs-on: ubuntu-24.04
+  #   needs: [calculate-code-coverage]
+  #   permissions:
+  #     contents: write
+  #   steps:
+  #   - name: Checkout repository 
+  #     uses: actions/checkout@v4
 
-      # Find existing score and color by line matching in README and get calculated coverage from json file
-    - name: Find existing and calculated test coverage scores and existing color
-      run: |
-        echo "EXISTING_COVERAGE=$(grep -oP '(?<=coverage-)\d+' README.md | head -n1)" >> "$GITHUB_ENV"
-        echo "EXISTING_BADGE_COLOR=$(grep -oP '(?<=%25-)[^?]+' README.md | head -n1)" >> "$GITHUB_ENV"
+  #     # Find existing score and color by line matching in README and get calculated coverage from json file
+  #   - name: Find existing and calculated test coverage scores and existing color
+  #     run: |
+  #       echo "EXISTING_COVERAGE=$(grep -oP '(?<=coverage-)\d+' README.md | head -n1)" >> "$GITHUB_ENV"
+  #       echo "EXISTING_BADGE_COLOR=$(grep -oP '(?<=%25-)[^?]+' README.md | head -n1)" >> "$GITHUB_ENV"
     
-    - name: Check found coverage scores and color
-      run: |
-        echo $EXISTING_COVERAGE
-        echo $CALCULATED_COVERAGE
-        echo $EXISTING_BADGE_COLOR
+  #   - name: Check found coverage scores and color
+  #     run: |
+  #       echo $EXISTING_COVERAGE
+  #       echo $CALCULATED_COVERAGE
+  #       echo $EXISTING_BADGE_COLOR
 
-    # 0-60: red; 60-70: orange; 70-80: yellow; 80-90: yellowish green; 90-100: green
-    # set new color and then add its variable to workflow's environment
-    - name: Define new badge color 
-      if: ${{ env.EXISTING_COVERAGE != env.CALCULATED_COVERAGE }} 
-      run: |
-        python3 - <<'PY'
-        import os
+  #   # 0-60: red; 60-70: orange; 70-80: yellow; 80-90: yellowish green; 90-100: green
+  #   # set new color and then add its variable to workflow's environment
+  #   - name: Define new badge color 
+  #     if: ${{ env.EXISTING_COVERAGE != env.CALCULATED_COVERAGE }} 
+  #     run: |
+  #       python3 - <<'PY'
+  #       import os
 
-        new_coverage = int(os.getenv("CALCULATED_COVERAGE"))
+  #       new_coverage = int(os.getenv("CALCULATED_COVERAGE"))
 
-        if new_coverage < 60:
-          new_badge_color = "crimson"
-        elif 60 <= new_coverage < 70:
-          new_badge_color = "orange"
-        elif 70 <= new_coverage < 80:
-          new_badge_color = "yellow"
-        elif 80 <= new_coverage < 90:
-          new_badge_color = "olivedrab"
-        elif new_coverage >= 90:
-          new_badge_color = "forestgreen"
+  #       if new_coverage < 60:
+  #         new_badge_color = "crimson"
+  #       elif 60 <= new_coverage < 70:
+  #         new_badge_color = "orange"
+  #       elif 70 <= new_coverage < 80:
+  #         new_badge_color = "yellow"
+  #       elif 80 <= new_coverage < 90:
+  #         new_badge_color = "olivedrab"
+  #       elif new_coverage >= 90:
+  #         new_badge_color = "forestgreen"
 
-        env_file = os.getenv('GITHUB_ENV')
+  #       env_file = os.getenv('GITHUB_ENV')
 
-        with open(env_file, "a") as f:
-            f.write(f"NEW_BADGE_COLOR={new_badge_color}")
-        PY
+  #       with open(env_file, "a") as f:
+  #           f.write(f"NEW_BADGE_COLOR={new_badge_color}")
+  #       PY
 
-      # Find existing badge url in README assuming that it looks like we expect (must be perfect match)
-      # Replace it with calculated url, where score and color are new
-    - name: Replace badge URL in README
-      if: ${{ env.EXISTING_COVERAGE != env.CALCULATED_COVERAGE }} 
-      run: |
+  #     # Find existing badge url in README assuming that it looks like we expect (must be perfect match)
+  #     # Replace it with calculated url, where score and color are new
+  #   - name: Replace badge URL in README
+  #     if: ${{ env.EXISTING_COVERAGE != env.CALCULATED_COVERAGE }} 
+  #     run: |
 
-        export EXISTING_COVERAGE_BADGE_URL="https://img.shields.io/badge/coverage-$EXISTING_COVERAGE%25-$EXISTING_BADGE_COLOR?logo=codecov&logoColor=ff9d1c"
-        export CALCULATED_COVERAGE_BADGE_URL="https://img.shields.io/badge/coverage-$CALCULATED_COVERAGE%25-$NEW_BADGE_COLOR?logo=codecov&logoColor=ff9d1c"
+  #       export EXISTING_COVERAGE_BADGE_URL="https://img.shields.io/badge/coverage-$EXISTING_COVERAGE%25-$EXISTING_BADGE_COLOR?logo=codecov&logoColor=ff9d1c"
+  #       export CALCULATED_COVERAGE_BADGE_URL="https://img.shields.io/badge/coverage-$CALCULATED_COVERAGE%25-$NEW_BADGE_COLOR?logo=codecov&logoColor=ff9d1c"
 
-        echo $EXISTING_COVERAGE_BADGE_URL
-        echo $CALCULATED_COVERAGE_BADGE_URL
+  #       echo $EXISTING_COVERAGE_BADGE_URL
+  #       echo $CALCULATED_COVERAGE_BADGE_URL
 
-        python3 - <<'PY'
-        import io, sys, os
+  #       python3 - <<'PY'
+  #       import io, sys, os
 
-        old_badge_url = os.getenv("EXISTING_COVERAGE_BADGE_URL")
-        new_badge_url = os.getenv("CALCULATED_COVERAGE_BADGE_URL")
-        path = "README.md"
+  #       old_badge_url = os.getenv("EXISTING_COVERAGE_BADGE_URL")
+  #       new_badge_url = os.getenv("CALCULATED_COVERAGE_BADGE_URL")
+  #       path = "README.md"
 
-        if not old_badge_url or not new_badge_url:
-          sys.exit("Either existing or calculated badge URL doesn't exist")
+  #       if not old_badge_url or not new_badge_url:
+  #         sys.exit("Either existing or calculated badge URL doesn't exist")
         
-        with io.open(path, "r", encoding="utf-8") as f:
-          content = f.read()
+  #       with io.open(path, "r", encoding="utf-8") as f:
+  #         content = f.read()
 
-        if old_badge_url in content:
-            content = content.replace(old_badge_url, new_badge_url)
-            with io.open(path, "w", encoding="utf-8") as f:
-                f.write(content)
-            print("Replaced coverage badge URL in README.md")
-        else:
-            print("Old URL not found in README.md, no replacement made")
-        PY
+  #       if old_badge_url in content:
+  #           content = content.replace(old_badge_url, new_badge_url)
+  #           with io.open(path, "w", encoding="utf-8") as f:
+  #               f.write(content)
+  #           print("Replaced coverage badge URL in README.md")
+  #       else:
+  #           print("Old URL not found in README.md, no replacement made")
+  #       PY
 
-    - name: Commit README changes
-      run: |
-        git config user.email "contact@tourmalinecore.com"
-        git config user.name "Workflow Action"
+  #   - name: Commit README changes
+  #     run: |
+  #       git config user.email "contact@tourmalinecore.com"
+  #       git config user.name "Workflow Action"
 
-        git commit README.md -m "docs(readme): bring test coverage score up to date" || echo "No changes to commit"
+  #       git commit README.md -m "docs(readme): bring test coverage score up to date" || echo "No changes to commit"
         
-        git push origin || echo "No changes to commit"
+  #       git push origin || echo "No changes to commit"
