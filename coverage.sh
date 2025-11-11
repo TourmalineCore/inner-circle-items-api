@@ -1,9 +1,20 @@
 #!/bin/bash
+set -e
+set -o pipefail
 
-dotnet-coverage collect -f cobertura --session-id calculate-project-coverage-session --disable-console-output --include-files "./**/bin/Debug/net9.0/*.dll" "dotnet test --no-build"
+dotnet-coverage collect -f cobertura --session-id calculate-project-coverage-session --include-files "./**/bin/Debug/net9.0/*.dll" "dotnet test --no-build"
 
-line_coverage_float=$(cat output.cobertura.xml | xq -x /coverage/@line-rate)
+# Optional: verify file exists
+if [ ! -f output.cobertura.xml ]; then
+  echo "ERROR: Coverage file not generated!"
+  exit 1
+fi
 
-line_coverage_percent=$(awk -v num="$line_coverage_float" 'BEGIN { print num * 100 }')
-# rounded to 2 decimal digits
-echo "CALCULATED_COVERAGE=$(printf "%.2f\n" "$line_coverage_percent")" >> "$GITHUB_ENV"
+line_coverage_float=$(xq -x '/coverage/@line-rate' output.cobertura.xml)
+if [ -z "$line_coverage_float" ]; then
+  echo "ERROR: Failed to extract line-rate from coverage file"
+  exit 1
+fi
+
+line_coverage_percent=$(awk -v num="$line_coverage_float" 'BEGIN { printf "%.2f", num * 100 }')
+echo "CALCULATED_COVERAGE=$line_coverage_percent"
