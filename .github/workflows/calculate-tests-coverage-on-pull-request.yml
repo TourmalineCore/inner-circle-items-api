@@ -22,8 +22,8 @@ jobs:
     - name: Calculate Unit Tests Coverage
       uses: devcontainers/ci@v0.3
       with:
-        imageName: ghcr.io/${{ github.repository }}-devcontainer
-        cacheFrom: ghcr.io/${{ github.repository }}-devcontainer
+        imageName: ghcr.io/tourmalinecore/inner-circle-items-api-devcontainer
+        cacheFrom: ghcr.io/tourmalinecore/inner-circle-items-api-devcontainer
         runCmd: |
           dotnet build
 
@@ -37,7 +37,7 @@ jobs:
     - name: Calculate E2E Tests Coverage
       uses: devcontainers/ci@v0.3
       with:
-        cacheFrom: ghcr.io/${{ github.repository }}-devcontainer
+        cacheFrom: ghcr.io/tourmalinecore/inner-circle-items-api-devcontainer
         runCmd: |
           dotnet-coverage collect \
             -f cobertura \
@@ -51,7 +51,7 @@ jobs:
     - name: Run E2E Tests And Save Coverage
       uses: devcontainers/ci@v0.3
       with:
-        cacheFrom: ghcr.io/${{ github.repository }}-devcontainer
+        cacheFrom: ghcr.io/tourmalinecore/inner-circle-items-api-devcontainer
         runCmd: |
           java -jar /karate.jar .
 
