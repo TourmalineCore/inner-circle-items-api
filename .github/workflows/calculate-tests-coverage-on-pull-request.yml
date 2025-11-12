@@ -59,6 +59,17 @@ jobs:
           dotnet-coverage shutdown calculate-e2e-coverage-session
         push: never
 
+    - name: Merge Units And E2E Into Full Coverage
+      uses: devcontainers/ci@v0.3
+      with:
+        cacheFrom: ghcr.io/tourmalinecore/inner-circle-items-api-devcontainer
+        runCmd: |
+          dotnet-coverage merge \
+          -f cobertura \
+          -o full-coverage.xml \
+          e2e-coverage.xml units-coverage.xml
+        push: never
+
     - name: Upload Unit Tests Coverage
       uses: actions/upload-artifact@v4
       with:
@@ -70,6 +81,12 @@ jobs:
       with:
         name: e2e-coverage
         path: e2e-coverage.xml
+
+    - name: Upload Full Tests Coverage
+      uses: actions/upload-artifact@v4
+      with:
+        name: full-coverage
+        path: full-coverage.xml
 
   update-coverage:
     runs-on: ubuntu-24.04
@@ -99,8 +116,8 @@ jobs:
       # Find existing score and color by line matching in README and get calculated coverage from json file
     - name: Find existing and calculated test coverage scores and existing color
       run: |
-        echo "EXISTING_COVERAGE=$(grep -oP '(?<=coverage-)\d+' README.md | head -n1)" >> "$GITHUB_ENV"
-        echo "EXISTING_BADGE_COLOR=$(grep -oP '(?<=%25-)[^?]+' README.md | head -n1)" >> "$GITHUB_ENV"
+        echo "UNITS_EXISTING_COVERAGE=$(grep -oP '(?<=units-coverage-)\d+' README.md | head -n1)" >> "$GITHUB_ENV"
+        echo "UNITS_EXISTING_BADGE_COLOR=$(grep -oP '(?<=%25-)[^?]+' README.md | head -n1)" >> "$GITHUB_ENV"
 
         units_line_coverage_float=$(cat coverage/units-coverage.xml | xq -x /coverage/@line-rate)
 
@@ -118,54 +135,67 @@ jobs:
 
     - name: Check found coverage scores and color
       run: |
-        echo $EXISTING_COVERAGE
+        echo $UNITS_EXISTING_COVERAGE
         echo $UNITS_CALCULATED_COVERAGE
+        echo $UNITS_EXISTING_BADGE_COLOR
         echo $E2E_CALCULATED_COVERAGE
-        echo $EXISTING_BADGE_COLOR
 
     # 0-60: red; 60-70: orange; 70-80: yellow; 80-90: yellowish green; 90-100: green
     # set new color and then add its variable to workflow's environment
     - name: Define new badge color 
-      if: ${{ env.EXISTING_COVERAGE != env.UNITS_CALCULATED_COVERAGE }} 
+      if: ${{ env.UNITS_EXISTING_COVERAGE != env.UNITS_CALCULATED_COVERAGE }} 
       run: |
         python3 - <<'PY'
         import os
 
-        new_coverage = float(os.getenv("UNITS_CALCULATED_COVERAGE"))
+        def get_bage_color_by_coverage_value(
+          new_coverage: str,
+        ) -> string:
+          if new_coverage < 60:
+            new_badge_color = "crimson"
+          elif 60 <= new_coverage < 70:
+            new_badge_color = "orange"
+          elif 70 <= new_coverage < 80:
+            new_badge_color = "yellow"
+          elif 80 <= new_coverage < 90:
+            new_badge_color = "olivedrab"
+          elif new_coverage >= 90:
+            new_badge_color = "forestgreen"
+          return new_badge_color
+        
+        def set_by_coverage_badge_color(
+            env_value_name_with_coverage: str,
+            env_value_name_with_bage_color: str,
+        ) -> None:
+          new_coverage = float(os.getenv(env_value_name_with_coverage))
+          badge_color = get_bage_color_by_coverage_value(new_coverage)
+          env_file = os.getenv("GITHUB_ENV")
 
-        if new_coverage < 60:
-          new_badge_color = "crimson"
-        elif 60 <= new_coverage < 70:
-          new_badge_color = "orange"
-        elif 70 <= new_coverage < 80:
-          new_badge_color = "yellow"
-        elif 80 <= new_coverage < 90:
-          new_badge_color = "olivedrab"
-        elif new_coverage >= 90:
-          new_badge_color = "forestgreen"
-
-        env_file = os.getenv('GITHUB_ENV')
-
-        with open(env_file, "a") as f:
-            f.write(f"NEW_BADGE_COLOR={new_badge_color}")
+          with open(env_file, "a") as f:
+              f.write(f"{env_value_name_with_bage_color}={badge_color}")
+        
+        set_by_coverage_badge_color(
+          env_value_name_with_coverage="UNITS_CALCULATED_COVERAGE", 
+          env_value_name_with_bage_color="UNITS_NEW_BADGE_COLOR"
+        )
         PY
 
       # Find existing badge url in README assuming that it looks like we expect (must be perfect match)
       # Replace it with calculated url, where score and color are new
     - name: Replace badge URL in README
-      if: ${{ env.EXISTING_COVERAGE != env.UNITS_CALCULATED_COVERAGE }} 
+      if: ${{ env.UNITS_EXISTING_COVERAGE != env.UNITS_CALCULATED_COVERAGE }} 
       run: |
 
-        export EXISTING_COVERAGE_BADGE_URL="https://img.shields.io/badge/coverage-$EXISTING_COVERAGE%25-$EXISTING_BADGE_COLOR?logo=codecov&logoColor=ff9d1c"
-        export UNITS_CALCULATED_COVERAGE_BADGE_URL="https://img.shields.io/badge/coverage-$UNITS_CALCULATED_COVERAGE%25-$NEW_BADGE_COLOR?logo=codecov&logoColor=ff9d1c"
+        export UNITS_EXISTING_COVERAGE_BADGE_URL="https://img.shields.io/badge/units-coverage-$UNITS_EXISTING_COVERAGE%25-$UNITS_EXISTING_BADGE_COLOR?logo=codecov&logoColor=ff9d1c"
+        export UNITS_CALCULATED_COVERAGE_BADGE_URL="https://img.shields.io/badge/units-coverage-$UNITS_CALCULATED_COVERAGE%25-$UNITS_NEW_BADGE_COLOR?logo=codecov&logoColor=ff9d1c"
 
-        echo $EXISTING_COVERAGE_BADGE_URL
+        echo $UNITS_EXISTING_COVERAGE_BADGE_URL
         echo $UNITS_CALCULATED_COVERAGE_BADGE_URL
 
         python3 - <<'PY'
         import io, sys, os
 
-        old_badge_url = os.getenv("EXISTING_COVERAGE_BADGE_URL")
+        old_badge_url = os.getenv("UNITS_EXISTING_COVERAGE_BADGE_URL")
         new_badge_url = os.getenv("UNITS_CALCULATED_COVERAGE_BADGE_URL")
         path = "README.md"
 
