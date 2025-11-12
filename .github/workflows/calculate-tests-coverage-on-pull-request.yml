@@ -150,7 +150,7 @@ jobs:
 
         def get_bage_color_by_coverage_value(
           new_coverage: str,
-        ) -> string:
+        ) -> str:
           if new_coverage < 60:
             new_badge_color = "crimson"
           elif 60 <= new_coverage < 70:
