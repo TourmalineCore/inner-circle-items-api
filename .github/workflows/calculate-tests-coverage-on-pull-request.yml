@@ -117,7 +117,7 @@ jobs:
     - name: Find existing and calculated test coverage scores and existing color
       run: |
         echo "UNITS_EXISTING_COVERAGE=$(grep -oP '(?<=units-coverage-)\d+' README.md | head -n1)" >> "$GITHUB_ENV"
-        echo "UNITS_EXISTING_BADGE_COLOR=$(grep -oP '(?<=%25-)[^?]+' README.md | head -n1)" >> "$GITHUB_ENV"
+        echo "UNITS_EXISTING_BADGE_COLOR=$(grep -oP '(?<=%26-)[^?]+' README.md | head -n1)" >> "$GITHUB_ENV"
 
         units_line_coverage_float=$(cat coverage/units-coverage.xml | xq -x /coverage/@line-rate)
 
@@ -186,8 +186,8 @@ jobs:
       if: ${{ env.UNITS_EXISTING_COVERAGE != env.UNITS_CALCULATED_COVERAGE }} 
       run: |
 
-        export UNITS_EXISTING_COVERAGE_BADGE_URL="https://img.shields.io/badge/units-coverage-$UNITS_EXISTING_COVERAGE%25-$UNITS_EXISTING_BADGE_COLOR?logo=codecov&logoColor=ff9d1c"
-        export UNITS_CALCULATED_COVERAGE_BADGE_URL="https://img.shields.io/badge/units-coverage-$UNITS_CALCULATED_COVERAGE%25-$UNITS_NEW_BADGE_COLOR?logo=codecov&logoColor=ff9d1c"
+        export UNITS_EXISTING_COVERAGE_BADGE_URL="https://img.shields.io/badge/units-coverage-$UNITS_EXISTING_COVERAGE%26-$UNITS_EXISTING_BADGE_COLOR?logo=codecov&logoColor=ff9d1c"
+        export UNITS_CALCULATED_COVERAGE_BADGE_URL="https://img.shields.io/badge/units-coverage-$UNITS_CALCULATED_COVERAGE%26-$UNITS_NEW_BADGE_COLOR?logo=codecov&logoColor=ff9d1c"
 
         echo $UNITS_EXISTING_COVERAGE_BADGE_URL
         echo $UNITS_CALCULATED_COVERAGE_BADGE_URL
