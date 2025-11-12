@@ -112,6 +112,12 @@ jobs:
       with:
         name: e2e-coverage
         path: coverage
+    
+    - name: Download Full Coverage
+      uses: actions/download-artifact@v5
+      with:
+        name: full-coverage
+        path: coverage
       
       # Find existing score and color by line matching in README and get calculated coverage from json file
     - name: Find existing and calculated test coverage scores and existing color
@@ -203,7 +209,7 @@ jobs:
           coverage_color: str,
         ) -> None:
           target_prefix = f"[![coverage](https://img.shields.io/badge/{coverage_prefix}"
-          replacement = f"[![coverage](https://img.shields.io/badge/{coverage_prefix}-{coverage}%25-{coverage_color})](https://github.com/TourmalineCore/inner-circle-items-api/actions/workflows/calculate-tests-coverage-on-pull-request.yml)"
+          replacement = f"[![coverage](https://img.shields.io/badge/{coverage_prefix}-{coverage}%25-{coverage_color})](https://github.com/TourmalineCore/inner-circle-items-api/actions/workflows/calculate-tests-coverage-on-pull-request.yml)\n"
           
           with fileinput.FileInput("README.md", inplace=True) as file:
             for line in file:
@@ -225,7 +231,7 @@ jobs:
         replace_coverage_badge_in_readme(
           coverage_prefix="full_coverage", 
           coverage=os.getenv("FULL_CALCULATED_COVERAGE"),
-          coverage_color=os.getenv("UNITS_NEW_BADGE_COLOR")
+          coverage_color=os.getenv("FULL_NEW_BADGE_COLOR")
         )
         PY
 
