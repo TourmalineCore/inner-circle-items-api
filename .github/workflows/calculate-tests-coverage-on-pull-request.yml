@@ -116,9 +116,6 @@ jobs:
       # Find existing score and color by line matching in README and get calculated coverage from json file
     - name: Find existing and calculated test coverage scores and existing color
       run: |
-        echo "UNITS_EXISTING_COVERAGE=$(grep -oP '(?<=units-coverage-)\d+' README.md | head -n1)" >> "$GITHUB_ENV"
-        echo "UNITS_EXISTING_BADGE_COLOR=$(grep -oP '(?<=%26-)[^?]+' README.md | head -n1)" >> "$GITHUB_ENV"
-
         units_line_coverage_float=$(cat coverage/units-coverage.xml | xq -x /coverage/@line-rate)
 
         units_line_coverage_percent=$(awk -v num="$units_line_coverage_float" 'BEGIN { print num * 100 }')
@@ -131,19 +128,24 @@ jobs:
         e2e_line_coverage_percent=$(awk -v num="$e2e_line_coverage_float" 'BEGIN { print num * 100 }')
         
         # round to 2 decimal digits
-        echo "E2E_CALCULATED_COVERAGE=$(printf "%.2f\n" "$e2e_line_coverage_percent")" >> "$GITHUB_ENV"    
+        echo "E2E_CALCULATED_COVERAGE=$(printf "%.2f\n" "$e2e_line_coverage_percent")" >> "$GITHUB_ENV" 
+
+        full_line_coverage_float=$(cat coverage/full-coverage.xml | xq -x /coverage/@line-rate)
+
+        full_line_coverage_percent=$(awk -v num="$full_line_coverage_float" 'BEGIN { print num * 100 }')
+        
+        # round to 2 decimal digits
+        echo "FULL_CALCULATED_COVERAGE=$(printf "%.2f\n" "$full_line_coverage_percent")" >> "$GITHUB_ENV"    
 
     - name: Check found coverage scores and color
       run: |
-        echo $UNITS_EXISTING_COVERAGE
         echo $UNITS_CALCULATED_COVERAGE
-        echo $UNITS_EXISTING_BADGE_COLOR
         echo $E2E_CALCULATED_COVERAGE
+        echo $FULL_CALCULATED_COVERAGE
 
     # 0-60: red; 60-70: orange; 70-80: yellow; 80-90: yellowish green; 90-100: green
     # set new color and then add its variable to workflow's environment
     - name: Define new badge color 
-      if: ${{ env.UNITS_EXISTING_COVERAGE != env.UNITS_CALCULATED_COVERAGE }} 
       run: |
         python3 - <<'PY'
         import os
@@ -178,40 +180,53 @@ jobs:
           env_value_name_with_coverage="UNITS_CALCULATED_COVERAGE", 
           env_value_name_with_bage_color="UNITS_NEW_BADGE_COLOR"
         )
+        set_by_coverage_badge_color(
+          env_value_name_with_coverage="E2E_CALCULATED_COVERAGE", 
+          env_value_name_with_bage_color="E2E_NEW_BADGE_COLOR"
+        )
+        set_by_coverage_badge_color(
+          env_value_name_with_coverage="FULL_CALCULATED_COVERAGE", 
+          env_value_name_with_bage_color="FULL_NEW_BADGE_COLOR"
+        )
         PY
 
       # Find existing badge url in README assuming that it looks like we expect (must be perfect match)
       # Replace it with calculated url, where score and color are new
     - name: Replace badge URL in README
-      if: ${{ env.UNITS_EXISTING_COVERAGE != env.UNITS_CALCULATED_COVERAGE }} 
       run: |
-
-        export UNITS_EXISTING_COVERAGE_BADGE_URL="https://img.shields.io/badge/units-coverage-$UNITS_EXISTING_COVERAGE%26-$UNITS_EXISTING_BADGE_COLOR?logo=codecov&logoColor=ff9d1c"
-        export UNITS_CALCULATED_COVERAGE_BADGE_URL="https://img.shields.io/badge/units-coverage-$UNITS_CALCULATED_COVERAGE%26-$UNITS_NEW_BADGE_COLOR?logo=codecov&logoColor=ff9d1c"
-
-        echo $UNITS_EXISTING_COVERAGE_BADGE_URL
-        echo $UNITS_CALCULATED_COVERAGE_BADGE_URL
-
         python3 - <<'PY'
-        import io, sys, os
+        import io, sys, os, fileinput
 
-        old_badge_url = os.getenv("UNITS_EXISTING_COVERAGE_BADGE_URL")
-        new_badge_url = os.getenv("UNITS_CALCULATED_COVERAGE_BADGE_URL")
-        path = "README.md"
+        def replace_coverage_badge_in_readme(
+          coverage_prefix: str,
+          coverage: str,
+          coverage_color: str,
+        ) -> None:
+          target_prefix = f"[![coverage](https://img.shields.io/badge/{coverage_prefix}"
+          replacement = f"[![coverage](https://img.shields.io/badge/{coverage_prefix}-{coverage}%25-{coverage_color})](https://github.com/TourmalineCore/inner-circle-items-api/actions/workflows/calculate-tests-coverage-on-pull-request.yml)"
+          
+          with fileinput.FileInput("README.md", inplace=True) as file:
+            for line in file:
+              if line.startswith(target_prefix):
+                sys.stdout.write(replacement)
+              else:
+                sys.stdout.write(line)
 
-        if not old_badge_url or not new_badge_url:
-          sys.exit("Either existing or calculated badge URL doesn't exist")
-        
-        with io.open(path, "r", encoding="utf-8") as f:
-          content = f.read()
-
-        if old_badge_url in content:
-            content = content.replace(old_badge_url, new_badge_url)
-            with io.open(path, "w", encoding="utf-8") as f:
-                f.write(content)
-            print("Replaced coverage badge URL in README.md")
-        else:
-            print("Old URL not found in README.md, no replacement made")
+        replace_coverage_badge_in_readme(
+          coverage_prefix="units_coverage", 
+          coverage=os.getenv("UNITS_CALCULATED_COVERAGE"),
+          coverage_color=os.getenv("UNITS_NEW_BADGE_COLOR")
+        )
+        replace_coverage_badge_in_readme(
+          coverage_prefix="e2e_coverage", 
+          coverage=os.getenv("E2E_CALCULATED_COVERAGE"),
+          coverage_color=os.getenv("E2E_NEW_BADGE_COLOR")
+        )
+        replace_coverage_badge_in_readme(
+          coverage_prefix="full_coverage", 
+          coverage=os.getenv("FULL_CALCULATED_COVERAGE"),
+          coverage_color=os.getenv("UNITS_NEW_BADGE_COLOR")
+        )
         PY
 
     - name: Commit README changes
