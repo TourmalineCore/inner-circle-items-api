@@ -6,7 +6,7 @@ on:
       - feature/*
 
 jobs:
-  calculate-units-coverage:
+  calculate-coverage:
     runs-on: ubuntu-24.04
     steps:
     - name: Check out the repo
@@ -35,33 +35,11 @@ jobs:
             dotnet test --no-build
         push: always
 
-    - name: Upload Unit Tests Coverage
-      uses: actions/upload-artifact@v4
-      with:
-        name: units-coverage
-        path: units-coverage.xml
-
-  calculate-e2e-coverage:
-    runs-on: ubuntu-24.04
-    steps:
-    - name: Check out the repo
-      uses: actions/checkout@v4
-
-    - name: Log in to GitHub Container Registry
-      uses: docker/login-action@v3
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-
     - name: Calculate E2E Tests Coverage
       uses: devcontainers/ci@v0.3
       with:
-        imageName: ghcr.io/tourmalinecore/inner-circle-items-api-devcontainer
         cacheFrom: ghcr.io/tourmalinecore/inner-circle-items-api-devcontainer
         runCmd: |
-          dotnet build
-
           dotnet-coverage collect \
             -f cobertura \
             -o e2e-coverage.xml \
@@ -81,6 +59,12 @@ jobs:
           dotnet-coverage shutdown calculate-e2e-coverage-session
         push: never
 
+    - name: Upload Unit Tests Coverage
+      uses: actions/upload-artifact@v4
+      with:
+        name: units-coverage
+        path: units-coverage.xml
+
     - name: Upload E2E Tests Coverage
       uses: actions/upload-artifact@v4
       with:
@@ -89,10 +73,7 @@ jobs:
 
   update-coverage:
     runs-on: ubuntu-24.04
-    needs: [
-      calculate-units-coverage,
-      calculate-e2e-coverage
-    ]
+    needs: [calculate-coverage]
     permissions:
       contents: write
     steps:
