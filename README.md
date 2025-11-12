@@ -2,7 +2,7 @@
 
 <!-- auto-generated -->
 [![coverage](https://img.shields.io/badge/e2e-coverage-10%25-crimson?logo=codecov&logoColor=ff9d1c)](https://github.com/TourmalineCore/inner-circle-items-api/actions/workflows/calculate-tests-coverage-on-pull-request.yml)
-[![coverage](https://img.shields.io/badge/units-coverage-10%26-crimson?logo=codecov&logoColor=ff9d1c)](https://github.com/TourmalineCore/inner-circle-items-api/actions/workflows/calculate-tests-coverage-on-pull-request.yml)
+[![coverage](https://img.shields.io/badge/units-coverage-28.10%26-crimson?logo=codecov&logoColor=ff9d1c)](https://github.com/TourmalineCore/inner-circle-items-api/actions/workflows/calculate-tests-coverage-on-pull-request.yml)
 [![coverage](https://img.shields.io/badge/full-coverage-10%27-crimson?logo=codecov&logoColor=ff9d1c)](https://github.com/TourmalineCore/inner-circle-items-api/actions/workflows/calculate-tests-coverage-on-pull-request.yml)
 <!-- auto-generated -->
 
