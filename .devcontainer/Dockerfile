@@ -1,3 +1,6 @@
+# https://hub.docker.com/r/microsoft/devcontainers-dotnet
+# You can update the version of the base image with .NET and SDK only checking it together with the related VSCode extensions
+# Please see the detailed comment in devcontainer.json
 FROM mcr.microsoft.com/devcontainers/dotnet:1.5.5-9.0-noble
 
 # installing EntityFramework Core tooling for migrations
