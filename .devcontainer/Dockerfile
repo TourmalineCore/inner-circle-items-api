@@ -5,6 +5,7 @@ FROM mcr.microsoft.com/devcontainers/dotnet:1.5.5-9.0-noble
 
 # installing EntityFramework Core tooling for migrations
 RUN dotnet tool install --global dotnet-ef --version 9.0.7 && \
+# installing tooling for tests coverage and its reporting
     dotnet tool install --global dotnet-coverage --version 18.1.0 && \
     dotnet tool install --global dotnet-reportgenerator-globaltool --version 5.4.18
 
