@@ -27,8 +27,8 @@ jobs:
     - name: Calculate Unit Tests Coverage
       uses: devcontainers/ci@v0.3
       with:
-        imageName: ghcr.io/${{ DEV_CONTAINER_IMAGE }}
-        cacheFrom: ghcr.io/${{ DEV_CONTAINER_IMAGE }}
+        imageName: ghcr.io/${{ env.DEV_CONTAINER_IMAGE }}
+        cacheFrom: ghcr.io/${{ env.DEV_CONTAINER_IMAGE }}
         runCmd: |
           # first we build in Debug, then we re-use dlls using --no-build flag here and later
           dotnet build
@@ -46,7 +46,7 @@ jobs:
     - name: Calculate E2E Tests Coverage
       uses: devcontainers/ci@v0.3
       with:
-        cacheFrom: ghcr.io/${{ DEV_CONTAINER_IMAGE }}
+        cacheFrom: ghcr.io/${{ env.DEV_CONTAINER_IMAGE }}
         runCmd: |
           # we need to run our Api and proceed to the next step
           # that is why we forward its output and start it in background with & at the end
@@ -62,7 +62,7 @@ jobs:
     - name: Run E2E Tests And Save Coverage
       uses: devcontainers/ci@v0.3
       with:
-        cacheFrom: ghcr.io/${{ DEV_CONTAINER_IMAGE }}
+        cacheFrom: ghcr.io/${{ env.DEV_CONTAINER_IMAGE }}
         runCmd: |
           java -jar /karate.jar .
 
@@ -72,7 +72,7 @@ jobs:
     - name: Merge Units And E2E Into Full Coverage
       uses: devcontainers/ci@v0.3
       with:
-        cacheFrom: ghcr.io/${{ DEV_CONTAINER_IMAGE }}
+        cacheFrom: ghcr.io/${{ env.DEV_CONTAINER_IMAGE }}
         runCmd: |
           dotnet-coverage merge \
           -f cobertura \
@@ -83,7 +83,7 @@ jobs:
     - name: Generate Full Tests Coverage Summary as Markdown
       uses: devcontainers/ci@v0.3
       with:
-        cacheFrom: ghcr.io/${{ DEV_CONTAINER_IMAGE }}
+        cacheFrom: ghcr.io/${{ env.DEV_CONTAINER_IMAGE }}
         runCmd: |
           reportgenerator -reports:"./full-coverage.xml" -targetdir:"." -reporttypes:MarkdownSummary
         push: never
