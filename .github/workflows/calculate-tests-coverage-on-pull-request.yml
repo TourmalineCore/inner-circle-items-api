@@ -83,6 +83,7 @@ jobs:
           cat Summary.md >> $GITHUB_STEP_SUMMARY
           cat $GITHUB_STEP_SUMMARY
         push: never
+        inheritEnv: true
 
     - name: Upload Unit Tests Coverage
       uses: actions/upload-artifact@v4
