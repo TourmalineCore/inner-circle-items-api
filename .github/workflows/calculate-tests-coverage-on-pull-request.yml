@@ -115,8 +115,6 @@ jobs:
   update-coverage:
     runs-on: ubuntu-24.04
     needs: [calculate-coverage]
-    permissions:
-      contents: write
     steps:
     - name: Checkout Repository 
       uses: actions/checkout@v4
