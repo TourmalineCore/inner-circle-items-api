@@ -30,6 +30,7 @@ jobs:
         imageName: ghcr.io/${{ DEV_CONTAINER_IMAGE }}
         cacheFrom: ghcr.io/${{ DEV_CONTAINER_IMAGE }}
         runCmd: |
+          # first we build in Debug, then we re-use dlls using --no-build flag here and later
           dotnet build
 
           dotnet-coverage collect \
@@ -38,6 +39,8 @@ jobs:
             --session-id calculate-units-coverage-session \
             --include-files "./**/bin/Debug/net9.0/*.dll" \
             dotnet test --no-build
+        # in the first step that runs inside Dev Container we push the image we built to re-use it in the next steps
+        # we newer push in the next steps, only use the cache if available
         push: always
 
     - name: Calculate E2E Tests Coverage
@@ -45,6 +48,8 @@ jobs:
       with:
         cacheFrom: ghcr.io/${{ DEV_CONTAINER_IMAGE }}
         runCmd: |
+          # we need to run our Api and proceed to the next step
+          # that is why we forward its output and start it in background with & at the end
           dotnet-coverage collect \
             -f cobertura \
             -o e2e-coverage.xml \
@@ -84,8 +89,9 @@ jobs:
         push: never
 
     # https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-commands#adding-a-job-summary
-    - name: Add Full Tests Coverage Summary to Job
+    - name: Add Full Tests Coverage Summary to Job Summary
       run: |
+        # this is a separate step because for some reason if you do it from devcontainers/ci it doesn't work and Job's summary is empty
         cat Summary.md >> "$GITHUB_STEP_SUMMARY"
 
     - name: Upload Unit Tests Coverage
@@ -112,13 +118,9 @@ jobs:
     permissions:
       contents: write
     steps:
-    - name: Checkout repository 
+    - name: Checkout Repository 
       uses: actions/checkout@v4
 
-    - name: Download xq
-      run: |
-        sudo apt install xq
-    
     - name: Download Units Coverage
       uses: actions/download-artifact@v5
       with:
@@ -137,41 +139,39 @@ jobs:
         name: full-coverage
         path: coverage
       
+    - name: Install xq to Read Coverage from XML
+      run: |
+        sudo apt install xq
+    
       # Find existing score and color by line matching in README and get calculated coverage from json file
-    - name: Find existing and calculated test coverage scores and existing color
+    - name: Write Coverages to ENV Vars
+      # ToDo avoid code duplication with reusable bash or python function
       run: |
         units_line_coverage_float=$(cat coverage/units-coverage.xml | xq -x /coverage/@line-rate)
 
         units_line_coverage_percent=$(awk -v num="$units_line_coverage_float" 'BEGIN { print num * 100 }')
         
         # round to 2 decimal digits
-        echo "UNITS_CALCULATED_COVERAGE=$(printf "%.2f\n" "$units_line_coverage_percent")" >> "$GITHUB_ENV"
+        echo "UNITS_COVERAGE=$(printf "%.2f\n" "$units_line_coverage_percent")" >> "$GITHUB_ENV"
 
         e2e_line_coverage_float=$(cat coverage/e2e-coverage.xml | xq -x /coverage/@line-rate)
 
         e2e_line_coverage_percent=$(awk -v num="$e2e_line_coverage_float" 'BEGIN { print num * 100 }')
         
         # round to 2 decimal digits
-        echo "E2E_CALCULATED_COVERAGE=$(printf "%.2f\n" "$e2e_line_coverage_percent")" >> "$GITHUB_ENV" 
+        echo "E2E_COVERAGE=$(printf "%.2f\n" "$e2e_line_coverage_percent")" >> "$GITHUB_ENV" 
 
         full_line_coverage_float=$(cat coverage/full-coverage.xml | xq -x /coverage/@line-rate)
 
         full_line_coverage_percent=$(awk -v num="$full_line_coverage_float" 'BEGIN { print num * 100 }')
         
         # round to 2 decimal digits
-        echo "FULL_CALCULATED_COVERAGE=$(printf "%.2f\n" "$full_line_coverage_percent")" >> "$GITHUB_ENV"    
-
-    - name: Check found coverage scores and color
-      run: |
-        echo $UNITS_CALCULATED_COVERAGE
-        echo $E2E_CALCULATED_COVERAGE
-        echo $FULL_CALCULATED_COVERAGE
+        echo "FULL_COVERAGE=$(printf "%.2f\n" "$full_line_coverage_percent")" >> "$GITHUB_ENV"    
 
     # 0-60: red; 60-70: orange; 70-80: yellow; 80-90: yellowish green; 90-100: green
     # set new color and then add its variable to workflow's environment
-    - name: Define new badge color 
+    - name: Calculate Coverages Badge Colors
       run: |
-        python3 - <<'PY'
         import os
 
         def get_bage_color_by_coverage_value(
@@ -201,24 +201,21 @@ jobs:
               f.write(f"{env_value_name_with_bage_color}={badge_color}")
         
         set_by_coverage_badge_color(
-          env_value_name_with_coverage="UNITS_CALCULATED_COVERAGE", 
-          env_value_name_with_bage_color="UNITS_NEW_BADGE_COLOR"
+          env_value_name_with_coverage="UNITS_COVERAGE", 
+          env_value_name_with_bage_color="UNITS_BADGE_COLOR"
         )
         set_by_coverage_badge_color(
-          env_value_name_with_coverage="E2E_CALCULATED_COVERAGE", 
-          env_value_name_with_bage_color="E2E_NEW_BADGE_COLOR"
+          env_value_name_with_coverage="E2E_COVERAGE", 
+          env_value_name_with_bage_color="E2E_BADGE_COLOR"
         )
         set_by_coverage_badge_color(
-          env_value_name_with_coverage="FULL_CALCULATED_COVERAGE", 
-          env_value_name_with_bage_color="FULL_NEW_BADGE_COLOR"
+          env_value_name_with_coverage="FULL_COVERAGE", 
+          env_value_name_with_bage_color="FULL_BADGE_COLOR"
         )
-        PY
+      shell: python
 
-      # Find existing badge url in README assuming that it looks like we expect (must be perfect match)
-      # Replace it with calculated url, where score and color are new
-    - name: Replace badge URL in README
+    - name: Replace Badge URL in README
       run: |
-        python3 - <<'PY'
         import io, sys, os, fileinput
 
         def replace_coverage_badge_in_readme(
@@ -238,20 +235,20 @@ jobs:
 
         replace_coverage_badge_in_readme(
           coverage_prefix="units_coverage", 
-          coverage=os.getenv("UNITS_CALCULATED_COVERAGE"),
-          coverage_color=os.getenv("UNITS_NEW_BADGE_COLOR")
+          coverage=os.getenv("UNITS_COVERAGE"),
+          coverage_color=os.getenv("UNITS_BADGE_COLOR")
         )
         replace_coverage_badge_in_readme(
           coverage_prefix="e2e_coverage", 
-          coverage=os.getenv("E2E_CALCULATED_COVERAGE"),
-          coverage_color=os.getenv("E2E_NEW_BADGE_COLOR")
+          coverage=os.getenv("E2E_COVERAGE"),
+          coverage_color=os.getenv("E2E_BADGE_COLOR")
         )
         replace_coverage_badge_in_readme(
           coverage_prefix="full_coverage", 
-          coverage=os.getenv("FULL_CALCULATED_COVERAGE"),
-          coverage_color=os.getenv("FULL_NEW_BADGE_COLOR")
+          coverage=os.getenv("FULL_COVERAGE"),
+          coverage_color=os.getenv("FULL_BADGE_COLOR")
         )
-        PY
+      shell: python
 
     - name: Commit README changes
       run: |
