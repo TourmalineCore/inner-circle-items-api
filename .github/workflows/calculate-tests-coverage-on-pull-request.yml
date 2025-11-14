@@ -252,7 +252,7 @@ jobs:
 
     - name: Commit README changes
       run: |
-        git pull --ff-only origin $GITHUB_HEAD_REF
+        git pull --rebase origin $GITHUB_HEAD_REF
         
         git config user.email "contact@tourmalinecore.com"
         git config user.name "Workflow Action"
