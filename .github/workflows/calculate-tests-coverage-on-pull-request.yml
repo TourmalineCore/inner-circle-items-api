@@ -76,7 +76,10 @@ jobs:
       with:
         cacheFrom: ghcr.io/tourmalinecore/inner-circle-items-api-devcontainer
         runCmd: |
-          reportgenerator -reports:"./full-coverage.xml" -targetdir:"$GITHUB_STEP_SUMMARY" -reporttypes:MarkdownSummary
+          reportgenerator -reports:"./full-coverage.xml" -targetdir:"." -reporttypes:MarkdownSummary
+          # it appends generated summary file to the target GitHub file because reportgenerator supportes only target directory arg, there is no target file or its analogue
+          # probably it can be simplified with stdout forwarding, but let it stay that way for now
+          cat Summary.md >> "$GITHUB_STEP_SUMMARY"
         push: never
 
     - name: Upload Unit Tests Coverage
