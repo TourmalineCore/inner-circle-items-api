@@ -259,4 +259,4 @@ jobs:
         
         git pull --rebase origin $GITHUB_HEAD_REF
 
-        git push origin || echo "No changes to commit"
+        git push origin HEAD:$GITHUB_HEAD_REF || echo "No changes to commit"
