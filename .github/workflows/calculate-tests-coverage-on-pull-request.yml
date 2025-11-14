@@ -18,11 +18,17 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
+    # this is needed to address this issue according to the comment https://github.com/devcontainers/ci/issues/271#issuecomment-2301764487
+    # otherwise our TourmalineCore org name cannot be used in docker image names, only tourmalinecore
+    - name: Add Lowercase Organization and Repo Name REPO_NAME Env Var
+      run: |
+        echo "DEV_CONTAINER_IMAGE=${GITHUB_REPOSITORY,,}-devcontainer" >>${GITHUB_ENV}
+
     - name: Calculate Unit Tests Coverage
       uses: devcontainers/ci@v0.3
       with:
-        imageName: ghcr.io/tourmalinecore/inner-circle-items-api-devcontainer
-        cacheFrom: ghcr.io/tourmalinecore/inner-circle-items-api-devcontainer
+        imageName: ghcr.io/${{ DEV_CONTAINER_IMAGE }}
+        cacheFrom: ghcr.io/${{ DEV_CONTAINER_IMAGE }}
         runCmd: |
           dotnet build
 
@@ -37,7 +43,7 @@ jobs:
     - name: Calculate E2E Tests Coverage
       uses: devcontainers/ci@v0.3
       with:
-        cacheFrom: ghcr.io/tourmalinecore/inner-circle-items-api-devcontainer
+        cacheFrom: ghcr.io/${{ DEV_CONTAINER_IMAGE }}
         runCmd: |
           dotnet-coverage collect \
             -f cobertura \
@@ -51,7 +57,7 @@ jobs:
     - name: Run E2E Tests And Save Coverage
       uses: devcontainers/ci@v0.3
       with:
-        cacheFrom: ghcr.io/tourmalinecore/inner-circle-items-api-devcontainer
+        cacheFrom: ghcr.io/${{ DEV_CONTAINER_IMAGE }}
         runCmd: |
           java -jar /karate.jar .
 
@@ -61,7 +67,7 @@ jobs:
     - name: Merge Units And E2E Into Full Coverage
       uses: devcontainers/ci@v0.3
       with:
-        cacheFrom: ghcr.io/tourmalinecore/inner-circle-items-api-devcontainer
+        cacheFrom: ghcr.io/${{ DEV_CONTAINER_IMAGE }}
         runCmd: |
           dotnet-coverage merge \
           -f cobertura \
@@ -72,7 +78,7 @@ jobs:
     - name: Generate Full Tests Coverage Summary as Markdown
       uses: devcontainers/ci@v0.3
       with:
-        cacheFrom: ghcr.io/tourmalinecore/inner-circle-items-api-devcontainer
+        cacheFrom: ghcr.io/${{ DEV_CONTAINER_IMAGE }}
         runCmd: |
           reportgenerator -reports:"./full-coverage.xml" -targetdir:"." -reporttypes:MarkdownSummary
         push: never
@@ -221,7 +227,7 @@ jobs:
           coverage_color: str,
         ) -> None:
           target_prefix = f"[![coverage](https://img.shields.io/badge/{coverage_prefix}"
-          replacement = f"[![coverage](https://img.shields.io/badge/{coverage_prefix}-{coverage}%25-{coverage_color})](https://github.com/TourmalineCore/inner-circle-items-api/actions/workflows/calculate-tests-coverage-on-pull-request.yml)\n"
+          replacement = f"[![coverage](https://img.shields.io/badge/{coverage_prefix}-{coverage}%25-{coverage_color})](https://github.com/${{ REPO_NAME }}/actions/workflows/calculate-tests-coverage-on-pull-request.yml)\n"
           
           with fileinput.FileInput("README.md", inplace=True) as file:
             for line in file:
