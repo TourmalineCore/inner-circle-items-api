@@ -198,7 +198,7 @@ jobs:
           env_file = os.getenv("GITHUB_ENV")
 
           with open(env_file, "a") as f:
-              f.write(f"{env_value_name_with_bage_color}={badge_color}")
+              f.write(f"{env_value_name_with_bage_color}={badge_color}\n")
         
         set_by_coverage_badge_color(
           env_value_name_with_coverage="UNITS_COVERAGE", 
