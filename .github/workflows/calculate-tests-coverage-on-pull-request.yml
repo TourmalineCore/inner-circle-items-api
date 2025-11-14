@@ -70,6 +70,15 @@ jobs:
           e2e-coverage.xml units-coverage.xml
         push: never
 
+    # https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-commands#adding-a-job-summary
+    - name: Add Full Tests Coverage Summary to Job
+      uses: devcontainers/ci@v0.3
+      with:
+        cacheFrom: ghcr.io/tourmalinecore/inner-circle-items-api-devcontainer
+        runCmd: |
+          reportgenerator -reports:"./full-coverage.xml" -targetdir:"$GITHUB_STEP_SUMMARY" -reporttypes:MarkdownSummary
+        push: never
+
     - name: Upload Unit Tests Coverage
       uses: actions/upload-artifact@v4
       with:
