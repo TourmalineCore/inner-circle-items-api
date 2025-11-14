@@ -7,6 +7,7 @@ on:
 
 jobs:
   calculate-coverage:
+    name: Calculate Coverage
     runs-on: ubuntu-24.04
     steps:
     - name: Check out the repo
