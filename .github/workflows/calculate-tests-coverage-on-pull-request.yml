@@ -7,7 +7,6 @@ on:
 
 jobs:
   calculate-coverage:
-    name: Calculate Coverage
     runs-on: ubuntu-24.04
     steps:
     - name: Check out the repo
@@ -71,7 +70,6 @@ jobs:
           e2e-coverage.xml units-coverage.xml
         push: never
 
-    # https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-commands#adding-a-job-summary
     - name: Generate Full Tests Coverage Summary as Markdown
       uses: devcontainers/ci@v0.3
       with:
