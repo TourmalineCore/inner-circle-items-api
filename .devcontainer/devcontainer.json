@@ -26,7 +26,25 @@
 			"extensions": [
 				"karatelabs.karate",
 				"bierner.markdown-mermaid",
-				"ms-dotnettools.csdevkit", // C# Dev Kit recommended extension
+				// --- .NET Related Extensions ---
+				// These extensions versions were fixed to try to stabilize working environment in VSCode
+				// There are several issues related to extensions and .NET Runtime/SDK versions incompatibility
+				// Related issues links:
+				// - https://stackoverflow.com/questions/79786199/issues-with-c-sharp-extension-with-vs-code-on-arch-linux
+				// - https://github.com/dotnet/vscode-csharp/issues/7679
+				// - https://github.com/microsoft/vscode-dotnettools/issues/2459
+				// - https://github.com/dotnet/vscode-csharp/issues/8718 (not directly related)
+				// - https://github.com/microsoft/vscode-dotnettools/issues/2416 (not directly related)
+				// If you need to upgrade these versions sync it with Dockerfile devcontainers/dotnet version
+				// It also needs to be tested checking:
+				// - if it finds tests in Tests Explorer
+				// - if there are no errors at the container start related to Roslyn
+				// - if there is no red syntax highlighting in .cs files related to custom NuGet packages even after their restore
+				// - if Debug of the running API and Debug of separate Unit tests work
+				"ms-dotnettools.csdevkit@1.73.8", // C# Dev Kit recommended extension
+				"ms-dotnettools.csharp@2.96.3",
+				"ms-dotnettools.vscode-dotnet-runtime@2.3.9",
+				// --- .NET Related Extensions ---
 				"humao.rest-client", // Rest Client for *.http files
 				"EditorConfig.EditorConfig", // For code auto-formatting using .editorconfig
 				"github.vscode-github-actions" // For workflows editing
