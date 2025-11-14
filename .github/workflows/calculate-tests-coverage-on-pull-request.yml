@@ -257,4 +257,4 @@ jobs:
 
         git commit README.md -m "docs(readme): bring test coverage score up to date" || echo "No changes to commit"
         
-        git push origin || echo "No changes to commit"
+        git push origin HEAD:$GITHUB_HEAD_REF || echo "No changes to commit"
