@@ -52,5 +52,20 @@
         ]
       }
     }
+  },
+  {
+    "httpRequest": {
+      "method": "GET",
+      "path": "/internal/get-employees"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "body": "[{ \"id\": 2, \"fullName\": \"Name Name Name\", \"corporateEmail\": \"mail@mail.ru\", \"tenantId\": 1 }]",
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      }
+    }
   }
 ]
