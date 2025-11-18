@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using Api.EnternalDeps.EmployeesApi;
+using Api.Mappers;
 using Api.Requests;
 using Api.Responses;
 using Application.Commands;
@@ -9,6 +11,7 @@ using TourmalineCore.AspNetCore.JwtAuthentication.Core.Filters;
 
 namespace Api.Controllers
 {
+
     [Authorize]
     [ApiController]
     [Route("items")]
@@ -20,10 +23,13 @@ namespace Api.Controllers
         [RequiresPermission(UserClaimsProvider.CanViewItems)]
         [HttpGet]
         public async Task<ItemsResponse> GetAllItemsAsync(
-            [FromServices] AllItemsQuery allItemsQuery
+            [FromServices] AllItemsQuery allItemsQuery,
+            [FromServices] EmployeesApi employeesApi
         )
         {
             var items = await allItemsQuery.GetAsync();
+
+            var allEmployeesResponse = await employeesApi.GetAllEmployeesAsync();
 
             return new ItemsResponse
             {
@@ -41,12 +47,7 @@ namespace Api.Controllers
                         Price = x.Price,
                         Description = x.Description,
                         PurchaseDate = x.PurchaseDate,
-                        HolderEmployee = (x.HolderEmployeeId == null)
-                            ? null
-                            : new EmployeeDto
-                            {
-                                Id = x.HolderEmployeeId.Value
-                            }
+                        HolderEmployee = HolderEmployeeMapper.MapToEmployeeDto(x.HolderEmployeeId, allEmployeesResponse)
                     })
                     .ToList()
             };

@@ -1,4 +1,5 @@
-﻿using Application;
+﻿using Api.EnternalDeps.EmployeesApi;
+using Application;
 using Application.Commands;
 using Application.Queries;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,10 @@ public static class DependencyInjection
         });
 
         services.AddScoped<TenantAppDbContext>();
+
+        services.Configure<ExternalDepsUrls>(configuration.GetSection(nameof(ExternalDepsUrls)));
+
+        services.AddTransient<EmployeesApi, EmployeesApi>();
 
         services.AddTransient<CreateItemTypeCommand>();
         services.AddTransient<HardDeleteItemTypeCommand>();

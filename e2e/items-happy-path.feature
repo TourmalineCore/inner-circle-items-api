@@ -1,11 +1,11 @@
 Feature: Items
-# https://github.com/karatelabs/karate/issues/1191
-# https://github.com/karatelabs/karate?tab=readme-ov-file#karate-fork
+    # https://github.com/karatelabs/karate/issues/1191
+    # https://github.com/karatelabs/karate?tab=readme-ov-file#karate-fork
 
-Background:
-* header Content-Type = 'application/json'
+  Background:
+    * header Content-Type = 'application/json'
 
-Scenario: Happy Path
+  Scenario: Happy Path
 
     * def jsUtils = read('./js-utils.js')
     * def authApiRootUrl = jsUtils().getEnvVariable('AUTH_API_ROOT_URL')
@@ -29,6 +29,8 @@ Scenario: Happy Path
     * def accessToken = karate.toMap(response.accessToken.value)
 
     * configure headers = jsUtils().getAuthHeaders(accessToken)
+
+    * def holderEmployeeId = jsUtils().getEmployeeIdFromToken(response.accessToken.value)
 
     # Step 1: Create a new item type
     * def itemTypeRandomName = '[API-E2E]-Test-item-type-' + Math.random()
@@ -60,7 +62,7 @@ Scenario: Happy Path
         "price": 322,
         "description": "some description",
         "purchaseDate": "2025-07-01",
-        "holderEmployeeId": 555
+        "holderEmployeeId": "#(holderEmployeeId)"
     }
     """
     When method POST
@@ -86,7 +88,8 @@ Scenario: Happy Path
         "description": "some description",
         "purchaseDate": "2025-07-01",
         "holderEmployee": {
-            "id": 555
+            "id": "#(holderEmployeeId)",
+            "fullName": "#notnull"
         }
     }
     """
