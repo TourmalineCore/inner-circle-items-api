@@ -7,7 +7,6 @@ namespace Api.EnternalDeps.EmployeesApi;
 
 public class EmployeesApi
 {
-    private readonly HttpClient _client;
     private readonly ExternalDepsUrls _externalDepsUrls;
     private readonly AuthenticationOptions _authenticationOptions;
     private readonly IHttpContextAccessor _httpContextAccessor;
@@ -18,7 +17,6 @@ public class EmployeesApi
         IHttpContextAccessor httpContextAccessor
     )
     {
-        _client = new HttpClient();
         _externalDepsUrls = externalDepsUrls.Value;
         _authenticationOptions = authenticationOptions.Value;
         _httpContextAccessor = httpContextAccessor;
@@ -38,9 +36,13 @@ public class EmployeesApi
           .Headers[headerName]
           .ToString();
 
-        _client.DefaultRequestHeaders.Add(headerName, token);
+        // ToDo improve work with HttpClient
+        // https://learn.microsoft.com/en-us/dotnet/fundamentals/networking/http/httpclient-guidelines
+        using var httpClient = new HttpClient()!;
 
-        var employeesDtos = await _client.GetFromJsonAsync<List<EmployeeDto>>(link);
+        httpClient.DefaultRequestHeaders.Add(headerName, token);
+
+        var employeesDtos = await httpClient.GetFromJsonAsync<List<EmployeeDto>>(link);
 
         return new EmployeesResponse
         {
