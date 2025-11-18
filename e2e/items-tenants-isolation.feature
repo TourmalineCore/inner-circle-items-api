@@ -1,11 +1,11 @@
 Feature: Items
-# https://github.com/karatelabs/karate/issues/1191
-# https://github.com/karatelabs/karate?tab=readme-ov-file#karate-fork
+    # https://github.com/karatelabs/karate/issues/1191
+    # https://github.com/karatelabs/karate?tab=readme-ov-file#karate-fork
 
-Background:
-* header Content-Type = 'application/json'
+  Background:
+    * header Content-Type = 'application/json'
 
-Scenario: Tenants Isolation
+  Scenario: Tenants Isolation
 
     * def jsUtils = read('./js-utils.js')
     * def authApiRootUrl = jsUtils().getEnvVariable('AUTH_API_ROOT_URL')
@@ -62,7 +62,7 @@ Scenario: Tenants Isolation
         "price": 322,
         "description": "some description",
         "purchaseDate": "2025-07-01",
-        "holderEmployeeId": 555
+        "holderEmployeeId": null
     }
     """
     When method POST
