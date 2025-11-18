@@ -1,9 +1,9 @@
 # inner-circle-items-api
 
 <!-- auto-generated -->
-[![coverage](https://img.shields.io/badge/e2e_coverage-86.02%25-olivedrab)](https://github.com/TourmalineCore/inner-circle-items-api/actions/workflows/calculate-tests-coverage-on-pull-request.yml)
-[![coverage](https://img.shields.io/badge/units_coverage-23.76%25-crimson)](https://github.com/TourmalineCore/inner-circle-items-api/actions/workflows/calculate-tests-coverage-on-pull-request.yml)
-[![coverage](https://img.shields.io/badge/full_coverage-97.20%25-forestgreen)](https://github.com/TourmalineCore/inner-circle-items-api/actions/workflows/calculate-tests-coverage-on-pull-request.yml)
+[![coverage](https://img.shields.io/badge/e2e_coverage-81.88%25-olivedrab)](https://github.com/TourmalineCore/inner-circle-items-api/actions/workflows/calculate-tests-coverage-on-pull-request.yml)
+[![coverage](https://img.shields.io/badge/units_coverage-17.67%25-crimson)](https://github.com/TourmalineCore/inner-circle-items-api/actions/workflows/calculate-tests-coverage-on-pull-request.yml)
+[![coverage](https://img.shields.io/badge/full_coverage-89.78%25-olivedrab)](https://github.com/TourmalineCore/inner-circle-items-api/actions/workflows/calculate-tests-coverage-on-pull-request.yml)
 <!-- auto-generated -->
 
 ## Run in Visual Studio
