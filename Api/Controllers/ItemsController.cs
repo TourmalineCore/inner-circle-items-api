@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using Api.EnternalDeps;
+using Api.EnternalDeps.EmployeesApi;
 using Api.Requests;
 using Api.Responses;
 using Application.Commands;
@@ -27,7 +27,7 @@ namespace Api.Controllers
         {
             var items = await allItemsQuery.GetAsync();
 
-            var allEmployees = await employeesApi.GetAllEmployeesAsync();
+            var allEmployeesResponse = await employeesApi.GetAllEmployeesAsync();
 
             return new ItemsResponse
             {
@@ -50,7 +50,8 @@ namespace Api.Controllers
                             : new EmployeeDto
                             {
                                 Id = x.HolderEmployeeId.Value,
-                                FullName = allEmployees
+                                FullName = allEmployeesResponse
+                                    .Employees
                                     .SingleOrDefault(y => y.Id == x.HolderEmployeeId.Value)
                                     ?.FullName ?? "Not Found"
                             }

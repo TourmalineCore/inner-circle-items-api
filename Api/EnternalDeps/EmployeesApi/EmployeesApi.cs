@@ -1,20 +1,9 @@
 
+using Api.EnternalDeps.EmployeesApi.Responses;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using TourmalineCore.AspNetCore.JwtAuthentication.Core.Options;
 
-namespace Api.EnternalDeps;
-
-public class Employee
-{
-    public long Id { get; set; }
-
-    public required string FullName { get; set; }
-
-    public required string CorporateEmail { get; set; }
-
-    public long TenantId { get; set; }
-}
+namespace Api.EnternalDeps.EmployeesApi;
 
 public class EmployeesApi
 {
@@ -35,7 +24,7 @@ public class EmployeesApi
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<List<Employee>> GetAllEmployeesAsync()
+    public async Task<EmployeesResponse> GetAllEmployeesAsync()
     {
         var link = $"{_externalDepsUrls.EmployeesApiRootUrl}/internal/get-employees";
 
@@ -51,8 +40,11 @@ public class EmployeesApi
 
         _client.DefaultRequestHeaders.Add(headerName, token);
 
-        var response = await _client.GetStringAsync(link);
+        var employeesDtos = await _client.GetFromJsonAsync<List<EmployeeDto>>(link);
 
-        return JsonConvert.DeserializeObject<List<Employee>>(response)!;
+        return new EmployeesResponse
+        {
+            Employees = employeesDtos!
+        };
     }
 }
