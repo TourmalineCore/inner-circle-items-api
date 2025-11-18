@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Api.EnternalDeps;
 using Api.Requests;
 using Api.Responses;
 using Application.Commands;
@@ -20,10 +21,13 @@ namespace Api.Controllers
         [RequiresPermission(UserClaimsProvider.CanViewItems)]
         [HttpGet]
         public async Task<ItemsResponse> GetAllItemsAsync(
-            [FromServices] AllItemsQuery allItemsQuery
+            [FromServices] AllItemsQuery allItemsQuery,
+            [FromServices] EmployeesApi employeesApi
         )
         {
             var items = await allItemsQuery.GetAsync();
+
+            var allEmployees = await employeesApi.GetAllEmployeesAsync();
 
             return new ItemsResponse
             {
@@ -45,7 +49,10 @@ namespace Api.Controllers
                             ? null
                             : new EmployeeDto
                             {
-                                Id = x.HolderEmployeeId.Value
+                                Id = x.HolderEmployeeId.Value,
+                                FullName = allEmployees
+                                    .SingleOrDefault(y => y.Id == x.HolderEmployeeId.Value)
+                                    ?.FullName ?? "Not Found"
                             }
                     })
                     .ToList()
