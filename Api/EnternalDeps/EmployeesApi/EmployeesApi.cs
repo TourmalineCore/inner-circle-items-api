@@ -42,7 +42,7 @@ public class EmployeesApi
 
         httpClient.DefaultRequestHeaders.Add(headerName, token);
 
-        var employeesDtos = await httpClient.GetFromJsonAsync<List<EmployeeDto>>(link);
+        var employeesDtos = await httpClient.GetFromJsonAsync<List<EmployeesResponse.EmployeeDto>>(link);
 
         return new EmployeesResponse
         {
