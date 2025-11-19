@@ -1,11 +1,11 @@
 Feature: Items
-# https://github.com/karatelabs/karate/issues/1191
-# https://github.com/karatelabs/karate?tab=readme-ov-file#karate-fork
+    # https://github.com/karatelabs/karate/issues/1191
+    # https://github.com/karatelabs/karate?tab=readme-ov-file#karate-fork
 
-Background:
-* header Content-Type = 'application/json'
+  Background:
+    * header Content-Type = 'application/json'
 
-Scenario: No Permissions Lead to Unauthorized for All Endpoints
+  Scenario: No Permissions Lead to Unauthorized for All Endpoints
 
     * def jsUtils = read('./js-utils.js')
     * def authApiRootUrl = jsUtils().getEnvVariable('AUTH_API_ROOT_URL')
@@ -31,15 +31,15 @@ Scenario: No Permissions Lead to Unauthorized for All Endpoints
     * configure headers = jsUtils().getAuthHeaders(accessToken)
 
     Given url apiRootUrl
-    Given path 'items'
+    Given path 'api/items'
     When method POST
     Then status 403
 
     Given url apiRootUrl
-    Given path 'items'
+    Given path 'api/items'
     When method GET
     Then status 403
 
-    Given path 'items', 100500, 'hard-delete'
+    Given path 'api/items', 100500, 'hard-delete'
     When method DELETE
     Then status 403

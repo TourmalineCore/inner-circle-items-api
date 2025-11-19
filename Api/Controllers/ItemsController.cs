@@ -14,7 +14,7 @@ namespace Api.Controllers
 
     [Authorize]
     [ApiController]
-    [Route("items")]
+    [Route("api/items")]
     public class ItemsController : ControllerBase
     {
         /// <summary>

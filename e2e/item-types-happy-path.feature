@@ -1,11 +1,11 @@
 Feature: Item Types
-# https://github.com/karatelabs/karate/issues/1191
-# https://github.com/karatelabs/karate?tab=readme-ov-file#karate-fork
+    # https://github.com/karatelabs/karate/issues/1191
+    # https://github.com/karatelabs/karate?tab=readme-ov-file#karate-fork
 
-Background:
-* header Content-Type = 'application/json'
+  Background:
+    * header Content-Type = 'application/json'
 
-Scenario: Happy Path
+  Scenario: Happy Path
 
     * def jsUtils = read('./js-utils.js')
     * def authApiRootUrl = jsUtils().getEnvVariable('AUTH_API_ROOT_URL')
@@ -34,7 +34,7 @@ Scenario: Happy Path
     * def randomName = '[API-E2E]-Test-item-type-' + Math.random()
     
     Given url apiRootUrl
-    Given path 'item-types'
+    Given path 'api/item-types'
     And request
     """
     {
@@ -48,7 +48,7 @@ Scenario: Happy Path
 
     # Step 2: Verify that item type is in the list with the id and generated name
     Given url apiRootUrl
-    Given path 'item-types'
+    Given path 'api/item-types'
     When method GET
     And match response.itemTypes contains
     """
@@ -59,13 +59,13 @@ Scenario: Happy Path
     """
 
     # Cleanup: Delete the item type (hard delete)
-    Given path 'item-types', newItemTypeId, 'hard-delete'
+    Given path 'api/item-types', newItemTypeId, 'hard-delete'
     When method DELETE
     Then status 200
     And match response == { isDeleted: true }
     
     # Cleanup Verification: Verify that item type was deleted
     Given url apiRootUrl
-    Given path 'item-types'
+    Given path 'api/item-types'
     When method GET
     And assert response.itemTypes.filter(x => x.id == newItemTypeId).length == 0
