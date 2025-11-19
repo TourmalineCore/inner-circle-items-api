@@ -2,6 +2,8 @@
 
 # This stage is used when running from VS in fast mode (Default for Debug configuration)
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
+# use root to be able to use privilidged port 80
+# https://github.com/dotnet/aspnetcore/discussions/53015
 USER root
 WORKDIR /app
 EXPOSE 80
