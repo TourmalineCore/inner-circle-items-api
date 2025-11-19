@@ -9,6 +9,7 @@
     <!-- Api/Program.cs(10,28): error CS0017: Program has more than one entry point defined. Compile with /main to specify the type that contains the entry point. -->
     <!-- https://stackoverflow.com/a/52205608 -->
     <GenerateProgramFile>false</GenerateProgramFile>
+    <ContainerUser>root</ContainerUser>
   </PropertyGroup>
 
   <!-- Condition to exclude tests related packages -->
