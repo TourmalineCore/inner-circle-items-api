@@ -59,6 +59,8 @@ jobs:
         with:
           context: .
           file: ./Api/Dockerfile
+          build-args: |
+            EXCLUDE_UNIT_TESTS_FROM_BUILD=true
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

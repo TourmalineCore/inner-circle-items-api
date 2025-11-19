@@ -30,5 +30,30 @@ README.md
 !.git/refs/heads/**
 
 # we don't need tests and their related code in production
-*Tests.cs
-*TestsRelated.cs
+**/*Tests.cs
+**/*TestsRelated.cs
+
+**/bin/*
+**/obj/*
+**/.vs/*
+**/.vscode/*
+**.user
+**.http
+**/appsettings.**
+**/Dockerfile
+**/lib/*
+
+.devcontainer/
+.github/
+target/
+ci/
+e2e/
+
+.dockerignore
+.editorconfig
+.gitattributes
+.gitignore
+docker-compose.yml
+LICENSE
+pgAdmin.json
+README.md
