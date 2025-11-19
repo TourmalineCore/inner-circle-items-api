@@ -101,8 +101,8 @@ services:
     profiles:
       - MockForPullRequest
     build:
-      dockerfile: ./e2e/KarateDockerfile
-      context: .
+      dockerfile: ./KarateDockerfile
+      context: ./e2e
     # service_started is not what we need, we need deps to be healthy and ready, this needs to be implemented in api and mock-server first 
     depends_on:
       inner-circle-items-api:

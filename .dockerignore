@@ -39,7 +39,12 @@ README.md
 **/.vscode/*
 **.user
 **.http
+
 **/appsettings.**
+# need to include these files for tests execution in docker compose even though these maigh not be used in prod
+!**/appsettings.json
+!**/appsettings.MockForPullRequest.json
+
 **/Dockerfile
 **/lib/*
 
