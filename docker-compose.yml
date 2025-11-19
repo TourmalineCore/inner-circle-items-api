@@ -73,7 +73,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=MockForPullRequest
     ports:
-      - 6501:80
+      - 6501:8080
     networks:
       - inner-circle-items-api-network
 
@@ -125,7 +125,7 @@ services:
       AUTH_PASSWORD_WITHOUT_PERMISSIONS: "first-tenant-password-without-permissions"
       # here the port is 1080 because it needs to be an internal port, not an external which is 8501 in this case
       AUTH_API_ROOT_URL: "http://inner-circle-items-api-mock-server:1080"
-      API_ROOT_URL: "http://inner-circle-items-api"
+      API_ROOT_URL: "http://inner-circle-items-api:8080"
       SHOULD_USE_FAKE_EXTERNAL_DEPENDENCIES: "true"
     networks:
       - inner-circle-items-api-network
