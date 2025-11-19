@@ -28,3 +28,7 @@ README.md
 !.git/config
 !.git/packed-refs
 !.git/refs/heads/**
+
+# we don't need tests and their related code in production
+*Tests.cs
+*TestsRelated.cs

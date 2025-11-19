@@ -1,21 +1,13 @@
 {
   "profiles": {
-    "http": {
-        "commandName": "Project",
-        "environmentVariables": {
-            "ASPNETCORE_ENVIRONMENT": "Development"
-        },
-      "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5117"
-    },
-    "Container (Dockerfile)": {
-      "commandName": "Docker",
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+    "MockForDevelopment": {
+      "commandName": "Project",
       "environmentVariables": {
-        "ASPNETCORE_HTTP_PORTS": "80"
+        "ASPNETCORE_ENVIRONMENT": "MockForDevelopment"
       },
       "publishAllPorts": true,
-      "useSSL": false
+      "useSSL": false,
+      "dotnetRunMessages": true
     }
   },
   "$schema": "https://json.schemastore.org/launchsettings.json"

@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Queries
 {
-    public class GetAllItemTypesQuery
+    public class AllItemTypesQuery
     {
-        private readonly AppDbContext _context;
+        private readonly TenantAppDbContext _context;
 
-        public GetAllItemTypesQuery(AppDbContext context)
+        public AllItemTypesQuery(TenantAppDbContext context)
         {
             _context = context;
         }
@@ -15,8 +15,7 @@ namespace Application.Queries
         public Task<List<ItemType>> GetAsync()
         {
             return _context
-                .ItemTypes
-                .AsNoTracking()
+                .QueryableWithinTenantAsNoTracking<ItemType>()
                 .ToListAsync();
         }
     }

@@ -1,4 +1,5 @@
-﻿using Application;
+﻿using Api.EnternalDeps.EmployeesApi;
+using Application;
 using Application.Commands;
 using Application.Queries;
 using Microsoft.EntityFrameworkCore;
@@ -11,12 +12,29 @@ public static class DependencyInjection
 
     public static void AddApplication(this IServiceCollection services, IConfiguration configuration)
     {
+        // https://stackoverflow.com/a/37373557
+        services.AddHttpContextAccessor();
+        services.AddScoped<IClaimsProvider, HttpContextClaimsProvider>();
+
         var connectionString = configuration.GetConnectionString(DefaultConnection);
 
-        services.AddDbContext<AppDbContext>(options => { options.UseNpgsql(connectionString); }
-        );
+        services.AddDbContext<AppDbContext>(options =>
+        {
+            options.UseNpgsql(connectionString);
+        });
+
+        services.AddScoped<TenantAppDbContext>();
+
+        services.Configure<ExternalDepsUrls>(configuration.GetSection(nameof(ExternalDepsUrls)));
+
+        services.AddTransient<EmployeesApi, EmployeesApi>();
+
         services.AddTransient<CreateItemTypeCommand>();
-        services.AddTransient<DeleteItemTypeCommand>();
-        services.AddTransient<GetAllItemTypesQuery>();
+        services.AddTransient<HardDeleteItemTypeCommand>();
+        services.AddTransient<AllItemTypesQuery>();
+
+        services.AddTransient<CreateItemCommand>();
+        services.AddTransient<AllItemsQuery>();
+        services.AddTransient<HardDeleteItemCommand>();
     }
 }
