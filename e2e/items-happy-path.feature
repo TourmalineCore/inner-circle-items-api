@@ -36,7 +36,7 @@ Feature: Items
     * def itemTypeRandomName = '[API-E2E]-Test-item-type-' + Math.random()
     
     Given url apiRootUrl
-    Given path 'item-types'
+    Given path 'api/item-types'
     And request
     """
     {
@@ -52,7 +52,7 @@ Feature: Items
     * def itemRandomName = '[API-E2E]-Test-item' + Math.random()
     
     Given url apiRootUrl
-    Given path 'items'
+    Given path 'api/items'
     And request
     """
     {
@@ -72,7 +72,7 @@ Feature: Items
 
     # Step 3: Verify that item is in the list with the id and generated name
     Given url apiRootUrl
-    Given path 'items'
+    Given path 'api/items'
     When method GET
     And match response.items contains
     """
@@ -95,19 +95,19 @@ Feature: Items
     """
 
     # Cleanup: Delete the item (hard delete)
-    Given path 'items', newItemId, 'hard-delete'
+    Given path 'api/items', newItemId, 'hard-delete'
     When method DELETE
     Then status 200
     And match response == { isDeleted: true }
 
     # Cleanup: Delete the item type (hard delete)
-    Given path 'item-types', newItemTypeId, 'hard-delete'
+    Given path 'api/item-types', newItemTypeId, 'hard-delete'
     When method DELETE
     Then status 200
     And match response == { isDeleted: true }
   
     # Cleanup Verification: Verify that item was deleted
     Given url apiRootUrl
-    Given path 'items'
+    Given path 'api/items'
     When method GET
     And assert response.items.filter(x => x.id == newItemId).length == 0

@@ -11,7 +11,7 @@ namespace Api.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("item-types")]
+    [Route("api/item-types")]
     public class ItemTypesController : ControllerBase
     {
         /// <summary>
