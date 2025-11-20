@@ -1,11 +1,75 @@
 name: E2E Tests
 
 on:
-  push:
-    branches:
-      - feature/*
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
+  # this is needed to wait for the new docker image to be build and published to the registry
+  # so that we can use the image to run ui of the needed commit related version as part of local-env
+  # the idea is taken from here https://stackoverflow.com/a/71489231
+  push_to_registry:
+    uses: ./.github/workflows/docker-build-and-push.yml
+    # without this it cannot login to the registry
+    secrets: inherit
+
+  e2e-test-against-local-env:
+    runs-on: ubuntu-24.04
+    needs: [push_to_registry]
+    steps:
+      - name: Checkout local-env
+        uses: actions/checkout@v4
+        with:
+          repository: TourmalineCore/inner-circle-local-env
+
+      - name: Deploy Local Env to Kind k8s
+        uses: devcontainers/ci@v0.3
+        with:
+          runCmd: |
+            # we need to override "latest" image tag of ui inside local-env to run e2e against the current commit ui version and not against latest from master
+            # We tried to use yq to change the image tag, but in the values files for helmfile we have non-yaml code that yq can`t parse or ignore
+            # so for that reason we use Stream EDitor which can find needed string using regular expressions and change it to a new value
+            # The -i flag is needed to write new image tag directly to values file
+            sed -i "0,/tag:.*/s//tag: \"sha-${{ github.sha }}\"/" deploy/values-items-api.yaml.gotmpl
+
+            # we need to override "latest" ref of service chart inside local-env to run tests against the current commit service chart version and not against latest from master
+            sed -i "0,/git+https:\/\/github.com\/TourmalineCore\/${{ github.event.repository.name }}.git?ref=.*/s//git+https:\/\/github.com\/TourmalineCore\/${{ github.event.repository.name }}.git?ref=${{ github.sha }}/" deploy/helmfile.yaml
+            
+            sed -i "0,/git::https:\/\/github.com\/TourmalineCore\/${{ github.event.repository.name }}.git@\/ci\/values.yaml?ref=.*/s//git::https:\/\/github.com\/TourmalineCore\/${{ github.event.repository.name }}.git@\/ci\/values.yaml?ref=${{ github.sha }}/" deploy/helmfile.yaml
+
+            kind create cluster --name inner-circle --config kind-local-config.yaml --kubeconfig ./.inner-circle-cluster-kubeconfig
+            # we need to properly expose KUBECONFIG as an absolute path, pwd prints current working directory path
+            export KUBECONFIG=$(pwd)/.inner-circle-cluster-kubeconfig
+
+            helmfile --environment local --namespace local -f deploy/helmfile.yaml apply
+          push: never
+
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      # this is needed to address this issue according to the comment https://github.com/devcontainers/ci/issues/271#issuecomment-2301764487
+      # otherwise our TourmalineCore org name cannot be used in docker image names, only tourmalinecore
+      - name: Add Lowercase Organization and Repo Name DEV_CONTAINER_IMAGE Env Var
+        run: |
+          echo "DEV_CONTAINER_IMAGE=${GITHUB_REPOSITORY,,}-devcontainer" >>${GITHUB_ENV}
+
+      - name: Run E2E Tests Against Local Env
+        uses: devcontainers/ci@v0.3
+        with:
+          cacheFrom: ghcr.io/${{ env.DEV_CONTAINER_IMAGE }}
+          runCmd: |
+            java -jar /karate.jar .
+          env: |
+            "AUTH_FIRST_TENANT_LOGIN_WITH_ALL_PERMISSIONS": "malfoy@tourmalinecore.com"
+            "AUTH_FIRST_TENANT_PASSWORD_WITH_ALL_PERMISSIONS": "Serpens1!"
+            "AUTH_SECOND_TENANT_LOGIN_WITH_ALL_PERMISSIONS": "chang@tourmalinecore.com"
+            "AUTH_SECOND_TENANT_PASSWORD_WITH_ALL_PERMISSIONS": "Reparo1!"
+            "AUTH_LOGIN_WITHOUT_PERMISSIONS": "goyle@tourmalinecore.com"
+            "AUTH_PASSWORD_WITHOUT_PERMISSIONS": "Crucio1!"
+            "AUTH_API_ROOT_URL": "http://localhost:30090/api"
+            "API_ROOT_URL": "http://localhost:30090"
+          push: never
+    
   e2e-karate-tests-in-docker-compose:
     runs-on: ubuntu-24.04
     steps:
