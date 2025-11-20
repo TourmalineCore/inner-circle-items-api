@@ -44,6 +44,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           platforms: linux/amd64
+          context: .
           file: ./Api/Dockerfile
           build-args: |
             EXCLUDE_UNIT_TESTS_FROM_BUILD=true
@@ -100,6 +101,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           platforms: linux/arm64
+          context: .
           file: ./Api/Dockerfile
           build-args: |
             EXCLUDE_UNIT_TESTS_FROM_BUILD=true
