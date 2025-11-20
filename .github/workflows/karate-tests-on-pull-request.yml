@@ -68,7 +68,7 @@ jobs:
           "AUTH_LOGIN_WITHOUT_PERMISSIONS": "goyle@tourmalinecore.com"
           "AUTH_PASSWORD_WITHOUT_PERMISSIONS": "Crucio1!"
           "AUTH_API_ROOT_URL": "http://localhost:30090/api"
-          "API_ROOT_URL": "http://localhost:30090"
+          "API_ROOT_URL": "http://localhost:30090/api/items"
 
   e2e-karate-tests-in-docker-compose:
     runs-on: ubuntu-24.04
