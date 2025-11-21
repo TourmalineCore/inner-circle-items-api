@@ -2,9 +2,8 @@
 name: DB Diagram Generation
 
 on:
-  push:
-    branches:
-      - feature/*
+  pull_request:
+    types: [opened, synchronize, reopened]
     # need to execute only when migrations changed
     paths:
       - '**/Migrations/**'

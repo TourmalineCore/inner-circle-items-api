@@ -36,7 +36,7 @@ Feature: Items
     * def randomName = '[API-E2E]-Test-item-type-' + Math.random()
     
     Given url apiRootUrl
-    Given path 'api/item-types'
+    Given path 'item-types'
     And request
     """
     {
@@ -52,7 +52,7 @@ Feature: Items
     * def itemRandomName = '[API-E2E]-Test-item' + Math.random()
     
     Given url apiRootUrl
-    Given path 'api/items'
+    Given path 'items'
     And request
     """
     {
@@ -89,13 +89,13 @@ Feature: Items
 
     # Step 3: Cannot get items generated within another Tenant
     Given url apiRootUrl
-    Given path 'api/items'
+    Given path 'items'
     When method GET
     Then status 200
     And match response.items == []
 
     # Step 4: Cannot delete item type of another Tenant
-    Given path 'api/items', newItemId, 'hard-delete'
+    Given path 'items', newItemId, 'hard-delete'
     When method DELETE
     Then status 200
     And match response == { isDeleted: false }
@@ -103,13 +103,13 @@ Feature: Items
     * configure headers = jsUtils().getAuthHeaders(firstTenantAccessToken)
 
     # Cleanup: Delete the item type (hard delete)
-    Given path 'api/items', newItemId, 'hard-delete'
+    Given path 'items', newItemId, 'hard-delete'
     When method DELETE
     Then status 200
     And match response == { isDeleted: true }
 
     # Cleanup: Delete the item type (hard delete)
-    Given path 'api/item-types', newItemTypeId, 'hard-delete'
+    Given path 'item-types', newItemTypeId, 'hard-delete'
     When method DELETE
     Then status 200
     And match response == { isDeleted: true }

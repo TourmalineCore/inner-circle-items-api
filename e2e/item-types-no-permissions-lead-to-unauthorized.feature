@@ -31,15 +31,15 @@ Feature: Item Types
     * configure headers = jsUtils().getAuthHeaders(accessToken)
 
     Given url apiRootUrl
-    Given path 'api/item-types'
+    Given path 'item-types'
     When method POST
     Then status 403
 
     Given url apiRootUrl
-    Given path 'api/item-types'
+    Given path 'item-types'
     When method GET
     Then status 403
 
-    Given path 'api/item-types', 100500, 'hard-delete'
+    Given path 'item-types', 100500, 'hard-delete'
     When method DELETE
     Then status 403
