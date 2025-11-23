@@ -28,7 +28,8 @@ podAnnotations:
   checksum/config: "{{ include (print $.Template.BasePath \"/extra-list.yaml\") . | sha256sum }}"
 
 # CUSTOM: Here you store non secret env vars that will be passed to the pod's environment
-extraConfigMapEnvVars: {}
+extraConfigMapEnvVars:
+  - AuthenticationOptions__IsDebugTokenEnabled: "false"
 
 # CUSTOM: Here you store secret env vars that will be passed to the pod's environment. You should never store them in this file.
 extraSecretEnvVars: {}
