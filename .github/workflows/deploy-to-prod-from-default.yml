@@ -3,11 +3,11 @@ name: Deploy to Prod
 on:
   push:
     branches:
-      - feature/deploy_to_production
+      - master
 
 jobs:
   push_to_registry:
-    uses: ./.github/workflows/docker-build-and-push.yml
+    uses: ./.github/workflows/reusable/docker-build-and-push.yml
 
   deploy-to-prod:
     needs: [push_to_registry]
@@ -37,7 +37,6 @@ jobs:
           helmfile-auto-init: "false"
 
   run_e2e_tests:
-    uses: ./.github/workflows/e2e-tests-against-prod.yml
+    uses: ./.github/workflows/reusable/e2e-tests-against-prod.yml
     needs: [deploy-to-prod]
     secrets: inherit
-
