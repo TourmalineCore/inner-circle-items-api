@@ -2,7 +2,7 @@
   {
     "httpRequest": {
       "method": "POST",
-      "path": "/auth/login",
+      "path": "/api/auth/login",
       "body": {
         "login": "first-tenant-login-with-all-permissions"
       }
@@ -20,7 +20,7 @@
   {
     "httpRequest": {
       "method": "POST",
-      "path": "/auth/login",
+      "path": "/api/auth/login",
       "body": {
         "login": "second-tenant-login-with-all-permissions"
       }
@@ -38,7 +38,7 @@
   {
     "httpRequest": {
       "method": "POST",
-      "path": "/auth/login",
+      "path": "/api/auth/login",
       "body": {
         "login": "first-tenant-login-without-permissions"
       }
@@ -56,7 +56,7 @@
   {
     "httpRequest": {
       "method": "GET",
-      "path": "/internal/get-employees"
+      "path": "/api/employees/internal/get-employees"
     },
     "httpResponse": {
       "statusCode": 200,
