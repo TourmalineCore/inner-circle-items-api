@@ -4,13 +4,10 @@ on:
   push:
     branches:
       - feature/deploy_to_production
-  # to allow to wait for a docker image to be published to proceed in another workflow
-  workflow_call:
 
 jobs:
   push_to_registry:
     uses: ./.github/workflows/docker-build-and-push.yml
-    secrets: inherit
 
   deploy-to-prod:
     needs: [push_to_registry]
@@ -38,3 +35,6 @@ jobs:
             --state-values-set extraSecretEnvVars.AuthenticationOptions__PublicSigningKey=${{ secrets.INNER_CIRCLE_PROD_PUBLIC_SIGNING_KEY }}
             --state-values-set extraSecretEnvVars.ExternalDepsUrls__EmployeesApiRootUrl=${{ secrets.INNER_CIRCLE_PROD_EMPLOYEES_API_ROOT_URL }}
           helmfile-auto-init: "false"
+
+  run_e2e_tests:
+    uses: ./.github/workflows/e2e-tests-against-prod.yml
