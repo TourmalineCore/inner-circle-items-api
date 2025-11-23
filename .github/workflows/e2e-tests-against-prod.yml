@@ -21,7 +21,9 @@ jobs:
 
     - name: Run E2E Tests Against Local Env
       run: |
-        java -jar karate.jar .
+        # Learn more about '> /dev/null 2>&1': https://stackoverflow.com/a/42919998
+        # In essence it merges output and error streams and doesn't show errors in the terminal to avoid leakage of secrets in the pipeline
+        java -jar karate.jar . > /dev/null 2>&1
       env:
         "AUTH_FIRST_TENANT_LOGIN_WITH_ALL_PERMISSIONS": ${{ secrets.INNER_CIRCLE_PROD_AUTH_FIRST_TENANT_LOGIN_WITH_ALL_PERMISSIONS }}
         "AUTH_FIRST_TENANT_PASSWORD_WITH_ALL_PERMISSIONS": ${{ secrets.INNER_CIRCLE_PROD_AUTH_FIRST_TENANT_PASSWORD_WITH_ALL_PERMISSIONS }}
