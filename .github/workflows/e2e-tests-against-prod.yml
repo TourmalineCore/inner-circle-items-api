@@ -3,7 +3,7 @@ name: E2E Tests Against Prod
 on:
   push:
     branches:
-      - master
+      - feature/deploy_to_production
 
 jobs:
   deploy_to_prod:
