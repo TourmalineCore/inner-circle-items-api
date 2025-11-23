@@ -9,20 +9,25 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Set up Docker Compose environment variables
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+      
+    - name: Download Karate JAR
       run: |
-        echo AUTH_FIRST_TENANT_LOGIN_WITH_ALL_PERMISSIONS=${{ secrets.INNER_CIRCLE_PROD_AUTH_FIRST_TENANT_LOGIN_WITH_ALL_PERMISSIONS }} >> .env
-        echo AUTH_FIRST_TENANT_PASSWORD_WITH_ALL_PERMISSIONS=${{ secrets.INNER_CIRCLE_PROD_AUTH_FIRST_TENANT_PASSWORD_WITH_ALL_PERMISSIONS }} >> .env
-        echo AUTH_SECOND_TENANT_LOGIN_WITH_ALL_PERMISSIONS=${{ secrets.INNER_CIRCLE_PROD_AUTH_SECOND_TENANT_LOGIN_WITH_ALL_PERMISSIONS }} >> .env
-        echo AUTH_SECOND_TENANT_PASSWORD_WITH_ALL_PERMISSIONS=${{ secrets.INNER_CIRCLE_PROD_AUTH_SECOND_TENANT_PASSWORD_WITH_ALL_PERMISSIONS }} >> .env
-        echo AUTH_LOGIN_WITHOUT_PERMISSIONS=${{ secrets.INNER_CIRCLE_PROD_AUTH_LOGIN_WITHOUT_PERMISSIONS }} >> .env
-        echo AUTH_PASSWORD_WITHOUT_PERMISSIONS=${{ secrets.INNER_CIRCLE_PROD_AUTH_PASSWORD_WITHOUT_PERMISSIONS }} >> .env
-        echo AUTH_API_ROOT_URL=${{ secrets.INNER_CIRCLE_PROD_AUTH_API_ROOT_URL }} >> .env
-        echo API_ROOT_URL=${{ secrets.INNER_CIRCLE_PROD_ITEMS_API_ROOT_URL }} >> .env
+        curl -L https://github.com/karatelabs/karate/releases/download/v1.5.1/karate-1.5.1.jar -o karate.jar
 
-    - name: Run E2E Tests in Docke Compose
+    - name: Run E2E Tests Against Local Env
       run: |
-        # The option --exit-code-from ensures that the command's exit code exactly matches the exit code of the specified service.
-        # Learn more about '> /dev/null 2>&1': https://stackoverflow.com/a/42919998
-        # In essence it merges output and error streams and doesn't show errors in the terminal to avoid leakage of secrets in the pipeline
-        docker compose -f docker-compose-e2e-against-prod.yml up --exit-code-from inner-circle-items-api-e2e-against-prod-tests > /dev/null 2>&1
+        java -jar karate.jar .
+      env:
+        "AUTH_FIRST_TENANT_LOGIN_WITH_ALL_PERMISSIONS": ${{ secrets.INNER_CIRCLE_PROD_AUTH_FIRST_TENANT_LOGIN_WITH_ALL_PERMISSIONS }}
+        "AUTH_FIRST_TENANT_PASSWORD_WITH_ALL_PERMISSIONS": ${{ secrets.INNER_CIRCLE_PROD_AUTH_FIRST_TENANT_PASSWORD_WITH_ALL_PERMISSIONS }}
+        "AUTH_SECOND_TENANT_LOGIN_WITH_ALL_PERMISSIONS": ${{ secrets.INNER_CIRCLE_PROD_AUTH_SECOND_TENANT_LOGIN_WITH_ALL_PERMISSIONS }}
+        "AUTH_SECOND_TENANT_PASSWORD_WITH_ALL_PERMISSIONS": ${{ secrets.INNER_CIRCLE_PROD_AUTH_SECOND_TENANT_PASSWORD_WITH_ALL_PERMISSIONS }}
+        "AUTH_LOGIN_WITHOUT_PERMISSIONS": ${{ secrets.INNER_CIRCLE_PROD_AUTH_LOGIN_WITHOUT_PERMISSIONS }}
+        "AUTH_PASSWORD_WITHOUT_PERMISSIONS": ${{ secrets.INNER_CIRCLE_PROD_AUTH_PASSWORD_WITHOUT_PERMISSIONS }}
+        "AUTH_API_ROOT_URL": ${{ secrets.INNER_CIRCLE_PROD_AUTH_API_ROOT_URL }}
+        "API_ROOT_URL": ${{ secrets.INNER_CIRCLE_PROD_ITEMS_API_ROOT_URL }}

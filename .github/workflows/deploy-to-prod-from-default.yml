@@ -39,3 +39,5 @@ jobs:
   run_e2e_tests:
     uses: ./.github/workflows/e2e-tests-against-prod.yml
     needs: [deploy-to-prod]
+    secrets: inherit
+
