@@ -8,12 +8,12 @@ jobs:
   # this is needed to wait for the new docker image to be build and published to the registry
   # so that we can use the image to run the service of the needed commit related version as part of local-env
   # the idea is taken from here https://stackoverflow.com/a/71489231
-  push_to_registry:
-    uses: ./.github/workflows/reusable/docker-build-and-push.yml
+  docker-build-and-push:
+    uses: ./.github/workflows/.reusable-docker-build-and-push.yml
 
   e2e-test-against-local-env:
     runs-on: ubuntu-24.04
-    needs: [push_to_registry]
+    needs: [docker-build-and-push]
     steps:
       - name: Checkout local-env
         uses: actions/checkout@v4

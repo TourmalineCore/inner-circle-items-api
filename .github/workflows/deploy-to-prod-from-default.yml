@@ -6,11 +6,11 @@ on:
       - master
 
 jobs:
-  push_to_registry:
-    uses: ./.github/workflows/reusable/docker-build-and-push.yml
+  docker-build-and-push:
+    uses: ./.github/workflows/.reusable-docker-build-and-push.yml
 
   deploy-to-prod:
-    needs: [push_to_registry]
+    needs: [docker-build-and-push]
     runs-on: ubuntu-24.04
     steps:
       - name: Check out the repo
@@ -36,7 +36,7 @@ jobs:
             --state-values-set extraSecretEnvVars.ExternalDepsUrls__EmployeesApiRootUrl=${{ secrets.INNER_CIRCLE_PROD_EMPLOYEES_API_ROOT_URL }}
           helmfile-auto-init: "false"
 
-  run_e2e_tests:
-    uses: ./.github/workflows/reusable/e2e-tests-against-prod.yml
+  run-e2e-tests:
+    uses: ./.github/workflows/.reusable-e2e-tests-against-prod.yml
     needs: [deploy-to-prod]
     secrets: inherit
