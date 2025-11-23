@@ -10,6 +10,7 @@ on:
 jobs:
   push_to_registry:
     uses: ./.github/workflows/docker-build-and-push.yml
+    secrets: inherit
 
   deploy-to-prod:
     needs: [push_to_registry]

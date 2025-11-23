@@ -8,6 +8,7 @@ on:
 jobs:
   deploy_to_prod:
     uses: ./.github/workflows/deploy-to-prod-from-default.yml
+    secrets: inherit
 
   e2e-test-against-prod:
     runs-on: ubuntu-24.04
