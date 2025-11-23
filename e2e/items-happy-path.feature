@@ -15,7 +15,7 @@ Feature: Items
 
     # Authentication
     Given url authApiRootUrl
-    And path '/auth/login'
+    And path '/login'
     And request
     """
     {

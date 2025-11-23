@@ -17,7 +17,7 @@ Feature: Item Types
     
     # Authentication
     Given url authApiRootUrl
-    And path '/auth/login'
+    And path '/login'
     And request
     """
     {
@@ -50,7 +50,7 @@ Feature: Item Types
 
     # Authentication with other tenant
     Given url authApiRootUrl
-    And path '/auth/login'
+    And path '/login'
     And request
     """
     {

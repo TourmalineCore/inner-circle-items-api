@@ -1,10 +1,11 @@
 name: Publish Docker image
 
+# !!! NEVER add on push when there is on workflow_call
+# if you do that the workflow can run multiple times
+# for instance if you re-use this docker build workflow for prod deployment and for local-env in PR
+# it will build the docker image it twice
+# if you build => deploy => run e2e against prod it will build the image 3 times!
 on:
-  push:
-    branches:
-      - master
-      - feature/*
   # to allow to wait for a docker image to be published to proceed in another workflow
   workflow_call:
 
@@ -170,6 +171,11 @@ jobs:
             # set latest tag for default branch
             # https://github.com/docker/metadata-action/issues/171 explains how to tag latest only on default branch
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
+        env:
+          # https://github.com/docker/metadata-action/issues/283
+          # without this flag it won't tag the image using the commit SHA 
+          # for non push events like pull_request ones it requires this :(
+          DOCKER_METADATA_PR_HEAD_SHA: true
 
       - name: Create manifest list and push
         working-directory: ${{ runner.temp }}/digests

@@ -58,7 +58,7 @@
 		"AUTH_SECOND_TENANT_PASSWORD_WITH_ALL_PERMISSIONS": "second-tenant-password-with-all-permissions",
 		"AUTH_LOGIN_WITHOUT_PERMISSIONS": "first-tenant-login-without-permissions",
 		"AUTH_PASSWORD_WITHOUT_PERMISSIONS": "first-tenant-password-without-permissions",
-		"AUTH_API_ROOT_URL": "http://localhost:8501",
+		"AUTH_API_ROOT_URL": "http://localhost:8501/api/auth",
 		"API_ROOT_URL": "http://localhost:4501/api",
 		"SHOULD_USE_FAKE_EXTERNAL_DEPENDENCIES": "true"
 	},
