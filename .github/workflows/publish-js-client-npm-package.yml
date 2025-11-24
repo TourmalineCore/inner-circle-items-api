@@ -13,12 +13,12 @@ jobs:
       packages: write
     steps:
       - uses: actions/checkout@v5
+      - run: cd js-client
       # Setup .npmrc file to publish to GitHub Packages
       - uses: actions/setup-node@v4
         with:
           node-version: '24.11.1'
           registry-url: 'https://npm.pkg.github.com'
-      - run: cd js-client
       - run: npm ci
       - run: npm run build
       - run: npm publish
