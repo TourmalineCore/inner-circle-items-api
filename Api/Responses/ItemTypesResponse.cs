@@ -1,7 +1,6 @@
-﻿namespace Api.Responses
+﻿namespace Api.Responses;
+
+public class ItemTypesResponse
 {
-    public class ItemTypesResponse
-    {
-        public required List<ItemTypeDto> ItemTypes { get; set; }
-    }
+    public required List<ItemTypeDto> ItemTypes { get; set; }
 }

@@ -1,7 +1,6 @@
-namespace Api.Responses
+namespace Api.Responses;
+
+public class CreateItemTypeResponse
 {
-    public class CreateItemTypeResponse
-    {
-        public required long NewItemTypeId { get; set; }
-    }
+    public required long NewItemTypeId { get; set; }
 }

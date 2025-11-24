@@ -1,9 +1,8 @@
-﻿namespace Core
-{
-    public abstract class EntityBase
-    {
-        public long Id { get; set; }
+﻿namespace Core;
 
-        public long TenantId { get; set; }
-    }
+public abstract class EntityBase
+{
+    public long Id { get; set; }
+
+    public long TenantId { get; set; }
 }
