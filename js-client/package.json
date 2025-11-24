@@ -1,0 +1,28 @@
+{
+  "name": "inner-circle-items-api-js-client",
+  "version": "0.0.1",
+  "description": "Client for inner-circle-items-api that provides TypeScript types and client to make network calls from JavaScript.",
+  "homepage": "https://github.com/TourmalineCore/inner-circle-items-api#readme",
+  "bugs": {
+    "url": "https://github.com/TourmalineCore/inner-circle-items-api/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TourmalineCore/inner-circle-items-api.git"
+  },
+  "license": "MIT",
+  "author": "TourmalineCore",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  },
+  "peerDependencies": {
+    "axios": "1.x"
+  }
+}
