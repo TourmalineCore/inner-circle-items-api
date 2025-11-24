@@ -18,6 +18,8 @@ jobs:
         with:
           node-version: '24.11.1'
           registry-url: 'https://npm.pkg.github.com'
+          # Defaults to the user or organization that owns the workflow file
+          scope: '@tourmalinecore'
       - run: |
           cd js-client
           npm ci
