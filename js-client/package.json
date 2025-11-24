@@ -23,6 +23,6 @@
     "typescript": "^5.2.2"
   },
   "peerDependencies": {
-    "axios": "1.x"
+    "axios": "^1.8.2"
   }
 }
