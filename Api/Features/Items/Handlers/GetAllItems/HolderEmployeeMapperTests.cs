@@ -1,7 +1,7 @@
 using Api.EnternalDeps.EmployeesApi.Responses;
 using Xunit;
 
-namespace Api.Mappers;
+namespace Api.Features.Items.Handlers.GetAllItems;
 
 public class HolderEmployeeMapperTests
 {

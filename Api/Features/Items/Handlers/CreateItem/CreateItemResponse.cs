@@ -1,4 +1,4 @@
-namespace Api.Responses;
+namespace Api.Features.Items.Handlers.CreateItem;
 
 public class CreateItemResponse
 {

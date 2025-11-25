@@ -1,4 +1,6 @@
-﻿namespace Api.Responses;
+﻿using Api.Responses;
+
+namespace Api.Features.Items.Handlers.GetAllItems;
 
 public class ItemsResponse
 {
