@@ -1,23 +1,22 @@
 ﻿using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Queries
+namespace Application.Queries;
+
+public class AllItemsQuery
 {
-    public class AllItemsQuery
+    private readonly TenantAppDbContext _context;
+
+    public AllItemsQuery(TenantAppDbContext context)
     {
-        private readonly TenantAppDbContext _context;
+        _context = context;
+    }
 
-        public AllItemsQuery(TenantAppDbContext context)
-        {
-            _context = context;
-        }
-
-        public Task<List<Item>> GetAsync()
-        {
-            return _context
-                .QueryableWithinTenantAsNoTracking<Item>()
-                .Include(x => x.ItemType)
-                .ToListAsync();
-        }
+    public Task<List<Item>> GetAsync()
+    {
+        return _context
+            .QueryableWithinTenantAsNoTracking<Item>()
+            .Include(x => x.ItemType)
+            .ToListAsync();
     }
 }
