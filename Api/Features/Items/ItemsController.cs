@@ -18,7 +18,7 @@ public class ItemsController : ControllerBase
     /// </summary>
     [RequiresPermission(UserClaimsProvider.CanViewItems)]
     [HttpGet]
-    public Task<ItemsResponse> GetAllItemsAsync(
+    public Task<GetAllItemsResponse> GetAllItemsAsync(
         [FromServices] GetAllItemsHandler getAllItemsHandler
     )
     {

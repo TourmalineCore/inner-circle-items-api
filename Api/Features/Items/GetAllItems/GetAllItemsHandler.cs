@@ -18,13 +18,13 @@ public class GetAllItemsHandler
         _employeesApi = employeesApi;
     }
 
-    public async Task<ItemsResponse> HandleAsync()
+    public async Task<GetAllItemsResponse> HandleAsync()
     {
         var items = await _allItemsQuery.GetAsync();
 
         var allEmployeesResponse = await _employeesApi.GetAllEmployeesAsync();
 
-        return new ItemsResponse
+        return new GetAllItemsResponse
         {
             Items = items
                 .Select(x => new ItemDto

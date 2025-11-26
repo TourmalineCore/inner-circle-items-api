@@ -2,7 +2,7 @@
 
 namespace Api.Features.Items.GetAllItems;
 
-public class ItemsResponse
+public class GetAllItemsResponse
 {
     public required List<ItemDto> Items { get; set; }
 }
