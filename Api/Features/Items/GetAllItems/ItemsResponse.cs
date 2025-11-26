@@ -1,6 +1,6 @@
 ﻿using Api.Responses;
 
-namespace Api.Features.Items.Handlers.GetAllItems;
+namespace Api.Features.Items.GetAllItems;
 
 public class ItemsResponse
 {

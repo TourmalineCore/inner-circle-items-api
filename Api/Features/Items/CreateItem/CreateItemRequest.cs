@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Api.Features.Items.Handlers.CreateItem;
+namespace Api.Features.Items.CreateItem;
 
 public class CreateItemRequest
 {

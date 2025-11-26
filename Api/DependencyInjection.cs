@@ -1,6 +1,6 @@
 ﻿using Api.EnternalDeps.EmployeesApi;
-using Api.Features.Items.Handlers.CreateItem;
-using Api.Features.Items.Handlers.GetAllItems;
+using Api.Features.Items.CreateItem;
+using Api.Features.Items.GetAllItems;
 using Application;
 using Application.Commands;
 using Application.Queries;

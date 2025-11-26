@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
-using Api.Features.Items.Handlers.CreateItem;
-using Api.Features.Items.Handlers.GetAllItems;
+using Api.Features.Items.CreateItem;
+using Api.Features.Items.GetAllItems;
 using Application.Commands;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

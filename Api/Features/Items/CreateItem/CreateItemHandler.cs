@@ -1,6 +1,6 @@
 using Application.Commands;
 
-namespace Api.Features.Items.Handlers.CreateItem;
+namespace Api.Features.Items.CreateItem;
 
 public class CreateItemHandler
 {

@@ -2,7 +2,7 @@ using Api.EnternalDeps.EmployeesApi;
 using Api.Responses;
 using Application.Queries;
 
-namespace Api.Features.Items.Handlers.GetAllItems;
+namespace Api.Features.Items.GetAllItems;
 
 public class GetAllItemsHandler
 {
