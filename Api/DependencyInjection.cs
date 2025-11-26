@@ -1,4 +1,4 @@
-﻿using Api.EnternalDeps.EmployeesApi;
+﻿using Api.ExternalDeps.EmployeesApi;
 using Api.Features.Items.CreateItem;
 using Api.Features.Items.GetAllItems;
 using Application;

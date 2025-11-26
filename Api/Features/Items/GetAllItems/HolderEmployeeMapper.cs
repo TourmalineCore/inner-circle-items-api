@@ -1,4 +1,4 @@
-using Api.EnternalDeps.EmployeesApi.Responses;
+using Api.ExternalDeps.EmployeesApi.Responses;
 
 namespace Api.Features.Items.GetAllItems;
 

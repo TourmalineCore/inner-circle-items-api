@@ -1,4 +1,4 @@
-using Api.EnternalDeps.EmployeesApi;
+using Api.ExternalDeps.EmployeesApi;
 using Api.Responses;
 using Application.Queries;
 
