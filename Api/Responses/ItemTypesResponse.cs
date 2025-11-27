@@ -1,4 +1,6 @@
-﻿namespace Api.Responses;
+﻿using Application.Features.Dtos;
+
+namespace Api.Responses;
 
 public class ItemTypesResponse
 {

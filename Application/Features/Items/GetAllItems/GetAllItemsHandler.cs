@@ -1,28 +1,25 @@
-using Api.ExternalDeps.EmployeesApi;
-using Api.Responses;
+using Application.ExternalDeps.EmployeesApi;
+using Application.Features.Dtos;
 using Application.Queries;
 
-namespace Api.Features.Items.GetAllItems;
+namespace Application.Features.Items.GetAllItems;
 
 public class GetAllItemsHandler
 {
     private readonly AllItemsQuery _allItemsQuery;
-    private readonly EmployeesApi _employeesApi;
+
+    public const string NotFoundEmployeeFullName = "Not Found";
 
     public GetAllItemsHandler(
-        AllItemsQuery allItemsQuery,
-        EmployeesApi employeesApi
+        AllItemsQuery allItemsQuery
     )
     {
         _allItemsQuery = allItemsQuery;
-        _employeesApi = employeesApi;
     }
 
-    public async Task<GetAllItemsResponse> HandleAsync()
+    public async Task<GetAllItemsResponse> HandleAsync(EmployeesResponse allEmployeesResponse)
     {
         var items = await _allItemsQuery.GetAsync();
-
-        var allEmployeesResponse = await _employeesApi.GetAllEmployeesAsync();
 
         return new GetAllItemsResponse
         {
@@ -40,7 +37,16 @@ public class GetAllItemsHandler
                     Price = x.Price,
                     Description = x.Description,
                     PurchaseDate = x.PurchaseDate,
-                    HolderEmployee = HolderEmployeeMapper.MapToEmployeeDto(x.HolderEmployeeId, allEmployeesResponse)
+                    HolderEmployee = x.HolderEmployeeId == null
+                        ? null
+                        : new EmployeeDto
+                        {
+                            Id = x.HolderEmployeeId.Value,
+                            FullName = allEmployeesResponse
+                                .Employees
+                                .SingleOrDefault(y => y.Id == x.HolderEmployeeId.Value)
+                                ?.FullName ?? NotFoundEmployeeFullName
+                        }
                 })
                 .ToList()
         };

@@ -1,6 +1,4 @@
-﻿using Api.Responses;
-
-namespace Api.Features.Items.GetAllItems;
+﻿namespace Application.Features.Items.GetAllItems;
 
 public class GetAllItemsResponse
 {
