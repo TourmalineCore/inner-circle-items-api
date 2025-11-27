@@ -39,7 +39,7 @@ public static class DependencyInjection
         services.AddTransient<AllItemsQuery>();
         services.AddTransient<HardDeleteItemCommand>();
 
-        services.AddScoped<GetAllItemsHandler>();
-        services.AddScoped<CreateItemHandler>();
+        services.AddTransient<GetAllItemsHandler>();
+        services.AddTransient<CreateItemHandler>();
     }
 }
