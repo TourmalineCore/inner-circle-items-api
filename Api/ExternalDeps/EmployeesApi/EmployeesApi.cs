@@ -1,4 +1,4 @@
-using Api.ExternalDeps.EmployeesApi.Responses;
+using Application.ExternalDeps.EmployeesApi;
 using Microsoft.Extensions.Options;
 using TourmalineCore.AspNetCore.JwtAuthentication.Core.Options;
 

@@ -1,4 +1,4 @@
-﻿namespace Api.Responses;
+﻿namespace Application.Features.Dtos;
 
 public class ItemTypeDto
 {

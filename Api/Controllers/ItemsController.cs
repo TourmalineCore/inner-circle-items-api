@@ -1,12 +1,13 @@
 using System.ComponentModel.DataAnnotations;
-using Api.Features.Items.CreateItem;
-using Api.Features.Items.GetAllItems;
+using Api.ExternalDeps.EmployeesApi;
 using Application.Commands;
+using Application.Features.Items.CreateItem;
+using Application.Features.Items.GetAllItems;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TourmalineCore.AspNetCore.JwtAuthentication.Core.Filters;
 
-namespace Api.Features.Items;
+namespace Api.Controllers;
 
 [Authorize]
 [ApiController]
@@ -18,11 +19,14 @@ public class ItemsController : ControllerBase
     /// </summary>
     [RequiresPermission(UserClaimsProvider.CanViewItems)]
     [HttpGet]
-    public Task<GetAllItemsResponse> GetAllItemsAsync(
-        [FromServices] GetAllItemsHandler getAllItemsHandler
+    public async Task<GetAllItemsResponse> GetAllItemsAsync(
+        [FromServices] GetAllItemsHandler getAllItemsHandler,
+        [FromServices] EmployeesApi employeesApi
     )
     {
-        return getAllItemsHandler.HandleAsync();
+        var allEmployeesResponse = await employeesApi.GetAllEmployeesAsync();
+
+        return await getAllItemsHandler.HandleAsync(allEmployeesResponse);
     }
 
     /// <summary>

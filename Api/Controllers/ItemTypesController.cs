@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using Api.Requests;
 using Api.Responses;
 using Application.Commands;
+using Application.Features.Dtos;
 using Application.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
