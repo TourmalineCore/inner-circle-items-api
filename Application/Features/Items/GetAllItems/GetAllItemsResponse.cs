@@ -1,4 +1,6 @@
-﻿namespace Application.Features.Items.GetAllItems;
+﻿using Application.Features.Dtos;
+
+namespace Application.Features.Items.GetAllItems;
 
 public class GetAllItemsResponse
 {
