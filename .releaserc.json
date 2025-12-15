@@ -7,10 +7,79 @@
     }
   ],
   "plugins": [
-    "@semantic-release/commit-analyzer",
-    "@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        "preset": false,
+        "parserOpts": {
+          "noteKeywords": [
+            "BREAKING CHANGE"
+          ]
+        },
+        "releaseRules": [
+          {
+            "type": "feat",
+            "release": "minor"
+          },
+          {
+            "type": "feat!",
+            "release": "major"
+          },
+          {
+            "type": "fix",
+            "release": "patch"
+          },
+          {
+            "type": "fix!",
+            "release": "major"
+          },
+          {
+            "type": "refactor",
+            "release": "patch"
+          },
+          {
+            "type": "refactor!",
+            "release": "major"
+          },
+          {
+            "type": "format",
+            "release": "patch"
+          },
+          {
+            "type": "cd",
+            "release": "patch"
+          },
+          {
+            "type": "docs",
+            "release": null
+          },
+          {
+            "type": "infra",
+            "release": null
+          },
+          {
+            "type": "ci",
+            "release": null
+          },
+          {
+            "type": "git",
+            "release": null
+          }
+        ]
+      }
+    ],
+    [
+      "@semantic-release/release-notes-generator",
+      {
+        "writerOpts": {
+          "commitsSort": [
+            "scope",
+            "subject"
+          ]
+        }
+      }
+    ],
     "@semantic-release/github",
-    "@semantic-release/git",
     [
       "@semantic-release/git",
       {
@@ -21,67 +90,5 @@
       }
     ]
   ],
-  "tagFormat": "${version}",
-  "preset": "conventionalcommits",
-  "parserOpts": {
-    "noteKeywords": [
-      "BREAKING CHANGE"
-    ]
-  },
-  "releaseRules": [
-    {
-      "type": "feat",
-      "release": "minor"
-    },
-    {
-      "type": "feat!",
-      "release": "major"
-    },
-    {
-      "type": "fix",
-      "release": "patch"
-    },
-    {
-      "type": "fix!",
-      "release": "major"
-    },
-    {
-      "type": "refactor",
-      "release": "patch"
-    },
-    {
-      "type": "refactor!",
-      "release": "major"
-    },
-    {
-      "type": "format",
-      "release": "patch"
-    },
-    {
-      "type": "cd",
-      "release": "patch"
-    },
-    {
-      "type": "docs",
-      "release": null
-    },
-    {
-      "type": "infra",
-      "release": null
-    },
-    {
-      "type": "ci",
-      "release": null
-    },
-    {
-      "type": "git",
-      "release": null
-    }
-  ],
-  "writerOpts": {
-    "commitsSort": [
-      "scope",
-      "subject"
-    ]
-  }
+  "tagFormat": "${version}"
 }
