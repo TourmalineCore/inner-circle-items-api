@@ -1,0 +1,87 @@
+{
+  "branches": [
+    "master",
+    {
+      "name": "feature/add-semantic-release",
+      "prerelease": "beta"
+    }
+  ],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/github",
+    "@semantic-release/git",
+    [
+      "@semantic-release/git",
+      {
+        "assets": [
+          "__version"
+        ],
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      }
+    ]
+  ],
+  "tagFormat": "${version}",
+  "preset": "conventionalcommits",
+  "parserOpts": {
+    "noteKeywords": [
+      "BREAKING CHANGE"
+    ]
+  },
+  "releaseRules": [
+    {
+      "type": "feat",
+      "release": "minor"
+    },
+    {
+      "type": "feat!",
+      "release": "major"
+    },
+    {
+      "type": "fix",
+      "release": "patch"
+    },
+    {
+      "type": "fix!",
+      "release": "major"
+    },
+    {
+      "type": "refactor",
+      "release": "patch"
+    },
+    {
+      "type": "refactor!",
+      "release": "major"
+    },
+    {
+      "type": "format",
+      "release": "patch"
+    },
+    {
+      "type": "cd",
+      "release": "patch"
+    },
+    {
+      "type": "docs",
+      "release": null
+    },
+    {
+      "type": "infra",
+      "release": null
+    },
+    {
+      "type": "ci",
+      "release": null
+    },
+    {
+      "type": "git",
+      "release": null
+    }
+  ],
+  "writerOpts": {
+    "commitsSort": [
+      "scope",
+      "subject"
+    ]
+  }
+}

@@ -1,0 +1,45 @@
+name: Semantic Release
+
+on:
+  push:
+    branches: [ feature/* ]
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      id-token: write # to enable use of OIDC for trusted publishing and npm provenance
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Node.js 22.18.0
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22.18.0
+
+      - name: Install semantic-release and plugins
+        run: |
+          npm install --save-dev semantic-release \
+            @semantic-release/commit-analyzer \
+            @semantic-release/release-notes-generator \
+            @semantic-release/github \
+            @semantic-release/git 
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Run Semantic Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
