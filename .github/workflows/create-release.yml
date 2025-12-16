@@ -2,7 +2,8 @@ name: Semantic Release
 
 on:
   push:
-    branches: [ feature/* ]
+    # todo: change branch to master
+    branches: [ feature/add-semantic-release ]
 
 jobs:
   release:
@@ -29,10 +30,11 @@ jobs:
       - name: Install semantic-release and plugins
         run: |
           npm install --save-dev semantic-release \
+            @semantic-release/exec \
             @semantic-release/commit-analyzer \
             @semantic-release/release-notes-generator \
             @semantic-release/github \
-            @semantic-release/git 
+            @semantic-release/git \
 
       - name: Configure Git
         run: |
