@@ -10,7 +10,7 @@ module.exports = {
       '@semantic-release/exec',
       {
         // Need to rewrite version in __version
-        successCmd: 'echo ${nextRelease.version} > __version'
+        verifyReleaseCmd: 'echo ${nextRelease.version} > __version'
       }
     ],
     [
