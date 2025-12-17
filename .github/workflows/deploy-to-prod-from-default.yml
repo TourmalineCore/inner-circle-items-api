@@ -3,7 +3,7 @@ name: Deploy to Prod
 on:
   push:
     branches:
-      - feature/add-semantic-release
+      - master
 
 jobs:
   docker-build-and-push:
