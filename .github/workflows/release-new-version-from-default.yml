@@ -1,13 +1,12 @@
-name: Semantic Release
+name: Release New Version (If Needed)
 
 on:
   push:
-    # todo: change branch to master
-    branches: [ feature/add-semantic-release ]
+    branches:
+      - feature/add-semantic-release
 
 jobs:
-  release:
-    name: Create Release
+  release-new-version:
     runs-on: ubuntu-24.04
     permissions:
       contents: write # to be able to publish a GitHub release
@@ -16,30 +15,30 @@ jobs:
       id-token: write # to enable use of OIDC for trusted publishing and npm provenance
     
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Check out the repo
+        uses: actions/checkout@v6
         with:
           # Downloads the entire commit history for semantic-release
           fetch-depth: 0
 
-      - name: Set up Node.js 22.18.0
-        uses: actions/setup-node@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
         with:
-          node-version: 22.18.0
+          node-version: 24.12.0
 
       - name: Install semantic-release and plugins
         run: |
-          npm install --save-dev semantic-release \
+          npm install semantic-release \
             @semantic-release/exec \
             @semantic-release/commit-analyzer \
             @semantic-release/release-notes-generator \
             @semantic-release/github \
-            @semantic-release/git \
+            @semantic-release/git
 
       - name: Configure Git
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.email "contact@tourmalinecore.com"
+          git config user.name "Workflow Action"
 
       - name: Run Semantic Release
         env:
