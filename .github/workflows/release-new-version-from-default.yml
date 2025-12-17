@@ -28,13 +28,13 @@ jobs:
 
       - name: Install semantic-release and plugins
         run: |
-          npm install semantic-release \
-            @semantic-release/exec \
-            @semantic-release/commit-analyzer \
-            @semantic-release/release-notes-generator \
-            @semantic-release/github \
-            @semantic-release/git \
-            conventional-changelog-conventionalcommits
+          npm install semantic-release@25.0.2 \
+            @semantic-release/exec@7.1.0 \
+            @semantic-release/commit-analyzer@13.0.1 \
+            @semantic-release/release-notes-generator@14.1.0 \
+            @semantic-release/github@12.0.2 \
+            @semantic-release/git@10.0.1 \
+            conventional-changelog-conventionalcommits@9.1.0
 
       - name: Configure Git
         run: |
