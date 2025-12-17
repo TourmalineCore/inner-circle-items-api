@@ -17,6 +17,9 @@ module.exports = {
       // Analyzes commits and determines which release version should be released.
       '@semantic-release/commit-analyzer',
       {
+        // decided to switch to angular to conventionalcommits preset for major bumps with short hand syntax like fix!
+        // they also consider to make that switch but not sure regarding the timeline https://github.com/semantic-release/semantic-release/issues/3406
+        // here you can find more about the issue with ! for angular preset
         // https://github.com/semantic-release/commit-analyzer/issues/231#issuecomment-2127394159
         preset: "conventionalcommits",
         releaseRules: "./release.rules.cjs"
