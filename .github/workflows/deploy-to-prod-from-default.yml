@@ -4,6 +4,7 @@ on:
   release:
     types: [published]
 
+    
 jobs:
   docker-build-and-push:
     uses: ./.github/workflows/.reusable-docker-build-and-push.yml
