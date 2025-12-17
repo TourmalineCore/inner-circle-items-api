@@ -10,71 +10,20 @@ module.exports = {
       '@semantic-release/exec',
       {
         // Need to rewrite version in __version
-        verifyReleaseCmd: 'echo ${nextRelease.version} > __version'
+        prepareCmd: 'echo ${nextRelease.version} > __version'
       }
     ],
     [
       // Analyzes commits and determines which release version should be released.
       '@semantic-release/commit-analyzer',
       {
-        // Disables standard presets
-        preset: false,
+        preset: "angular",
         parserOpts: {
-          // It is necessary that the types with ! you were right to worry,
-          // without this feat!, refactor! and fix! did not update the major version
+          // It is necessary for correct parsing of "!",
+          // without it, feat!, refactor! and fix! did not update the major version
           headerPattern: /^(\w+!?): (.+)$/
         },
-        // Custom rules
-        releaseRules: [
-          {
-            type: 'feat!',
-            release: 'major'
-          },
-          {
-            type: 'feat',
-            release: 'minor'
-          },
-          {
-            type: 'fix!',
-            release: 'major'
-          },
-          {
-            type: 'fix',
-            release: 'patch'
-          },
-          {
-            type: 'refactor!',
-            release: 'major'
-          },
-          {
-            type: 'refactor',
-            release: 'patch'
-          },
-          {
-            type: 'format',
-            release: 'patch'
-          },
-          {
-            type: 'cd',
-            release: 'patch'
-          },
-          {
-            type: 'docs',
-            release: null
-          },
-          {
-            type: 'infra',
-            release: null
-          },
-          {
-            type: 'ci',
-            release: null
-          },
-          {
-            type: 'git',
-            release: null
-          }
-        ]
+        releaseRules: "./release-rules.js"
       }
     ],
     // Add release notes
