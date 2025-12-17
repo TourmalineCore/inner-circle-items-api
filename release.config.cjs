@@ -17,12 +17,8 @@ module.exports = {
       // Analyzes commits and determines which release version should be released.
       '@semantic-release/commit-analyzer',
       {
-        preset: "angular",
-        parserOpts: {
-          // It is necessary for correct parsing of "!",
-          // without it, feat!, refactor! and fix! did not update the major version
-          headerPattern: /^(\w+!?): (.+)$/
-        },
+        // https://github.com/semantic-release/commit-analyzer/issues/231#issuecomment-2127394159
+        preset: "conventionalcommits",
         releaseRules: "./release.rules.cjs"
       }
     ],

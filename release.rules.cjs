@@ -1,17 +1,5 @@
 module.exports = [
     {
-        type: 'feat!',
-        release: 'major'
-    },
-    {
-        type: 'fix!',
-        release: 'major'
-    },
-    {
-        type: 'refactor!',
-        release: 'major'
-    },
-    {
         type: 'refactor',
         release: 'patch'
     },
@@ -22,5 +10,21 @@ module.exports = [
     {
         type: 'cd',
         release: 'patch'
+    },
+    {
+        type: "docs",
+        release: false
+    },
+    {
+        type: "infra",
+        release: false
+    },
+    {
+        type: "ci",
+        release: false
+    },
+    {
+        type: "git",
+        release: false
     },
 ];
