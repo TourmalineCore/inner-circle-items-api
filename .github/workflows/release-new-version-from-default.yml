@@ -3,7 +3,7 @@ name: Release New Version (If Needed)
 on:
   push:
     branches:
-      - master
+      - feature/add-semantic-release
 
 jobs:
   release-new-version:
