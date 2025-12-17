@@ -33,6 +33,8 @@ module.exports = {
         }
       }
     ],
+    // Create GitHub Release
+    '@semantic-release/github',
     [
       // Plugin for commits changes
       '@semantic-release/git',
