@@ -4,14 +4,15 @@ on:
   push:
     branches:
       - master
+    paths:
+      # need to trigger deployment only when the version is changed in a semantic-release produced auto commit
+      - '__version'
 
 jobs:
   docker-build-and-push:
-    if: ${{ contains(github.event.head_commit.message, '[deploy to prod]') }}
     uses: ./.github/workflows/.reusable-docker-build-and-push.yml
 
   deploy-to-prod:
-    if: ${{ contains(github.event.head_commit.message, '[deploy to prod]') }}
     needs: [docker-build-and-push]
     runs-on: ubuntu-24.04
     steps:
