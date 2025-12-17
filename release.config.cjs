@@ -44,7 +44,7 @@ module.exports = {
         // Also add this file to commit
         assets: ['__version'],
         // Release commit message
-        message: 'chore(release): ${nextRelease.version}'
+        message: 'chore(release): ${nextRelease.version} [deploy to prod]'
       }
     ]
   ],
