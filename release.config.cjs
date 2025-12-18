@@ -1,7 +1,7 @@
 module.exports = {
   // You can find out more about the configuration of this file here https://semantic-release.gitbook.io/semantic-release/usage/configuration
   branches: [
-    'feature/fix_deployment_from_master_on_version_change'
+    'master'
   ],
   // Plugins https://semantic-release.gitbook.io/semantic-release/extending/plugins-list
   plugins: [
