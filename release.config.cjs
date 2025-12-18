@@ -1,7 +1,7 @@
 module.exports = {
   // You can find out more about the configuration of this file here https://semantic-release.gitbook.io/semantic-release/usage/configuration
   branches: [
-    'master'
+    'feature/fix_release_workflow_trigger'
   ],
   // Plugins https://semantic-release.gitbook.io/semantic-release/extending/plugins-list
   plugins: [
