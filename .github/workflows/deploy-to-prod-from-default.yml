@@ -3,7 +3,7 @@ name: Deploy to Prod
 on:
   push:
     branches:
-      - master
+      - feature/fix_deployment_from_master_on_version_change
     paths:
       # need to trigger deployment only when the version is changed in a semantic-release produced auto commit
       - '__version'
