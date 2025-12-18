@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - master
+    paths-ignore:
+      # don't need to trigger this on push of this job's result commit
+      - '__version'
 
 jobs:
   release-new-version:
