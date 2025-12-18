@@ -8,10 +8,10 @@ on:
 jobs:
   release-new-version:
     runs-on: ubuntu-24.04
-    permissions:
-      contents: write # to be able to publish a GitHub release
-      issues: write # to be able to comment on released issues
-      pull-requests: write # to be able to comment on released pull requests
+    # permissions:
+    #   contents: write # to be able to publish a GitHub release
+    #   issues: write # to be able to comment on released issues
+    #   pull-requests: write # to be able to comment on released pull requests
     
     steps:
       - name: Check out the repo
@@ -19,6 +19,7 @@ jobs:
         with:
           # Downloads the entire commit history for semantic-release
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Set up Node.js
         uses: actions/setup-node@v6
