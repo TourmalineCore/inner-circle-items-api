@@ -3,7 +3,7 @@ name: Release New Version (If Needed)
 on:
   push:
     branches:
-      - feature/fix_release_workflow_trigger
+      - master
     paths-ignore:
       # don't need to trigger this on push of this job's result commit
       - '__version'
