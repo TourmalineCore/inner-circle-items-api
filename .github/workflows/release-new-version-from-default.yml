@@ -3,7 +3,7 @@ name: Release New Version (If Needed)
 on:
   push:
     branches:
-      - master
+      - feature/fix_deployment_from_master_on_version_change
 
 jobs:
   release-new-version:
