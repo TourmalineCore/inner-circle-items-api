@@ -1,4 +1,6 @@
-﻿using Api.EnternalDeps.EmployeesApi;
+﻿using Api.ExternalDeps.EmployeesApi;
+using Api.Features.Items.CreateItem;
+using Api.Features.Items.GetAllItems;
 using Application;
 using Application.Commands;
 using Application.Queries;
@@ -36,5 +38,8 @@ public static class DependencyInjection
         services.AddTransient<CreateItemCommand>();
         services.AddTransient<AllItemsQuery>();
         services.AddTransient<HardDeleteItemCommand>();
+
+        services.AddTransient<GetAllItemsHandler>();
+        services.AddTransient<CreateItemHandler>();
     }
 }
