@@ -19,7 +19,7 @@ jobs:
 
       - name: Deploy
         run: |
-            helmfile apply --suppress-diff --namespace ${{ secrets.INNER_CIRCLE_PROD_NAMESPACE }} -f ci/helmfile.yaml
+            helmfile apply --suppress-diff --namespace ${{ secrets.INNER_CIRCLE_PROD_NAMESPACE }} -f ci/helmfile.yaml \
             --state-values-set image.tag=sha-${{ github.sha }} 
             --state-values-set ingress.hostname=${{ secrets.INNER_CIRCLE_PROD_HOSTNAME }}
             --state-values-set extraSecretEnvVars.ConnectionStrings__DefaultConnection=${{ secrets.INNER_CIRCLE_PROD_ITEMS_DB_CONNECTION_STRING }}
