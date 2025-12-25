@@ -42,5 +42,9 @@ jobs:
       run: |
         git config user.email "contact@tourmalinecore.com"
         git config user.name "Workflow Action"
-        git commit README.md -m "docs: Update Mermaid DB Schema Diagram in README.md (siren-gen)" || echo "No changes to commit"
-        git push origin || echo "No changes to commit"
+        
+        git commit README.md -m "docs(readme): Update Mermaid DB Schema Diagram in README.md (siren-gen)" || echo "No changes to commit"
+        
+        git pull --rebase origin $GITHUB_HEAD_REF
+
+        git push origin HEAD:$GITHUB_HEAD_REF || echo "No changes to commit"
