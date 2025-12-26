@@ -1,0 +1,10 @@
+name: Deploy to Prod
+
+on:
+  push:
+    branches:
+      - feature/tag_docker_images_using_semver_version
+
+jobs:
+  docker-build-and-push:
+    uses: ./.github/workflows/.reusable-docker-build-and-push.yml
