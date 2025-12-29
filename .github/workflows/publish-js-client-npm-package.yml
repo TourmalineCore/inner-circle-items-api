@@ -46,7 +46,7 @@ jobs:
 
       - run: |
           cd js-client
-          npm version ${{ env.NEW_JS_CLIENT_VERSION }}
+          npm version "${{ env.NEW_JS_CLIENT_VERSION }}"
           npm ci
           npm run build
           npm publish
