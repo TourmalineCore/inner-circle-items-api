@@ -17,7 +17,7 @@ jobs:
 
       - name: Run the api via docker-compose
         run: |
-          docker compose --profile MockForTests up
+          docker compose --profile MockForTests up -d
 
       - name: Re-generate js-client by OpenAPI
         run: |
