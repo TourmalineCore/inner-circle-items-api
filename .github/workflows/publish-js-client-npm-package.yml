@@ -12,16 +12,41 @@ jobs:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@v5
-      # Setup .npmrc file to publish to GitHub Packages
-      - uses: actions/setup-node@v4
+      - name: Check out the repo
+        uses: actions/checkout@v6
+
+      - name: Run the api via docker-compose
+        run: |
+          docker compose --profile MockForTests up
+
+      - name: Re-generate js-client by OpenAPI
+        run: |
+          docker compose -f ./api-types/docker-compose.yml up
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
         with:
-          node-version: '24.11.1'
+          node-version: 24.12.0
+          # Setup .npmrc file to publish to GitHub Packages
           registry-url: 'https://npm.pkg.github.com'
           # Defaults to the user or organization that owns the workflow file
           scope: '@tourmalinecore'
+
+      - name: Add SEMVER_VERSION Env Var with Value from __version File
+        run: |
+          echo "SEMVER_VERSION=$(cat __version)" >>${GITHUB_ENV}
+
+      - name: Add new Env Var with new npm package version using commit sha or __version
+        run: |
+          # commit to master uses __version
+          should_use_sem_ver_version="${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}"
+          sem_ver_version="${{ env.SEMVER_VERSION }}"
+          commit_sha_version="sha-${{ github.sha }}"
+          [[ "$should_use_sem_ver_version" == "true" ]] && echo "NEW_JS_CLIENT_VERSION=${sem_ver_version}" >> ${GITHUB_ENV} || echo "NEW_JS_CLIENT_VERSION=${commit_sha_version}" >> ${GITHUB_ENV}
+
       - run: |
           cd js-client
+          npm version ${{ env.NEW_JS_CLIENT_VERSION }}
           npm ci
           npm run build
           npm publish
