@@ -89,5 +89,25 @@ However, UI doesn't support requests execution, this requires adding Auth dialog
 >Note: Even though here it is PascalCase and singular table name instead of plural (e.g. it should be Items, not Item) in reality it is snake_case for both table names and column names. It seems like the used plugin doesn't support that. For now it looks ok-ish.
 
 <!--- SIREN_START -->
-
+```mermaid
+	erDiagram
+	%%{init: {'theme':'neutral'}}%%
+	Item {
+		bigint Id PK
+		charactervarying512 Description 
+		bigint HolderEmployeeId 
+		bigint ItemTypeId FK
+		charactervarying256 Name 
+		numeric Price 
+		date PurchaseDate 
+		charactervarying128 SerialNumber 
+		bigint TenantId 
+	}
+	ItemType {
+		bigint Id PK
+		charactervarying128 Name 
+		bigint TenantId 
+	}
+Item}o--||ItemType : ""
+```
 <!--- SIREN_END -->
