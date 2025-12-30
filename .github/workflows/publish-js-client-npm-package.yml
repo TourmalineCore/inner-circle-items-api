@@ -6,6 +6,9 @@ on:
   push:
     branches: 
       - feature/generate_npm_package_with_types_and_client
+    paths:
+      # need to trigger deployment only when the version is changed on master in a semantic-release produced auto commit
+      - '__version'
 
 jobs:
   build:
@@ -47,7 +50,7 @@ jobs:
           commit_sha="${{ github.sha }}"
           commit_sha_version="${{ env.SEMVER_VERSION }}-${{ github.sha }}"
           [[ "$should_use_sem_ver_version" == "true" ]] && echo "NEW_JS_CLIENT_VERSION=${sem_ver_version}" >> ${GITHUB_ENV} || echo "NEW_JS_CLIENT_VERSION=${commit_sha_version}" >> ${GITHUB_ENV}
-          [[ "$should_use_sem_ver_version" == "true" ]] && echo "NEW_JS_CLIENT_TAG=${sem_ver_version}" >> ${GITHUB_ENV} || echo "NEW_JS_CLIENT_TAG=${commit_sha}" >> ${GITHUB_ENV}
+          [[ "$should_use_sem_ver_version" == "true" ]] && echo "NEW_JS_CLIENT_TAG=release-${sem_ver_version}" >> ${GITHUB_ENV} || echo "NEW_JS_CLIENT_TAG=${commit_sha}" >> ${GITHUB_ENV}
 
       - name: Publish js-client npm package
         run: |
