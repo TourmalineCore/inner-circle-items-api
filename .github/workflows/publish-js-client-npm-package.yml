@@ -81,7 +81,11 @@ jobs:
           git config user.email "contact@tourmalinecore.com"
           git config user.name "Workflow Action"
 
-          git add js-client/index.ts js-client/package.json js-client/package-lock.json
+          git add js-client/index.ts
+
+          # we don't need to commit these files with always changing version
+          # that will allow us to not reset installed packages cache on these files change
+          git restore js-client/package.json js-client/package-lock.json
           
           git commit -m "chore(js-client): Update js-client by OpenAPI" || echo "No changes to commit"
           
