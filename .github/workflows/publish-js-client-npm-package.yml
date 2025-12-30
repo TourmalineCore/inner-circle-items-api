@@ -63,6 +63,6 @@ jobs:
           
           # these fetch and rebase were needed to address an issue when there are 2 or more parallel jobs which commit
           # these jobs are doing it concurrently and there were a race condition, only the first modifier could push its changes
-          git fetch origin ${{ github.ref }}
-          git rebase origin/${{ github.ref }}
-          git push origin HEAD:${{ github.ref }} || echo "No changes to commit"
+          git fetch origin ${{ github.head_ref || github.ref_name }}
+          git rebase origin/${{ github.head_ref || github.ref_name }}
+          git push origin HEAD:${{ github.head_ref || github.ref_name }} || echo "No changes to commit"
