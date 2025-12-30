@@ -10,23 +10,6 @@
  * ---------------------------------------------------------------
  */
 
-export interface CreateItemRequest {
-  /** @maxLength 256 */
-  name: string;
-  /** @maxLength 128 */
-  serialNumber?: string;
-  /** @format int64 */
-  itemTypeId: number;
-  /** @format double */
-  price: number;
-  /** @maxLength 512 */
-  description?: string;
-  /** @format date */
-  purchaseDate?: string | null;
-  /** @format int64 */
-  holderEmployeeId?: number | null;
-}
-
 export interface CreateItemResponse {
   /** @format int64 */
   newItemId: number;
@@ -164,7 +147,7 @@ export class HttpClient<SecurityDataType = unknown> {
       headers: {
         ...((method &&
           this.instance.defaults.headers[
-            method.toLowerCase() as keyof HeadersDefaults
+          method.toLowerCase() as keyof HeadersDefaults
           ]) ||
           {}),
         ...(params1.headers || {}),
