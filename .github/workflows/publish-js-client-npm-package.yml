@@ -11,7 +11,6 @@ on:
       # we want this to be in sync with the new version and with the parallel deployment to prod
       - '__version'
 
-      
 jobs:
   publish-js-client-npm-package:
     runs-on: ubuntu-24.04
