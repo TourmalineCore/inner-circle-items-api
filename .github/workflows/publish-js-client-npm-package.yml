@@ -5,10 +5,11 @@ on:
     types: [opened, synchronize, reopened]
   push:
     branches: 
-      - feature/generate_npm_package_with_types_and_client
-    # paths:
-    #   # need to trigger deployment only when the version is changed on master in a semantic-release produced auto commit
-    #   - '__version'
+      - master
+    paths:
+      # need to trigger this only when the version is changed on master in a semantic-release produced auto commit
+      # we want this to be in sync with the new version and with the parallel deployment to prod
+      - '__version'
 
 jobs:
   build:
@@ -34,7 +35,6 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 24.12.0
-          # Setup .npmrc file to publish to npm
           # it was decided to use npm intead of GitHub Packages
           # the reason is that GutHub Packages require a token to be added to .npmrc
           # it looks an overkill for an open source public package
@@ -50,9 +50,18 @@ jobs:
         run: |
           # commit to master uses __version
           should_use_sem_ver_version="${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}"
+          
+          # sem_ver_version value example is 1.0.3
           sem_ver_version="${{ env.SEMVER_VERSION }}"
-          commit_sha="${{ github.sha }}"
-          commit_sha_version="${{ env.SEMVER_VERSION }}-${{ github.sha }}"
+          
+          # commit_sha value example is 856455dadd9b3c4a0346a01789031b405def40f8
+          commit_sha="${{ github.event.pull_request.head.sha }}"
+          
+          # commit_sha_version value example is 1.0.3-856455dadd9b3c4a0346a01789031b405def40f8
+          # we cannot use commit_sha as an npm package version, it strictly checks its SemVer compliance
+          # the workaround is to add commit_sha after the SemVer like it is a pre-repease version, which it is  in fact
+          commit_sha_version="${{ env.SEMVER_VERSION }}-${commit_sha}"
+
           [[ "$should_use_sem_ver_version" == "true" ]] && echo "NEW_JS_CLIENT_VERSION=${sem_ver_version}" >> ${GITHUB_ENV} || echo "NEW_JS_CLIENT_VERSION=${commit_sha_version}" >> ${GITHUB_ENV}
           [[ "$should_use_sem_ver_version" == "true" ]] && echo "NEW_JS_CLIENT_TAG=release-${sem_ver_version}" >> ${GITHUB_ENV} || echo "NEW_JS_CLIENT_TAG=${commit_sha}" >> ${GITHUB_ENV}
 
@@ -75,6 +84,8 @@ jobs:
           
           # these fetch and rebase were needed to address an issue when there are 2 or more parallel jobs which commit
           # these jobs are doing it concurrently and there were a race condition, only the first modifier could push its changes
+          # github.head_ref || github.ref_name are solving the problem that head_ref is filled only for PRs
+          # and in case of commits to master ref_name is what we need and head_ref is empty
           git fetch origin ${{ github.head_ref || github.ref_name }}
           git rebase origin/${{ github.head_ref || github.ref_name }}
           git push origin HEAD:${{ github.head_ref || github.ref_name }} || echo "No changes to commit"
