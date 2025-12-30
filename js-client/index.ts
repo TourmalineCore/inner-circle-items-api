@@ -10,6 +10,23 @@
  * ---------------------------------------------------------------
  */
 
+export interface CreateItemRequest {
+  /** @maxLength 256 */
+  name: string;
+  /** @maxLength 128 */
+  serialNumber?: string;
+  /** @format int64 */
+  itemTypeId: number;
+  /** @format double */
+  price: number;
+  /** @maxLength 512 */
+  description?: string;
+  /** @format date */
+  purchaseDate?: string | null;
+  /** @format int64 */
+  holderEmployeeId?: number | null;
+}
+
 export interface CreateItemResponse {
   /** @format int64 */
   newItemId: number;
@@ -147,7 +164,7 @@ export class HttpClient<SecurityDataType = unknown> {
       headers: {
         ...((method &&
           this.instance.defaults.headers[
-          method.toLowerCase() as keyof HeadersDefaults
+            method.toLowerCase() as keyof HeadersDefaults
           ]) ||
           {}),
         ...(params1.headers || {}),
@@ -247,10 +264,10 @@ export class Api<
      * No description
      *
      * @tags Items
-     * @name ItemsList
+     * @name ItemsGetAllItems
      * @request GET:/api/items
      */
-    itemsList: (params: RequestParams = {}) =>
+    itemsGetAllItems: (params: RequestParams = {}) =>
       this.request<ItemsResponse, any>({
         path: `/api/items`,
         method: "GET",
@@ -262,10 +279,10 @@ export class Api<
      * No description
      *
      * @tags Items
-     * @name ItemsCreate
+     * @name ItemsCreateItem
      * @request POST:/api/items
      */
-    itemsCreate: (data: CreateItemRequest, params: RequestParams = {}) =>
+    itemsCreateItem: (data: CreateItemRequest, params: RequestParams = {}) =>
       this.request<CreateItemResponse, any>({
         path: `/api/items`,
         method: "POST",
@@ -279,10 +296,10 @@ export class Api<
      * No description
      *
      * @tags Items
-     * @name ItemsHardDeleteDelete
+     * @name ItemsHardDeleteItem
      * @request DELETE:/api/items/{itemId}/hard-delete
      */
-    itemsHardDeleteDelete: (itemId: number, params: RequestParams = {}) =>
+    itemsHardDeleteItem: (itemId: number, params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/api/items/${itemId}/hard-delete`,
         method: "DELETE",
@@ -293,10 +310,10 @@ export class Api<
      * No description
      *
      * @tags ItemTypes
-     * @name ItemTypesList
+     * @name ItemTypesGetAllItemTypes
      * @request GET:/api/item-types
      */
-    itemTypesList: (params: RequestParams = {}) =>
+    itemTypesGetAllItemTypes: (params: RequestParams = {}) =>
       this.request<ItemTypesResponse, any>({
         path: `/api/item-types`,
         method: "GET",
@@ -308,10 +325,10 @@ export class Api<
      * No description
      *
      * @tags ItemTypes
-     * @name ItemTypesCreate
+     * @name ItemTypesCreateItemType
      * @request POST:/api/item-types
      */
-    itemTypesCreate: (
+    itemTypesCreateItemType: (
       data: CreateItemTypeRequest,
       params: RequestParams = {},
     ) =>
@@ -328,10 +345,10 @@ export class Api<
      * No description
      *
      * @tags ItemTypes
-     * @name ItemTypesHardDeleteDelete
+     * @name ItemTypesHardDeleteItemType
      * @request DELETE:/api/item-types/{itemTypeId}/hard-delete
      */
-    itemTypesHardDeleteDelete: (
+    itemTypesHardDeleteItemType: (
       itemTypeId: number,
       params: RequestParams = {},
     ) =>
