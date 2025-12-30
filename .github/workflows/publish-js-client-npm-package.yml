@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: read
-      packages: write
+      id-token: write  # Required for OIDC (https://docs.npmjs.com/trusted-publishers#github-actions-configuration)
     steps:
       - name: Check out the repo
         uses: actions/checkout@v6
@@ -27,8 +27,8 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 24.12.0
-          # Setup .npmrc file to publish to GitHub Packages
-          registry-url: 'https://npm.pkg.github.com'
+          # Setup .npmrc file to publish to npm
+          registry-url: 'https://registry.npmjs.org'
           # Defaults to the user or organization that owns the workflow file
           scope: '@tourmalinecore'
 
@@ -51,6 +51,6 @@ jobs:
           npm version "${{ env.NEW_JS_CLIENT_VERSION }}" --no-git-tag-version
           npm ci
           npm run build
-          npm publish --tag "${{ env.NEW_JS_CLIENT_TAG }}"
+          npm publish --tag "${{ env.NEW_JS_CLIENT_TAG }}" --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
