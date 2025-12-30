@@ -22,6 +22,9 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v6
+        with:
+          # from AI: Without this ref in PRs, you're on a merge commit, and pushing back is ambiguous.
+          ref: ${{ github.head_ref }}
 
       - name: Run the api via docker-compose
         run: |
