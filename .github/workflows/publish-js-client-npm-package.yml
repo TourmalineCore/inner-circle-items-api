@@ -52,5 +52,3 @@ jobs:
           npm ci
           npm run build
           npm publish --tag "${{ env.NEW_JS_CLIENT_TAG }}" --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
