@@ -118,6 +118,9 @@ jobs:
     steps:
     - name: Checkout Repository 
       uses: actions/checkout@v4
+      with:
+        # from AI: Without this ref in PRs, you're on a merge commit, and pushing back is ambiguous.
+        ref: ${{ github.head_ref }}
 
     - name: Download Units Coverage
       uses: actions/download-artifact@v5
