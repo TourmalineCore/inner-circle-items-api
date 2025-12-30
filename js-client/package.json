@@ -1,6 +1,6 @@
 {
   "name": "@tourmalinecore/inner-circle-items-api-js-client",
-  "version": "1.0.3-e84e540267250e8cd19c08c2e767072db1ff98f0",
+  "version": "1.0.3-7f08e74c7dd45f17c064c35308d0821597b99365",
   "description": "Client for inner-circle-items-api that provides TypeScript types and client to make network calls from JavaScript.",
   "homepage": "https://github.com/TourmalineCore/inner-circle-items-api#readme",
   "bugs": {
