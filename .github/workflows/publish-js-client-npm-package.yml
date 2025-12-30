@@ -12,7 +12,7 @@ on:
       - '__version'
 
 jobs:
-  build:
+  publish-js-client-npm-package:
     runs-on: ubuntu-24.04
     permissions:
       # Required to commit changes from the workflow
@@ -83,7 +83,7 @@ jobs:
 
           git add js-client/index.ts js-client/package.json js-client/package-lock.json
           
-          git commit -m "chore(js-client): Update js-client by OpenAPI [skip ci]" || echo "No changes to commit"
+          git commit -m "chore(js-client): Update js-client by OpenAPI" || echo "No changes to commit"
           
           # these fetch and rebase were needed to address an issue when there are 2 or more parallel jobs which commit
           # these jobs are doing it concurrently and there were a race condition, only the first modifier could push its changes
