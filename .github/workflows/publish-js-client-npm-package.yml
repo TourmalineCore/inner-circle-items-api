@@ -1,6 +1,8 @@
 name: Publish js-client npm Package
 
 on:
+  pull_request:
+    types: [opened, synchronize, reopened]
   push:
     branches: 
       - feature/generate_npm_package_with_types_and_client
@@ -39,7 +41,8 @@ jobs:
       - name: Add new Env Var with new npm package version using commit sha or __version
         run: |
           # commit to master uses __version
-          should_use_sem_ver_version="${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}"
+          # should_use_sem_ver_version="${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}"
+          should_use_sem_ver_version="${{ github.ref == format('refs/heads/{0}', 'feature/generate_npm_package_with_types_and_client') }}"
           sem_ver_version="${{ env.SEMVER_VERSION }}"
           commit_sha="${{ github.sha }}"
           commit_sha_version="${{ env.SEMVER_VERSION }}-${{ github.sha }}"
