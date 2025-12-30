@@ -1,4 +1,4 @@
-name: Publish package to GitHub Packages
+name: Publish js-client npm Package
 
 on:
   push:
@@ -46,9 +46,23 @@ jobs:
           [[ "$should_use_sem_ver_version" == "true" ]] && echo "NEW_JS_CLIENT_VERSION=${sem_ver_version}" >> ${GITHUB_ENV} || echo "NEW_JS_CLIENT_VERSION=${commit_sha_version}" >> ${GITHUB_ENV}
           [[ "$should_use_sem_ver_version" == "true" ]] && echo "NEW_JS_CLIENT_TAG=${sem_ver_version}" >> ${GITHUB_ENV} || echo "NEW_JS_CLIENT_TAG=${commit_sha}" >> ${GITHUB_ENV}
 
-      - run: |
+      - name: Publish js-client npm package
+        run: |
           cd js-client
           npm version "${{ env.NEW_JS_CLIENT_VERSION }}" --no-git-tag-version
           npm ci
           npm run build
           npm publish --tag "${{ env.NEW_JS_CLIENT_TAG }}" --access public
+      
+      - name: Commit js-client
+        run: |
+          git config user.email "contact@tourmalinecore.com"
+          git config user.name "Workflow Action"
+          
+          git commit js-client/index.ts -m "chore(js-client): Update js-client by OpenAPI [skip ci]" || echo "No changes to commit"
+          
+          # these fetch and rebase were needed to address an issue when there are 2 or more parallel jobs which commit
+          # these jobs are doing it concurrently and there were a race condition, only the first modifier could push its changes
+          git fetch origin ${{ github.ref }}
+          git rebase origin/${{ github.ref }}
+          git push origin HEAD:${{ github.ref }} || echo "No changes to commit"
