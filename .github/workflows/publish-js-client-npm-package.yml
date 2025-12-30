@@ -6,9 +6,9 @@ on:
   push:
     branches: 
       - feature/generate_npm_package_with_types_and_client
-    paths:
-      # need to trigger deployment only when the version is changed on master in a semantic-release produced auto commit
-      - '__version'
+    # paths:
+    #   # need to trigger deployment only when the version is changed on master in a semantic-release produced auto commit
+    #   - '__version'
 
 jobs:
   build:
