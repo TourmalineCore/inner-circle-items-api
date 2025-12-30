@@ -41,14 +41,16 @@ jobs:
           # commit to master uses __version
           should_use_sem_ver_version="${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}"
           sem_ver_version="${{ env.SEMVER_VERSION }}"
+          commit_sha="${{ github.sha }}"
           commit_sha_version="${{ env.SEMVER_VERSION }}-${{ github.sha }}"
           [[ "$should_use_sem_ver_version" == "true" ]] && echo "NEW_JS_CLIENT_VERSION=${sem_ver_version}" >> ${GITHUB_ENV} || echo "NEW_JS_CLIENT_VERSION=${commit_sha_version}" >> ${GITHUB_ENV}
+          [[ "$should_use_sem_ver_version" == "true" ]] && echo "NEW_JS_CLIENT_TAG=${sem_ver_version}" >> ${GITHUB_ENV} || echo "NEW_JS_CLIENT_TAG=${commit_sha}" >> ${GITHUB_ENV}
 
       - run: |
           cd js-client
           npm version "${{ env.NEW_JS_CLIENT_VERSION }}" --no-git-tag-version
           npm ci
           npm run build
-          npm publish --tag "${{ env.NEW_JS_CLIENT_VERSION }}"
+          npm publish --tag "${{ env.NEW_JS_CLIENT_TAG }}"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
