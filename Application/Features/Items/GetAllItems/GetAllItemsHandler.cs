@@ -37,16 +37,7 @@ public class GetAllItemsHandler
                     Price = x.Price,
                     Description = x.Description,
                     PurchaseDate = x.PurchaseDate,
-                    HolderEmployee = x.HolderEmployeeId == null
-                        ? null
-                        : new EmployeeDto
-                        {
-                            Id = x.HolderEmployeeId.Value,
-                            FullName = allEmployeesResponse
-                                .Employees
-                                .SingleOrDefault(y => y.Id == x.HolderEmployeeId.Value)
-                                ?.FullName ?? NotFoundEmployeeFullName
-                        }
+                    HolderEmployee = HolderEmployeeMapper.MapToEmployeeDto(x.HolderEmployeeId, allEmployeesResponse)
                 })
                 .ToList()
         };
