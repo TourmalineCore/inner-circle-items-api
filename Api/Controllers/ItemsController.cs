@@ -14,9 +14,7 @@ namespace Api.Controllers;
 [Route("api/items")]
 public class ItemsController : ControllerBase
 {
-    /// <summary>
-    ///     Get all items
-    /// </summary>
+    [EndpointSummary("Get all items")]
     [RequiresPermission(UserClaimsProvider.CanViewItems)]
     [HttpGet]
     public async Task<GetAllItemsResponse> GetAllItemsAsync(
@@ -29,9 +27,7 @@ public class ItemsController : ControllerBase
         return await getAllItemsHandler.HandleAsync(allEmployeesResponse);
     }
 
-    /// <summary>
-    ///     Add an item
-    /// </summary>
+    [EndpointSummary("Add an item")]
     /// <param name="createItemRequest"></param>
     [RequiresPermission(UserClaimsProvider.CanManageItems)]
     [HttpPost]
@@ -43,9 +39,7 @@ public class ItemsController : ControllerBase
         return createItemHandler.HandleAsync(createItemRequest);
     }
 
-    /// <summary>
-    ///     Deletes specific item
-    /// </summary>
+    [EndpointSummary("Deletes specific item")]
     /// <param name="itemId"></param>
     [RequiresPermission(UserClaimsProvider.AUTO_TESTS_ONLY_IsItemsHardDeleteAllowed)]
     [HttpDelete("{itemId}/hard-delete")]
