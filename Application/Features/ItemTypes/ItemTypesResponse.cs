@@ -1,6 +1,6 @@
 ﻿using Application.Features.Dtos;
 
-namespace Api.Responses;
+namespace Application.Features.ItemTypes;
 
 public class ItemTypesResponse
 {

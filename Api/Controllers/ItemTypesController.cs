@@ -1,8 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using Api.Requests;
-using Api.Responses;
 using Application.Commands;
 using Application.Features.Dtos;
+using Application.Features.ItemTypes;
 using Application.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -45,12 +44,7 @@ public class ItemTypesController : ControllerBase
         [Required][FromBody] CreateItemTypeRequest createItemTypeRequest
     )
     {
-        var createItemTypeCommandParams = new CreateItemTypeCommandParams
-        {
-            Name = createItemTypeRequest.Name
-        };
-
-        var newItemTypeId = await createItemTypeCommand.ExecuteAsync(createItemTypeCommandParams);
+        var newItemTypeId = await createItemTypeCommand.ExecuteAsync(createItemTypeRequest);
 
         return new CreateItemTypeResponse()
         {
