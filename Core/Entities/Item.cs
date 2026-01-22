@@ -13,8 +13,6 @@ public class Item : EntityBase
 
     public string SerialNumber { get; set; }
 
-    public string Test { get; set; }
-
     public long ItemTypeId { get; set; }
     public ItemType ItemType { get; set; }
 

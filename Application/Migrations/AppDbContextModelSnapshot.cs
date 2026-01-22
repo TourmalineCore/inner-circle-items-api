@@ -69,11 +69,6 @@ namespace Application.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("tenant_id");
 
-                    b.Property<string>("Test")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("test");
-
                     b.HasKey("Id")
                         .HasName("pk_items");
 
