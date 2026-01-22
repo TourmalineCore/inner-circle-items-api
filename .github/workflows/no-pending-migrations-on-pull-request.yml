@@ -36,7 +36,7 @@ jobs:
         runCmd: |
           dotnet build
 
-          dotnet ef migrations add CheckPendingMigration \
+          dotnet ef migrations has-pending-model-changes  \
               --startup-project ./Api/Api.csproj \
               --project ./Application/Application.csproj \
               --context AppDbContext \
