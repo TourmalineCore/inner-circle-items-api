@@ -8,3 +8,6 @@
 karate.jar
 target/
 connect-plugins/
+
+**/node_modules/**
+**/dist/**
