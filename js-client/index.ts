@@ -45,25 +45,36 @@ export interface CreateItemTypeResponse {
 export type EmployeeDto = {
   /** @format int64 */
   id: number;
+  /** @maxLength 128 */
   fullName: string;
 } | null;
+
+export interface GetAllItemsResponse {
+  items: ItemDto[];
+}
 
 export interface ItemDto {
   /** @format int64 */
   id: number;
+  /**
+   * Description for Name
+   * @maxLength 128
+   * @default "DefaultName"
+   * @pattern ^[a-zA-Z\s]+$
+   */
   name: string;
   serialNumber: string;
   itemType: ItemTypeDto;
-  /** @format double */
+  /**
+   * @format double
+   * @min 1
+   * @max 100
+   */
   price: number;
   description: string;
   /** @format date */
   purchaseDate: string | null;
   holderEmployee: EmployeeDto;
-}
-
-export interface ItemsResponse {
-  items: ItemDto[];
 }
 
 export interface ItemTypeDto {
@@ -261,14 +272,15 @@ export class Api<
 > extends HttpClient<SecurityDataType> {
   api = {
     /**
-     * No description
+     * @description This is a description.
      *
-     * @tags Items
+     * @tags Tag 2
      * @name ItemsGetAllItems
+     * @summary Get all items
      * @request GET:/api/items
      */
     itemsGetAllItems: (params: RequestParams = {}) =>
-      this.request<ItemsResponse, any>({
+      this.request<GetAllItemsResponse, any>({
         path: `/api/items`,
         method: "GET",
         format: "json",
@@ -278,8 +290,9 @@ export class Api<
     /**
      * No description
      *
-     * @tags Items
+     * @tags Tag 1
      * @name ItemsCreateItem
+     * @summary Add an item
      * @request POST:/api/items
      */
     itemsCreateItem: (data: CreateItemRequest, params: RequestParams = {}) =>
@@ -295,8 +308,9 @@ export class Api<
     /**
      * No description
      *
-     * @tags Items
+     * @tags Tag 1
      * @name ItemsHardDeleteItem
+     * @summary Deletes specific item
      * @request DELETE:/api/items/{itemId}/hard-delete
      */
     itemsHardDeleteItem: (itemId: number, params: RequestParams = {}) =>
@@ -311,6 +325,7 @@ export class Api<
      *
      * @tags ItemTypes
      * @name ItemTypesGetAllItemTypes
+     * @summary Get all item types
      * @request GET:/api/item-types
      */
     itemTypesGetAllItemTypes: (params: RequestParams = {}) =>
@@ -326,6 +341,7 @@ export class Api<
      *
      * @tags ItemTypes
      * @name ItemTypesCreateItemType
+     * @summary Adds item type
      * @request POST:/api/item-types
      */
     itemTypesCreateItemType: (
@@ -346,6 +362,7 @@ export class Api<
      *
      * @tags ItemTypes
      * @name ItemTypesHardDeleteItemType
+     * @summary Deletes specific item type
      * @request DELETE:/api/item-types/{itemTypeId}/hard-delete
      */
     itemTypesHardDeleteItemType: (
