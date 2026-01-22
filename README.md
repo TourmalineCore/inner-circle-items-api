@@ -102,7 +102,6 @@ However, UI doesn't support requests execution, this requires adding Auth dialog
 		date PurchaseDate 
 		charactervarying128 SerialNumber 
 		bigint TenantId 
-		text Test 
 	}
 	ItemType {
 		bigint Id PK
