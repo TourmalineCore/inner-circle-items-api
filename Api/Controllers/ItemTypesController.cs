@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using Api.Requests;
-using Api.Responses;
 using Application.Commands;
+using Application.Features.Dtos;
+using Application.Features.ItemTypes;
 using Application.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,9 +14,7 @@ namespace Api.Controllers;
 [Route("api/item-types")]
 public class ItemTypesController : ControllerBase
 {
-    /// <summary>
-    ///     Get all item types
-    /// </summary>
+    [EndpointSummary("Get all item types")]
     [RequiresPermission(UserClaimsProvider.CanViewItemsTypes)]
     [HttpGet]
     public async Task<ItemTypesResponse> GetAllItemTypesAsync(
@@ -37,9 +35,7 @@ public class ItemTypesController : ControllerBase
         };
     }
 
-    /// <summary>
-    ///     Adds item type
-    /// </summary>
+    [EndpointSummary("Adds item type")]
     /// <param name="createItemTypeRequest"></param>
     [RequiresPermission(UserClaimsProvider.CanManageItemsTypes)]
     [HttpPost]
@@ -48,12 +44,7 @@ public class ItemTypesController : ControllerBase
         [Required][FromBody] CreateItemTypeRequest createItemTypeRequest
     )
     {
-        var createItemTypeCommandParams = new CreateItemTypeCommandParams
-        {
-            Name = createItemTypeRequest.Name
-        };
-
-        var newItemTypeId = await createItemTypeCommand.ExecuteAsync(createItemTypeCommandParams);
+        var newItemTypeId = await createItemTypeCommand.ExecuteAsync(createItemTypeRequest);
 
         return new CreateItemTypeResponse()
         {
@@ -61,9 +52,7 @@ public class ItemTypesController : ControllerBase
         };
     }
 
-    /// <summary>
-    ///     Deletes specific item type
-    /// </summary>
+    [EndpointSummary("Deletes specific item type")]
     /// <param name="itemTypeId"></param>
     [RequiresPermission(UserClaimsProvider.AUTO_TESTS_ONLY_IsItemTypesHardDeleteAllowed)]
     [HttpDelete("{itemTypeId}/hard-delete")]

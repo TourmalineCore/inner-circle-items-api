@@ -62,3 +62,5 @@ docker-compose.yml
 LICENSE
 pgAdmin.json
 README.md
+release.config.cjs
+release.rules.cjs

@@ -1,33 +1,38 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using Api.Features.Items.CreateItem;
-using Api.Features.Items.GetAllItems;
+using Api.ExternalDeps.EmployeesApi;
 using Application.Commands;
+using Application.Features.Items.CreateItem;
+using Application.Features.Items.GetAllItems;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TourmalineCore.AspNetCore.JwtAuthentication.Core.Filters;
 
-namespace Api.Features.Items;
+namespace Api.Controllers;
 
 [Authorize]
 [ApiController]
+[Tags("Tag 1")] // If not set, defaults to "Items"
 [Route("api/items")]
 public class ItemsController : ControllerBase
 {
-    /// <summary>
-    ///     Get all items
-    /// </summary>
+    [EndpointName("GetAllItems")] // For operationId
+    [EndpointSummary("Get all items")]
+    [Tags("Tag 2")]
+    [EndpointDescription("This is a description.")]
     [RequiresPermission(UserClaimsProvider.CanViewItems)]
     [HttpGet]
-    public Task<GetAllItemsResponse> GetAllItemsAsync(
-        [FromServices] GetAllItemsHandler getAllItemsHandler
+    public async Task<GetAllItemsResponse> GetAllItemsAsync(
+        [FromServices] GetAllItemsHandler getAllItemsHandler,
+        [FromServices] EmployeesApi employeesApi
     )
     {
-        return getAllItemsHandler.HandleAsync();
+        var allEmployeesResponse = await employeesApi.GetAllEmployeesAsync();
+
+        return await getAllItemsHandler.HandleAsync(allEmployeesResponse);
     }
 
-    /// <summary>
-    ///     Add an item
-    /// </summary>
+    [EndpointSummary("Add an item")]
     /// <param name="createItemRequest"></param>
     [RequiresPermission(UserClaimsProvider.CanManageItems)]
     [HttpPost]
@@ -39,15 +44,12 @@ public class ItemsController : ControllerBase
         return createItemHandler.HandleAsync(createItemRequest);
     }
 
-    /// <summary>
-    ///     Deletes specific item
-    /// </summary>
-    /// <param name="itemId"></param>
+    [EndpointSummary("Deletes specific item")]
     [RequiresPermission(UserClaimsProvider.AUTO_TESTS_ONLY_IsItemsHardDeleteAllowed)]
     [HttpDelete("{itemId}/hard-delete")]
     public async Task<object> HardDeleteItemAsync(
         [FromServices] HardDeleteItemCommand hardDeleteItemCommand,
-        [Required][FromRoute] long itemId
+        [Required][FromRoute, Description("ID of the item to delete")] long itemId
     )
     {
         return new

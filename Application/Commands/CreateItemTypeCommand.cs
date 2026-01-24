@@ -1,11 +1,7 @@
-﻿using Core.Entities;
+﻿using Application.Features.ItemTypes;
+using Core.Entities;
 
 namespace Application.Commands;
-
-public class CreateItemTypeCommandParams
-{
-    public required string Name { get; set; }
-}
 
 public class CreateItemTypeCommand
 {
@@ -21,12 +17,12 @@ public class CreateItemTypeCommand
         _claimsProvider = claimsProvider;
     }
 
-    public async Task<long> ExecuteAsync(CreateItemTypeCommandParams createItemTypeCommandParams)
+    public async Task<long> ExecuteAsync(CreateItemTypeRequest CreateItemTypeRequest)
     {
         var itemType = new ItemType
         {
             TenantId = _claimsProvider.TenantId,
-            Name = createItemTypeCommandParams.Name
+            Name = CreateItemTypeRequest.Name
         };
 
         await _context
