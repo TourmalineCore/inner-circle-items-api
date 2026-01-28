@@ -4,7 +4,9 @@ on:
   push:
     branches:
       - master
-      - feature/**
+    paths:
+      # need to trigger deployment only when the version is changed on master in a semantic-release produced auto commit
+      - '__version'
 
 jobs:
   docker-build-and-push:
