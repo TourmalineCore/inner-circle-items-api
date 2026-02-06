@@ -17,7 +17,11 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
+
+      - name: Add SEMVER_VERSION Env Var with Value from __version File
+        run: |
+          echo "SEMVER_VERSION=$(cat __version)" >>${GITHUB_ENV}
 
       - name: Deploy
         env:
@@ -25,7 +29,7 @@ jobs:
           INNER_CIRCLE_PROD_ITEMS_DB_CONNECTION_STRING: ${{ secrets.INNER_CIRCLE_PROD_ITEMS_DB_CONNECTION_STRING }}
         run: |
             helmfile cache cleanup && helmfile apply --suppress-diff --namespace "${{ secrets.INNER_CIRCLE_PROD_NAMESPACE }}" -f ci/helmfile.yaml \
-            --state-values-set image.tag="sha-${{ github.sha }}" \
+            --state-values-set image.tag="${{ env.SEMVER_VERSION }}" \
             --state-values-set ingress.hostname="${{ secrets.INNER_CIRCLE_PROD_HOSTNAME }}" \
             --state-values-set extraSecretEnvVars.ConnectionStrings__DefaultConnection="$INNER_CIRCLE_PROD_ITEMS_DB_CONNECTION_STRING" \
             --state-values-set extraSecretEnvVars.AuthenticationOptions__PublicSigningKey="${{ secrets.INNER_CIRCLE_PROD_PUBLIC_SIGNING_KEY }}" \
