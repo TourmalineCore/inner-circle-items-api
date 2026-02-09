@@ -8,8 +8,6 @@ public class GetAllItemsHandler
 {
     private readonly AllItemsQuery _allItemsQuery;
 
-    public const string NotFoundEmployeeFullName = "Not Found";
-
     public GetAllItemsHandler(
         AllItemsQuery allItemsQuery
     )
