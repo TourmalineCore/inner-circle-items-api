@@ -7,10 +7,18 @@ Feature: OpenApi
 
     * def jsUtils = read('./js-utils.js')
     * def apiRootUrl = jsUtils().getEnvVariable('API_ROOT_URL')
+    # we need to trim because __version files contains one extra empty line
+    * def apiVersion = karate.readAsString('../__version').trim()
     
-    # Check that response contains non-empty JSON with an expected OpenApi version
+    # Check that response contains correct api name and version from __version file
     Given url apiRootUrl
     And path 'swagger/openapi/v1.json'
     And method GET
     Then status 200
-    And assert response.openapi == '3.0.1'
+    And match response.info == 
+    """
+    {
+        "title": "inner-circle-items-api",
+        "version": "#(apiVersion)"
+    }
+    """
