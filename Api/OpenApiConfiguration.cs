@@ -38,4 +38,14 @@ public static class OpenApiConfiguration
             });
         });
     }
+    public static void AddOpenApiSchemaAndUI(this WebApplication app)
+    {
+        app.MapOpenApi("api/swagger/openapi.json");
+
+        app.UseSwaggerUI(options =>
+        {
+            options.SwaggerEndpoint("openapi.json", "API");
+            options.RoutePrefix = "api/swagger";
+        });
+    }
 }

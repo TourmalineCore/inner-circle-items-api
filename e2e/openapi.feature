@@ -12,7 +12,7 @@ Feature: OpenApi
     
     # Check that response contains correct api name and version from __version file
     Given url apiRootUrl
-    And path 'swagger/openapi/v1.json'
+    And path 'swagger/openapi.json'
     And method GET
     Then status 200
     And match response.info == 
