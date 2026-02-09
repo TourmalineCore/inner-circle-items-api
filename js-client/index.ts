@@ -48,6 +48,10 @@ export type EmployeeDto = {
   fullName: string;
 } | null;
 
+export interface GetAllItemsResponse {
+  items: ItemDto[];
+}
+
 export interface ItemDto {
   /** @format int64 */
   id: number;
@@ -60,10 +64,6 @@ export interface ItemDto {
   /** @format date */
   purchaseDate: string | null;
   holderEmployee: EmployeeDto;
-}
-
-export interface ItemsResponse {
-  items: ItemDto[];
 }
 
 export interface ItemTypeDto {
@@ -268,7 +268,7 @@ export class Api<
      * @request GET:/api/items
      */
     itemsGetAllItems: (params: RequestParams = {}) =>
-      this.request<ItemsResponse, any>({
+      this.request<GetAllItemsResponse, any>({
         path: `/api/items`,
         method: "GET",
         format: "json",

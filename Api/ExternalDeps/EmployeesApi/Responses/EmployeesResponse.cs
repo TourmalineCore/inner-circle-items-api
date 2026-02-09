@@ -1,4 +1,4 @@
-namespace Api.EnternalDeps.EmployeesApi.Responses;
+namespace Api.ExternalDeps.EmployeesApi.Responses;
 
 public class EmployeesResponse
 {

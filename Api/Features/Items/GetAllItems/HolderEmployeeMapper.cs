@@ -1,7 +1,6 @@
-using Api.EnternalDeps.EmployeesApi.Responses;
-using Api.Responses;
+using Api.ExternalDeps.EmployeesApi.Responses;
 
-namespace Api.Mappers;
+namespace Api.Features.Items.GetAllItems;
 
 public class HolderEmployeeMapper
 {

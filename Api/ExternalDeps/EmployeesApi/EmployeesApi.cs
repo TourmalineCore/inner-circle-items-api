@@ -1,8 +1,8 @@
-using Api.EnternalDeps.EmployeesApi.Responses;
+using Api.ExternalDeps.EmployeesApi.Responses;
 using Microsoft.Extensions.Options;
 using TourmalineCore.AspNetCore.JwtAuthentication.Core.Options;
 
-namespace Api.EnternalDeps.EmployeesApi;
+namespace Api.ExternalDeps.EmployeesApi;
 
 public class EmployeesApi
 {

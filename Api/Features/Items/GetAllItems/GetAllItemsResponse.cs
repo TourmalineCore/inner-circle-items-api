@@ -1,6 +1,8 @@
-﻿namespace Api.Responses;
+﻿using Api.Responses;
 
-public class ItemsResponse
+namespace Api.Features.Items.GetAllItems;
+
+public class GetAllItemsResponse
 {
     public required List<ItemDto> Items { get; set; }
 }
