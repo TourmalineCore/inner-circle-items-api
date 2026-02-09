@@ -30,6 +30,21 @@ public class Program
 
                 return Task.CompletedTask;
             });
+
+            options.AddDocumentTransformer((document, context, cancellationToken) =>
+            {
+                var version = File
+                    .ReadLines("../__version")
+                    .First();
+
+                document.Info = new()
+                {
+                    Title = "inner-circle-items-api",
+                    Version = version
+                };
+
+                return Task.CompletedTask;
+            });
         });
 
         builder.Services.AddApplication(configuration);
