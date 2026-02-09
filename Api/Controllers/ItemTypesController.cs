@@ -14,7 +14,9 @@ namespace Api.Controllers;
 [Route("api/item-types")]
 public class ItemTypesController : ControllerBase
 {
-    [EndpointSummary("Get all item types")]
+    /// <summary>
+    ///     Get all item types
+    /// </summary>
     [RequiresPermission(UserClaimsProvider.CanViewItemsTypes)]
     [HttpGet]
     public async Task<ItemTypesResponse> GetAllItemTypesAsync(
@@ -35,7 +37,9 @@ public class ItemTypesController : ControllerBase
         };
     }
 
-    [EndpointSummary("Adds item type")]
+    /// <summary>
+    ///     Adds item type
+    /// </summary>
     /// <param name="createItemTypeRequest"></param>
     [RequiresPermission(UserClaimsProvider.CanManageItemsTypes)]
     [HttpPost]
@@ -52,7 +56,9 @@ public class ItemTypesController : ControllerBase
         };
     }
 
-    [EndpointSummary("Deletes specific item type")]
+    /// <summary>
+    ///     Deletes specific item type
+    /// </summary>
     /// <param name="itemTypeId"></param>
     [RequiresPermission(UserClaimsProvider.AUTO_TESTS_ONLY_IsItemTypesHardDeleteAllowed)]
     [HttpDelete("{itemTypeId}/hard-delete")]
