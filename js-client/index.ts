@@ -263,6 +263,52 @@ export class Api<
     /**
      * No description
      *
+     * @tags Items
+     * @name ItemsGetAllItems
+     * @request GET:/api/items
+     */
+    itemsGetAllItems: (params: RequestParams = {}) =>
+      this.request<GetAllItemsResponse, any>({
+        path: `/api/items`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Items
+     * @name ItemsCreateItem
+     * @request POST:/api/items
+     */
+    itemsCreateItem: (data: CreateItemRequest, params: RequestParams = {}) =>
+      this.request<CreateItemResponse, any>({
+        path: `/api/items`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Items
+     * @name ItemsHardDeleteItem
+     * @request DELETE:/api/items/{itemId}/hard-delete
+     */
+    itemsHardDeleteItem: (itemId: number, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/items/${itemId}/hard-delete`,
+        method: "DELETE",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
      * @tags ItemTypes
      * @name ItemTypesGetAllItemTypes
      * @request GET:/api/item-types
@@ -308,52 +354,6 @@ export class Api<
     ) =>
       this.request<void, any>({
         path: `/api/item-types/${itemTypeId}/hard-delete`,
-        method: "DELETE",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Items
-     * @name ItemsGetAllItems
-     * @request GET:/api/items
-     */
-    itemsGetAllItems: (params: RequestParams = {}) =>
-      this.request<GetAllItemsResponse, any>({
-        path: `/api/items`,
-        method: "GET",
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Items
-     * @name ItemsCreateItem
-     * @request POST:/api/items
-     */
-    itemsCreateItem: (data: CreateItemRequest, params: RequestParams = {}) =>
-      this.request<CreateItemResponse, any>({
-        path: `/api/items`,
-        method: "POST",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Items
-     * @name ItemsHardDeleteItem
-     * @request DELETE:/api/items/{itemId}/hard-delete
-     */
-    itemsHardDeleteItem: (itemId: number, params: RequestParams = {}) =>
-      this.request<void, any>({
-        path: `/api/items/${itemId}/hard-delete`,
         method: "DELETE",
         ...params,
       }),
