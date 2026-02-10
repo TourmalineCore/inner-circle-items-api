@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TourmalineCore.AspNetCore.JwtAuthentication.Core.Filters;
 
-namespace Api.Controllers;
+namespace Api.Features.Items;
 
 [Authorize]
 [ApiController]
