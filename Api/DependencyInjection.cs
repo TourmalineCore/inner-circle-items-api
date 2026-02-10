@@ -33,18 +33,20 @@ public static class DependencyInjection
 
         services.AddTransient<EmployeesApi, EmployeesApi>();
 
-        services.AddTransient<CreateItemCommand>();
+        services.AddTransient<CreateItemTypeHandler>();
         services.AddTransient<CreateItemTypeCommand>();
-        services.AddTransient<GetAllItemTypesQuery>();
-
-        services.AddTransient<GetAllItemsQuery>();
-
-        services.AddTransient<GetAllItemsHandler>();
-        services.AddTransient<CreateItemHandler>();
-        services.AddTransient<HardDeleteItemHandler>();
 
         services.AddTransient<GetAllItemTypesHandler>();
-        services.AddTransient<CreateItemTypeHandler>();
+        services.AddTransient<GetAllItemTypesQuery>();
+
         services.AddTransient<HardDeleteItemTypeHandler>();
+
+        services.AddTransient<CreateItemHandler>();
+        services.AddTransient<CreateItemCommand>();
+
+        services.AddTransient<GetAllItemsHandler>();
+        services.AddTransient<GetAllItemsQuery>();
+
+        services.AddTransient<HardDeleteItemHandler>();
     }
 }
