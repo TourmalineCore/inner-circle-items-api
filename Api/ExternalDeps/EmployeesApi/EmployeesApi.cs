@@ -1,10 +1,10 @@
-using Api.ExternalDeps.EmployeesApi.Responses;
+using Application.ExternalDeps.EmployeesApi;
 using Microsoft.Extensions.Options;
 using TourmalineCore.AspNetCore.JwtAuthentication.Core.Options;
 
 namespace Api.ExternalDeps.EmployeesApi;
 
-public class EmployeesApi
+public class EmployeesApi : IEmployeesApi
 {
     private readonly ExternalDepsUrls _externalDepsUrls;
     private readonly AuthenticationOptions _authenticationOptions;

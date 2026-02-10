@@ -52,6 +52,10 @@ export interface GetAllItemsResponse {
   items: ItemDto[];
 }
 
+export interface GetAllItemTypesResponse {
+  itemTypes: ItemTypeDto[];
+}
+
 export interface ItemDto {
   /** @format int64 */
   id: number;
@@ -70,10 +74,6 @@ export interface ItemTypeDto {
   /** @format int64 */
   id: number;
   name: string;
-}
-
-export interface ItemTypesResponse {
-  itemTypes: ItemTypeDto[];
 }
 
 import type {
@@ -253,13 +253,65 @@ export class HttpClient<SecurityDataType = unknown> {
 
 /**
  * @title inner-circle-items-api
- * @version 1.0.8
+ * @version 1.0.9
  * @baseUrl http://localhost:6501/
  */
 export class Api<
   SecurityDataType extends unknown,
 > extends HttpClient<SecurityDataType> {
   api = {
+    /**
+     * No description
+     *
+     * @tags ItemTypes
+     * @name ItemTypesGetAllItemTypes
+     * @request GET:/api/item-types
+     */
+    itemTypesGetAllItemTypes: (params: RequestParams = {}) =>
+      this.request<GetAllItemTypesResponse, any>({
+        path: `/api/item-types`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags ItemTypes
+     * @name ItemTypesCreateItemType
+     * @request POST:/api/item-types
+     */
+    itemTypesCreateItemType: (
+      data: CreateItemTypeRequest,
+      params: RequestParams = {},
+    ) =>
+      this.request<CreateItemTypeResponse, any>({
+        path: `/api/item-types`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags ItemTypes
+     * @name ItemTypesHardDeleteItemType
+     * @request DELETE:/api/item-types/{itemTypeId}/hard-delete
+     */
+    itemTypesHardDeleteItemType: (
+      itemTypeId: number,
+      params: RequestParams = {},
+    ) =>
+      this.request<void, any>({
+        path: `/api/item-types/${itemTypeId}/hard-delete`,
+        method: "DELETE",
+        ...params,
+      }),
+
     /**
      * No description
      *
@@ -302,58 +354,6 @@ export class Api<
     itemsHardDeleteItem: (itemId: number, params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/api/items/${itemId}/hard-delete`,
-        method: "DELETE",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags ItemTypes
-     * @name ItemTypesGetAllItemTypes
-     * @request GET:/api/item-types
-     */
-    itemTypesGetAllItemTypes: (params: RequestParams = {}) =>
-      this.request<ItemTypesResponse, any>({
-        path: `/api/item-types`,
-        method: "GET",
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags ItemTypes
-     * @name ItemTypesCreateItemType
-     * @request POST:/api/item-types
-     */
-    itemTypesCreateItemType: (
-      data: CreateItemTypeRequest,
-      params: RequestParams = {},
-    ) =>
-      this.request<CreateItemTypeResponse, any>({
-        path: `/api/item-types`,
-        method: "POST",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags ItemTypes
-     * @name ItemTypesHardDeleteItemType
-     * @request DELETE:/api/item-types/{itemTypeId}/hard-delete
-     */
-    itemTypesHardDeleteItemType: (
-      itemTypeId: number,
-      params: RequestParams = {},
-    ) =>
-      this.request<void, any>({
-        path: `/api/item-types/${itemTypeId}/hard-delete`,
         method: "DELETE",
         ...params,
       }),

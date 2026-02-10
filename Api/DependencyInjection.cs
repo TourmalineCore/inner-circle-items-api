@@ -1,9 +1,12 @@
 ﻿using Api.ExternalDeps.EmployeesApi;
-using Api.Features.Items.CreateItem;
-using Api.Features.Items.GetAllItems;
 using Application;
-using Application.Commands;
-using Application.Queries;
+using Application.ExternalDeps.EmployeesApi;
+using Application.Features.Items.CreateItem;
+using Application.Features.Items.GetAllItems;
+using Application.Features.Items.HardDeleteItem;
+using Application.Features.ItemTypes.CreateItemType;
+using Application.Features.ItemTypes.GetAllItemTypes;
+using Application.Features.ItemTypes.HardDeleteItemType;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api;
@@ -29,17 +32,22 @@ public static class DependencyInjection
 
         services.Configure<ExternalDepsUrls>(configuration.GetSection(nameof(ExternalDepsUrls)));
 
-        services.AddTransient<EmployeesApi, EmployeesApi>();
+        services.AddTransient<IEmployeesApi, EmployeesApi>();
 
+        services.AddTransient<CreateItemTypeHandler>();
         services.AddTransient<CreateItemTypeCommand>();
-        services.AddTransient<HardDeleteItemTypeCommand>();
-        services.AddTransient<AllItemTypesQuery>();
 
+        services.AddTransient<GetAllItemTypesHandler>();
+        services.AddTransient<GetAllItemTypesQuery>();
+
+        services.AddTransient<HardDeleteItemTypeHandler>();
+
+        services.AddTransient<CreateItemHandler>();
         services.AddTransient<CreateItemCommand>();
-        services.AddTransient<AllItemsQuery>();
-        services.AddTransient<HardDeleteItemCommand>();
 
         services.AddTransient<GetAllItemsHandler>();
-        services.AddTransient<CreateItemHandler>();
+        services.AddTransient<GetAllItemsQuery>();
+
+        services.AddTransient<HardDeleteItemHandler>();
     }
 }

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using Api.Features.Items.CreateItem;
-using Api.Features.Items.GetAllItems;
-using Application.Commands;
+using Application.Features.Items.CreateItem;
+using Application.Features.Items.GetAllItems;
+using Application.Features.Items.HardDeleteItem;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TourmalineCore.AspNetCore.JwtAuthentication.Core.Filters;
@@ -46,13 +46,13 @@ public class ItemsController : ControllerBase
     [RequiresPermission(UserClaimsProvider.AUTO_TESTS_ONLY_IsItemsHardDeleteAllowed)]
     [HttpDelete("{itemId}/hard-delete")]
     public async Task<object> HardDeleteItemAsync(
-        [FromServices] HardDeleteItemCommand hardDeleteItemCommand,
+        [FromServices] HardDeleteItemHandler hardDeleteItemHandler,
         [Required][FromRoute] long itemId
     )
     {
         return new
         {
-            isDeleted = await hardDeleteItemCommand.ExecuteAsync(itemId)
+            isDeleted = await hardDeleteItemHandler.HandleAsync(itemId)
         };
     }
 }
