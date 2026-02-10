@@ -1,4 +1,4 @@
-﻿using Application.Features.SharedDtos;
+﻿using Application.SharedDtos;
 
 namespace Application.Features.ItemTypes.GetAllItemTypes;
 

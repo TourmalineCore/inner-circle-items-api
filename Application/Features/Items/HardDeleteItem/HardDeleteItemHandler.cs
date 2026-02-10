@@ -1,4 +1,4 @@
-using Application.Features.SharedCommands;
+using Application.SharedCommands;
 using Core.Entities;
 
 namespace Application.Features.Items.HardDeleteItem;
