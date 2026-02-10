@@ -1,13 +1,13 @@
 ﻿using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Queries;
+namespace Application.Features.Items.GetAllItems;
 
-public class AllItemsQuery
+public class GetAllItemsQuery
 {
     private readonly TenantAppDbContext _context;
 
-    public AllItemsQuery(TenantAppDbContext context)
+    public GetAllItemsQuery(TenantAppDbContext context)
     {
         _context = context;
     }

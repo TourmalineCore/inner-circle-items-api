@@ -6,7 +6,6 @@ using Application.Features.Items.HardDeleteItem;
 using Application.Features.ItemTypes.CreateItemType;
 using Application.Features.ItemTypes.GetAllItemTypes;
 using Application.Features.ItemTypes.HardDeleteItemType;
-using Application.Queries;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api;
@@ -36,9 +35,9 @@ public static class DependencyInjection
 
         services.AddTransient<CreateItemCommand>();
         services.AddTransient<CreateItemTypeCommand>();
-        services.AddTransient<AllItemTypesQuery>();
+        services.AddTransient<GetAllItemTypesQuery>();
 
-        services.AddTransient<AllItemsQuery>();
+        services.AddTransient<GetAllItemsQuery>();
 
         services.AddTransient<GetAllItemsHandler>();
         services.AddTransient<CreateItemHandler>();

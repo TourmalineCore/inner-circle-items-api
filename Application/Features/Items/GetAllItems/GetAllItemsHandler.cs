@@ -1,23 +1,22 @@
 using Application.ExternalDeps.EmployeesApi;
 using Application.Features.SharedDtos;
-using Application.Queries;
 
 namespace Application.Features.Items.GetAllItems;
 
 public class GetAllItemsHandler
 {
-    private readonly AllItemsQuery _allItemsQuery;
+    private readonly GetAllItemsQuery _getAllItemsQuery;
 
     public GetAllItemsHandler(
-        AllItemsQuery allItemsQuery
+        GetAllItemsQuery getAllItemsQuery
     )
     {
-        _allItemsQuery = allItemsQuery;
+        _getAllItemsQuery = getAllItemsQuery;
     }
 
     public async Task<GetAllItemsResponse> HandleAsync(EmployeesResponse allEmployeesResponse)
     {
-        var items = await _allItemsQuery.GetAsync();
+        var items = await _getAllItemsQuery.GetAsync();
 
         return new GetAllItemsResponse
         {

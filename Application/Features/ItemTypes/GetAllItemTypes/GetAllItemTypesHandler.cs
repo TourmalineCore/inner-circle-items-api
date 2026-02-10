@@ -1,22 +1,21 @@
 using Application.Features.SharedDtos;
-using Application.Queries;
 
 namespace Application.Features.ItemTypes.GetAllItemTypes;
 
 public class GetAllItemTypesHandler
 {
-    private readonly AllItemTypesQuery _allItemTypesQuery;
+    private readonly GetAllItemTypesQuery _getAllItemTypesQuery;
 
     public GetAllItemTypesHandler(
-        AllItemTypesQuery allItemTypesQuery
+        GetAllItemTypesQuery getAllItemTypesQuery
     )
     {
-        _allItemTypesQuery = allItemTypesQuery;
+        _getAllItemTypesQuery = getAllItemTypesQuery;
     }
 
     public async Task<GetAllItemTypesResponse> HandleAsync()
     {
-        var itemTypes = await _allItemTypesQuery.GetAsync();
+        var itemTypes = await _getAllItemTypesQuery.GetAsync();
 
         return new GetAllItemTypesResponse
         {
