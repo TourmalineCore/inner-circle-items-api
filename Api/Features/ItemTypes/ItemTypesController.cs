@@ -19,7 +19,7 @@ public class ItemTypesController : ControllerBase
     /// </summary>
     [RequiresPermission(UserClaimsProvider.CanViewItemsTypes)]
     [HttpGet]
-    public async Task<ItemTypesResponse> GetAllItemTypesAsync(
+    public async Task<GetAllItemTypesResponse> GetAllItemTypesAsync(
         [FromServices] GetAllItemTypesHandler getAllItemTypesHandler
     )
     {

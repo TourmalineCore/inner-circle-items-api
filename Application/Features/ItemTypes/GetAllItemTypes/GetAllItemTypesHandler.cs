@@ -14,11 +14,11 @@ public class GetAllItemTypesHandler
         _allItemTypesQuery = allItemTypesQuery;
     }
 
-    public async Task<ItemTypesResponse> HandleAsync()
+    public async Task<GetAllItemTypesResponse> HandleAsync()
     {
         var itemTypes = await _allItemTypesQuery.GetAsync();
 
-        return new ItemTypesResponse
+        return new GetAllItemTypesResponse
         {
             ItemTypes = itemTypes
                 .Select(x => new ItemTypeDto
