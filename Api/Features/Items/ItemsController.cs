@@ -18,11 +18,11 @@ public class ItemsController : ControllerBase
     /// </summary>
     [RequiresPermission(UserClaimsProvider.CanViewItems)]
     [HttpGet]
-    public async Task<GetAllItemsResponse> GetAllItemsAsync(
+    public Task<GetAllItemsResponse> GetAllItemsAsync(
         [FromServices] GetAllItemsHandler getAllItemsHandler
     )
     {
-        return await getAllItemsHandler.HandleAsync();
+        return getAllItemsHandler.HandleAsync();
     }
 
     /// <summary>
