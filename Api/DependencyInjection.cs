@@ -31,6 +31,7 @@ public static class DependencyInjection
 
         services.AddTransient<EmployeesApi, EmployeesApi>();
 
+        services.AddTransient<CreateItemCommand>();
         services.AddTransient<CreateItemTypeCommand>();
         services.AddTransient<HardDeleteItemTypeCommand>();
         services.AddTransient<AllItemTypesQuery>();
