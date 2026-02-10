@@ -17,12 +17,12 @@ public class CreateItemTypeCommand
         _claimsProvider = claimsProvider;
     }
 
-    public async Task<long> ExecuteAsync(CreateItemTypeRequest CreateItemTypeRequest)
+    public async Task<long> ExecuteAsync(CreateItemTypeRequest createItemTypeRequest)
     {
         var itemType = new ItemType
         {
             TenantId = _claimsProvider.TenantId,
-            Name = CreateItemTypeRequest.Name
+            Name = createItemTypeRequest.Name
         };
 
         await _context
