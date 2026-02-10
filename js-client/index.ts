@@ -253,7 +253,7 @@ export class HttpClient<SecurityDataType = unknown> {
 
 /**
  * @title inner-circle-items-api
- * @version 1.0.7
+ * @version 1.0.8
  * @baseUrl http://localhost:6501/
  */
 export class Api<
