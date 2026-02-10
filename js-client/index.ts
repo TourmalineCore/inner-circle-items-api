@@ -45,7 +45,6 @@ export interface CreateItemTypeResponse {
 export type EmployeeDto = {
   /** @format int64 */
   id: number;
-  /** @maxLength 128 */
   fullName: string;
 } | null;
 
@@ -56,20 +55,10 @@ export interface GetAllItemsResponse {
 export interface ItemDto {
   /** @format int64 */
   id: number;
-  /**
-   * Description for Name
-   * @maxLength 128
-   * @default "DefaultName"
-   * @pattern ^[a-zA-Z\s]+$
-   */
   name: string;
   serialNumber: string;
   itemType: ItemTypeDto;
-  /**
-   * @format double
-   * @min 1
-   * @max 100
-   */
+  /** @format double */
   price: number;
   description: string;
   /** @format date */
@@ -272,60 +261,10 @@ export class Api<
 > extends HttpClient<SecurityDataType> {
   api = {
     /**
-     * @description This is a description.
-     *
-     * @tags Tag 2
-     * @name ItemsGetAllItems
-     * @summary Get all items
-     * @request GET:/api/items
-     */
-    itemsGetAllItems: (params: RequestParams = {}) =>
-      this.request<GetAllItemsResponse, any>({
-        path: `/api/items`,
-        method: "GET",
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Tag 1
-     * @name ItemsCreateItem
-     * @summary Add an item
-     * @request POST:/api/items
-     */
-    itemsCreateItem: (data: CreateItemRequest, params: RequestParams = {}) =>
-      this.request<CreateItemResponse, any>({
-        path: `/api/items`,
-        method: "POST",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Tag 1
-     * @name ItemsHardDeleteItem
-     * @summary Deletes specific item
-     * @request DELETE:/api/items/{itemId}/hard-delete
-     */
-    itemsHardDeleteItem: (itemId: number, params: RequestParams = {}) =>
-      this.request<void, any>({
-        path: `/api/items/${itemId}/hard-delete`,
-        method: "DELETE",
-        ...params,
-      }),
-
-    /**
      * No description
      *
      * @tags ItemTypes
      * @name ItemTypesGetAllItemTypes
-     * @summary Get all item types
      * @request GET:/api/item-types
      */
     itemTypesGetAllItemTypes: (params: RequestParams = {}) =>
@@ -341,7 +280,6 @@ export class Api<
      *
      * @tags ItemTypes
      * @name ItemTypesCreateItemType
-     * @summary Adds item type
      * @request POST:/api/item-types
      */
     itemTypesCreateItemType: (
@@ -362,7 +300,6 @@ export class Api<
      *
      * @tags ItemTypes
      * @name ItemTypesHardDeleteItemType
-     * @summary Deletes specific item type
      * @request DELETE:/api/item-types/{itemTypeId}/hard-delete
      */
     itemTypesHardDeleteItemType: (
@@ -371,6 +308,52 @@ export class Api<
     ) =>
       this.request<void, any>({
         path: `/api/item-types/${itemTypeId}/hard-delete`,
+        method: "DELETE",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Items
+     * @name ItemsGetAllItems
+     * @request GET:/api/items
+     */
+    itemsGetAllItems: (params: RequestParams = {}) =>
+      this.request<GetAllItemsResponse, any>({
+        path: `/api/items`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Items
+     * @name ItemsCreateItem
+     * @request POST:/api/items
+     */
+    itemsCreateItem: (data: CreateItemRequest, params: RequestParams = {}) =>
+      this.request<CreateItemResponse, any>({
+        path: `/api/items`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Items
+     * @name ItemsHardDeleteItem
+     * @request DELETE:/api/items/{itemId}/hard-delete
+     */
+    itemsHardDeleteItem: (itemId: number, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/items/${itemId}/hard-delete`,
         method: "DELETE",
         ...params,
       }),
