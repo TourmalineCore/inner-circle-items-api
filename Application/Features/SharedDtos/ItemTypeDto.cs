@@ -1,4 +1,4 @@
-﻿namespace Application.Features.Dtos;
+﻿namespace Application.Features.SharedDtos;
 
 public class ItemTypeDto
 {

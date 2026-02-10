@@ -1,4 +1,4 @@
-namespace Application.Features.ItemTypes;
+namespace Application.Features.ItemTypes.CreateItemType;
 
 public class CreateItemTypeResponse
 {

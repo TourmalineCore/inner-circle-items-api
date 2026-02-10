@@ -1,5 +1,5 @@
 using Application.ExternalDeps.EmployeesApi;
-using Application.Features.Dtos;
+using Application.Features.SharedDtos;
 using Application.Queries;
 
 namespace Application.Features.Items.GetAllItems;

@@ -1,5 +1,3 @@
-using Application.Commands;
-
 namespace Application.Features.Items.CreateItem;
 
 public class CreateItemHandler

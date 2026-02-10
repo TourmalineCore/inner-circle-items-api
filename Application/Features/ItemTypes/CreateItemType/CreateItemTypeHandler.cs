@@ -1,6 +1,3 @@
-
-using Application.Commands;
-
 namespace Application.Features.ItemTypes.CreateItemType;
 
 public class CreateItemTypeHandler
