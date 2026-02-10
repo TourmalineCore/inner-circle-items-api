@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using Api.ExternalDeps.EmployeesApi;
 using Application.Features.Items.CreateItem;
 using Application.Features.Items.GetAllItems;
 using Application.Features.Items.HardDeleteItem;
@@ -20,13 +19,10 @@ public class ItemsController : ControllerBase
     [RequiresPermission(UserClaimsProvider.CanViewItems)]
     [HttpGet]
     public async Task<GetAllItemsResponse> GetAllItemsAsync(
-        [FromServices] GetAllItemsHandler getAllItemsHandler,
-        [FromServices] EmployeesApi employeesApi
+        [FromServices] GetAllItemsHandler getAllItemsHandler
     )
     {
-        var allEmployeesResponse = await employeesApi.GetAllEmployeesAsync();
-
-        return await getAllItemsHandler.HandleAsync(allEmployeesResponse);
+        return await getAllItemsHandler.HandleAsync();
     }
 
     /// <summary>

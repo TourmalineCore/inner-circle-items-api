@@ -5,17 +5,22 @@ namespace Application.Features.Items.GetAllItems;
 
 public class GetAllItemsHandler
 {
+    private readonly IEmployeesApi _employeesApi;
     private readonly GetAllItemsQuery _getAllItemsQuery;
 
     public GetAllItemsHandler(
+        IEmployeesApi employeesApi,
         GetAllItemsQuery getAllItemsQuery
     )
     {
+        _employeesApi = employeesApi;
         _getAllItemsQuery = getAllItemsQuery;
     }
 
-    public async Task<GetAllItemsResponse> HandleAsync(EmployeesResponse allEmployeesResponse)
+    public async Task<GetAllItemsResponse> HandleAsync()
     {
+        var allEmployeesResponse = await _employeesApi.GetAllEmployeesAsync();
+
         var items = await _getAllItemsQuery.GetAsync();
 
         return new GetAllItemsResponse

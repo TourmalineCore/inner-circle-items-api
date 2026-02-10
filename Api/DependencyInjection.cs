@@ -1,5 +1,6 @@
 ﻿using Api.ExternalDeps.EmployeesApi;
 using Application;
+using Application.ExternalDeps.EmployeesApi;
 using Application.Features.Items.CreateItem;
 using Application.Features.Items.GetAllItems;
 using Application.Features.Items.HardDeleteItem;
@@ -31,7 +32,7 @@ public static class DependencyInjection
 
         services.Configure<ExternalDepsUrls>(configuration.GetSection(nameof(ExternalDepsUrls)));
 
-        services.AddTransient<EmployeesApi, EmployeesApi>();
+        services.AddTransient<IEmployeesApi, EmployeesApi>();
 
         services.AddTransient<CreateItemTypeHandler>();
         services.AddTransient<CreateItemTypeCommand>();
