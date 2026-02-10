@@ -1,7 +1,6 @@
-﻿using Application.Features.ItemTypes;
-using Core.Entities;
+﻿using Core.Entities;
 
-namespace Application.Commands;
+namespace Application.Features.ItemTypes.CreateItemType;
 
 public class CreateItemTypeCommand
 {

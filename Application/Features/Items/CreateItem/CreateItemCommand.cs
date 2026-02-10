@@ -1,8 +1,7 @@
-using Application.Features.Items.CreateItem;
 using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Commands;
+namespace Application.Features.Items.CreateItem;
 
 public class CreateItemCommand
 {
