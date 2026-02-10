@@ -4,6 +4,9 @@ using Application.Commands;
 using Application.Features.Items.CreateItem;
 using Application.Features.Items.GetAllItems;
 using Application.Features.Items.HardDeleteItem;
+using Application.Features.ItemTypes.CreateItemType;
+using Application.Features.ItemTypes.GetAllItemTypes;
+using Application.Features.ItemTypes.HardDeleteItemType;
 using Application.Queries;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,7 +37,6 @@ public static class DependencyInjection
 
         services.AddTransient<CreateItemCommand>();
         services.AddTransient<CreateItemTypeCommand>();
-        services.AddTransient<HardDeleteItemTypeCommand>();
         services.AddTransient<AllItemTypesQuery>();
 
         services.AddTransient<AllItemsQuery>();
@@ -42,5 +44,9 @@ public static class DependencyInjection
         services.AddTransient<GetAllItemsHandler>();
         services.AddTransient<CreateItemHandler>();
         services.AddTransient<HardDeleteItemHandler>();
+
+        services.AddTransient<GetAllItemTypesHandler>();
+        services.AddTransient<CreateItemTypeHandler>();
+        services.AddTransient<HardDeleteItemTypeHandler>();
     }
 }

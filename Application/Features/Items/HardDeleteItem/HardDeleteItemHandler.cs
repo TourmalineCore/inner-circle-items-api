@@ -12,8 +12,8 @@ public class HardDeleteItemHandler
         _hardDeleteEntityCommand = new HardDeleteEntityCommand(context);
     }
 
-    public async Task<bool> HandleAsync(long itemId)
+    public Task<bool> HandleAsync(long itemId)
     {
-        return await _hardDeleteEntityCommand.ExecuteAsync<Item>(itemId);
+        return _hardDeleteEntityCommand.ExecuteAsync<Item>(itemId);
     }
 }

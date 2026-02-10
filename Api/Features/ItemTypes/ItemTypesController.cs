@@ -1,13 +1,13 @@
 using System.ComponentModel.DataAnnotations;
-using Application.Commands;
-using Application.Features.Dtos;
 using Application.Features.ItemTypes;
-using Application.Queries;
+using Application.Features.ItemTypes.CreateItemType;
+using Application.Features.ItemTypes.GetAllItemTypes;
+using Application.Features.ItemTypes.HardDeleteItemType;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TourmalineCore.AspNetCore.JwtAuthentication.Core.Filters;
 
-namespace Api.Controllers;
+namespace Api.Features.ItemTypes;
 
 [Authorize]
 [ApiController]
@@ -20,21 +20,10 @@ public class ItemTypesController : ControllerBase
     [RequiresPermission(UserClaimsProvider.CanViewItemsTypes)]
     [HttpGet]
     public async Task<ItemTypesResponse> GetAllItemTypesAsync(
-        [FromServices] AllItemTypesQuery allItemTypesQuery
+        [FromServices] GetAllItemTypesHandler getAllItemTypesHandler
     )
     {
-        var itemTypes = await allItemTypesQuery.GetAsync();
-
-        return new ItemTypesResponse
-        {
-            ItemTypes = itemTypes
-                .Select(x => new ItemTypeDto
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                })
-                .ToList()
-        };
+        return await getAllItemTypesHandler.HandleAsync();
     }
 
     /// <summary>
@@ -43,17 +32,12 @@ public class ItemTypesController : ControllerBase
     /// <param name="createItemTypeRequest"></param>
     [RequiresPermission(UserClaimsProvider.CanManageItemsTypes)]
     [HttpPost]
-    public async Task<CreateItemTypeResponse> CreateItemTypeAsync(
-        [FromServices] CreateItemTypeCommand createItemTypeCommand,
+    public Task<CreateItemTypeResponse> CreateItemTypeAsync(
+        [FromServices] CreateItemTypeHandler createItemTypeHandler,
         [Required][FromBody] CreateItemTypeRequest createItemTypeRequest
     )
     {
-        var newItemTypeId = await createItemTypeCommand.ExecuteAsync(createItemTypeRequest);
-
-        return new CreateItemTypeResponse()
-        {
-            NewItemTypeId = newItemTypeId
-        };
+        return createItemTypeHandler.HandleAsync(createItemTypeRequest);
     }
 
     /// <summary>
@@ -63,13 +47,13 @@ public class ItemTypesController : ControllerBase
     [RequiresPermission(UserClaimsProvider.AUTO_TESTS_ONLY_IsItemTypesHardDeleteAllowed)]
     [HttpDelete("{itemTypeId}/hard-delete")]
     public async Task<object> HardDeleteItemTypeAsync(
-        [FromServices] HardDeleteItemTypeCommand hardDeleteItemTypeCommand,
+        [FromServices] HardDeleteItemTypeHandler hardDeleteItemTypeHandler,
         [Required][FromRoute] long itemTypeId
     )
     {
         return new
         {
-            isDeleted = await hardDeleteItemTypeCommand.ExecuteAsync(itemTypeId)
+            isDeleted = await hardDeleteItemTypeHandler.HandleAsync(itemTypeId)
         };
     }
 }
