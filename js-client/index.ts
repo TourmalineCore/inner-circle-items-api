@@ -52,6 +52,10 @@ export interface GetAllItemsResponse {
   items: ItemDto[];
 }
 
+export interface GetAllItemTypesResponse {
+  itemTypes: ItemTypeDto[];
+}
+
 export interface ItemDto {
   /** @format int64 */
   id: number;
@@ -70,10 +74,6 @@ export interface ItemTypeDto {
   /** @format int64 */
   id: number;
   name: string;
-}
-
-export interface ItemTypesResponse {
-  itemTypes: ItemTypeDto[];
 }
 
 import type {
@@ -268,7 +268,7 @@ export class Api<
      * @request GET:/api/item-types
      */
     itemTypesGetAllItemTypes: (params: RequestParams = {}) =>
-      this.request<ItemTypesResponse, any>({
+      this.request<GetAllItemTypesResponse, any>({
         path: `/api/item-types`,
         method: "GET",
         format: "json",
