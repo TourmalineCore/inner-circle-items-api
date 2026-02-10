@@ -1,9 +1,9 @@
 # inner-circle-items-api
 
 <!-- auto-generated -->
-[![coverage](https://img.shields.io/badge/e2e_coverage-82.43%25-olivedrab)](https://github.com/TourmalineCore/inner-circle-items-api/actions/workflows/calculate-tests-coverage-on-pull-request.yml)
-[![coverage](https://img.shields.io/badge/units_coverage-17.13%25-crimson)](https://github.com/TourmalineCore/inner-circle-items-api/actions/workflows/calculate-tests-coverage-on-pull-request.yml)
-[![coverage](https://img.shields.io/badge/full_coverage-90.09%25-forestgreen)](https://github.com/TourmalineCore/inner-circle-items-api/actions/workflows/calculate-tests-coverage-on-pull-request.yml)
+[![coverage](https://img.shields.io/badge/e2e_coverage-82.81%25-olivedrab)](https://github.com/TourmalineCore/inner-circle-items-api/actions/workflows/calculate-tests-coverage-on-pull-request.yml)
+[![coverage](https://img.shields.io/badge/units_coverage-16.77%25-crimson)](https://github.com/TourmalineCore/inner-circle-items-api/actions/workflows/calculate-tests-coverage-on-pull-request.yml)
+[![coverage](https://img.shields.io/badge/full_coverage-90.30%25-forestgreen)](https://github.com/TourmalineCore/inner-circle-items-api/actions/workflows/calculate-tests-coverage-on-pull-request.yml)
 <!-- auto-generated -->
 
 This repo contains Inner Circle Items API.
@@ -80,7 +80,7 @@ The most useful is `PgAdmin` http://localhost:9501 (password is `postgres`).
 
 ## Swagger
 
-You can fetch OpenApi endpoints and types contract using this URL http://localhost:4501/api/swagger/openapi/v1.json. Swagger UI is accessible at http://localhost:4501/api/swagger/index.html. 
+You can fetch OpenApi endpoints and types contract using this URL http://localhost:4501/api/swagger/openapi.json. Swagger UI is accessible at http://localhost:4501/api/swagger/index.html. 
 
 However, UI doesn't support requests execution, this requires adding Auth dialog to pass a token. It is a bit trickier starting from .NET 9 due to the change in support of Swagger packagies family `Swashbuckle`, read [here](https://learn.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-8.0&tabs=visual-studio) and [there](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/openapi/overview?view=aspnetcore-9.0&preserve-view=true) about that more.
 
