@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 
-namespace Application.SharedCommands;
+namespace Application.Features.SharedCommands;
 
 public class HardDeleteEntityCommandTests
 {

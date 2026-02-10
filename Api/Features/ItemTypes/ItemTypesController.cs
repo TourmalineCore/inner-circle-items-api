@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using Application.Features.ItemTypes;
 using Application.Features.ItemTypes.CreateItemType;
 using Application.Features.ItemTypes.GetAllItemTypes;
 using Application.Features.ItemTypes.HardDeleteItemType;

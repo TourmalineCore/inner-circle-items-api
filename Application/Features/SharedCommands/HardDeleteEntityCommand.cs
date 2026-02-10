@@ -1,7 +1,7 @@
 ﻿using Core;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.SharedCommands;
+namespace Application.Features.SharedCommands;
 
 public class HardDeleteEntityCommand
 {
