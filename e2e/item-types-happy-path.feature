@@ -30,6 +30,11 @@ Feature: Item Types
 
     * configure headers = jsUtils().getAuthHeaders(accessToken)
 
+    Given url apiRootUrl
+    Given path 'item-types/first'
+    When method GET
+    And match response == ''
+
     # Step 1: Create a new item type
     * def randomName = '[API-E2E]-Test-item-type-' + Math.random()
     
@@ -51,6 +56,19 @@ Feature: Item Types
     Given path 'item-types'
     When method GET
     And match response.itemTypes contains
+    """
+    {
+        "id": "#(newItemTypeId)",
+        "name": "#(randomName)"
+    }
+    """
+    
+    Given url apiRootUrl
+    Given path 'item-types/first'
+    When method GET
+    Then status 200
+    Then status 200
+    And match response ==
     """
     {
         "id": "#(newItemTypeId)",

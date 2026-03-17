@@ -56,6 +56,12 @@ export interface GetAllItemTypesResponse {
   itemTypes: ItemTypeDto[];
 }
 
+export interface GetFirstItemTypeResponse {
+  /** @format int64 */
+  id: number;
+  name: string;
+}
+
 export interface ItemDto {
   /** @format int64 */
   id: number;
@@ -253,7 +259,7 @@ export class HttpClient<SecurityDataType = unknown> {
 
 /**
  * @title inner-circle-items-api
- * @version 1.0.9
+ * @version 1.0.10
  * @baseUrl http://localhost:6501/
  */
 export class Api<
@@ -291,6 +297,21 @@ export class Api<
         method: "POST",
         body: data,
         type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags ItemTypes
+     * @name ItemTypesGetFirstItemType
+     * @request GET:/api/item-types/first
+     */
+    itemTypesGetFirstItemType: (params: RequestParams = {}) =>
+      this.request<GetFirstItemTypeResponse, any>({
+        path: `/api/item-types/first`,
+        method: "GET",
         format: "json",
         ...params,
       }),

@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Application.Features.ItemTypes.CreateItemType;
 using Application.Features.ItemTypes.GetAllItemTypes;
+using Application.Features.ItemTypes.GetFirstItemType;
 using Application.Features.ItemTypes.HardDeleteItemType;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +24,15 @@ public class ItemTypesController : ControllerBase
     )
     {
         return getAllItemTypesHandler.HandleAsync();
+    }
+
+    [RequiresPermission(UserClaimsProvider.CanViewItemsTypes)]
+    [HttpGet("first")]
+    public Task<GetFirstItemTypeResponse?> GetFirstItemTypeAsync(
+        [FromServices] GetFirstItemTypeHandler getFirstItemTypeHandler
+    )
+    {
+        return getFirstItemTypeHandler.HandleAsync();
     }
 
     /// <summary>
