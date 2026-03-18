@@ -83,6 +83,11 @@ jobs:
           fi
           
       - name: Commit js-client
+        env:
+          # this token should have at lease these permissions to be able to push to the protected main branch:
+          #   contents: write # to be able to publish a GitHub release
+          # default token won't be able to bypass the rule that all changes should appear in master only through PRs
+          GITHUB_TOKEN: ${{ secrets.INNER_CIRCLE_SEMANTIC_RELEASE_GH_TOKEN }}
         run: |
           git config user.email "contact@tourmalinecore.com"
           git config user.name "Workflow Action"
