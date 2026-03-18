@@ -25,6 +25,9 @@ jobs:
         with:
           # from AI: Without this ref in PRs, you're on a merge commit, and pushing back is ambiguous.
           ref: ${{ github.head_ref }}
+          # this is needed to use the custom INNER_CIRCLE_SEMANTIC_RELEASE_GH_TOKEN
+          # without this it keeps the default token and won't be able to push directly to master
+          persist-credentials: false
 
       - name: Run the api via docker-compose
         run: |
