@@ -3,6 +3,12 @@
 # Please see the detailed comment in devcontainer.json
 FROM mcr.microsoft.com/devcontainers/dotnet:1.5.5-9.0-noble
 
+# It is necessary to solve the problem described in this issue https://github.com/yarnpkg/yarn/issues/9218
+# Download and install a new key
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | tee /etc/apt/keyrings/yarn-archive-keyring.gpg > /dev/null
+# Set a new path to the key
+RUN echo "deb [signed-by=/etc/apt/keyrings/yarn-archive-keyring.gpg] https://dl.yarnpkg.com/debian stable main" | tee /etc/apt/sources.list.d/yarn.list
+
 # installing EntityFramework Core tooling for migrations
 RUN dotnet tool install --global dotnet-ef --version 9.0.7 && \
 # installing tooling for tests coverage and its reporting
