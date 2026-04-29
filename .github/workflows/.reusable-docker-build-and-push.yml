@@ -48,6 +48,13 @@ jobs:
           # for non push events like pull_request ones it requires this :(
           DOCKER_METADATA_PR_HEAD_SHA: true
 
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build and push Docker image
         id: push
         uses: docker/build-push-action@v6
