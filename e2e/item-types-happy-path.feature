@@ -42,7 +42,8 @@ Feature: Item Types
     }
     """
     When method POST
-    Then status 200
+    # TODO: temporarily broken to check that the coverage pipeline fails on failed e2e tests, revert before merge
+    Then status 418
 
     * def newItemTypeId = response.newItemTypeId
 
